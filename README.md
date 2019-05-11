@@ -5,6 +5,14 @@ JavaScript로 [M42kup](https://github.com/logico-philosophical/m42kup/wiki)의 H
 
 ## 설치
 
+### NPM에서 받기
+
+NPM에 올릴 예정입니다.
+
+### Release에서 받기
+
+아직 릴리즈가 없습니다.
+
 ### Bleeding-edge
 
 ```bash
