@@ -2,7 +2,7 @@
 
 JavaScript로 M42kup의 HTML 렌더러를 구현한 것입니다. 아직 만들고 있음.  
 M42kup이 뭔지는 어딘가에 쓸 예정입니다.  
-테스트 페이지 제공 예정.
+[클라이언트 사이드 렌더러 테스트 페이지](https://logico-philosophical.github.io/m42kup/tests/client.html)
 
 ## 설치
 
@@ -25,10 +25,10 @@ M42kup이 뭔지는 어딘가에 쓸 예정입니다.
 ### `m42kup.render(input)`
 
 #### 입력
-* `input`: M42kup 문법을 따르는 문자열.
+* `input`(`String`): M42kup 코드.
 
 #### 출력
-HTML로 렌더링 된 것의 문자열이 출력됩니다. `<span class="m42kup">`이랑 `</span>`으로 감싸져 있음.
+렌더링 된 HTML(`String`)이 출력됩니다. `<span class="m42kup">`이랑 `</span>`으로 감싸져 있음.
 
 #### 입출력 예시
 ```bash
