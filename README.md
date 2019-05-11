@@ -35,3 +35,6 @@ HTML로 렌더링 된 것의 문자열이 출력됩니다. `<span class="m42kup"
 > m42kup.render('[*hi]')
 '<span class="m42kup"><i>hi</i></span>'
 ```
+
+## License
+[MIT](LICENSE)
