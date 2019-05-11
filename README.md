@@ -5,6 +5,8 @@ JavaScript로 [M42kup](https://github.com/logico-philosophical/m42kup/wiki)의 H
 
 ## 설치
 
+### Bleeding-edge
+
 ```bash
 ~ $ git clone https://github.com/logico-philosophical/m42kup.git
 ~ $ cd m42kup
