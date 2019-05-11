@@ -1,7 +1,7 @@
 # M42kup
 
-JavaScript로 M42kup의 HTML 렌더러를 구현한 것입니다. 아직 만들고 있음.\
-M42kup이 뭔지는 어딘가에 쓸 예정입니다.\
+JavaScript로 M42kup의 HTML 렌더러를 구현한 것입니다. 아직 만들고 있음.  
+M42kup이 뭔지는 어딘가에 쓸 예정입니다.  
 테스트 페이지 제공 예정.
 
 ## 설치
@@ -34,3 +34,4 @@ HTML로 렌더링 된 것의 문자열이 출력됩니다. `<span class="m42kup"
 ```bash
 > m42kup.render('[*hi]')
 '<span class="m42kup"><i>hi</i></span>'
+```
