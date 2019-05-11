@@ -1,7 +1,7 @@
 # M42kup
 
 JavaScript로 [M42kup](https://github.com/logico-philosophical/m42kup/wiki)의 HTML 렌더러를 구현한 것입니다. 아직 만들고 있음.  
-[클라이언트 사이드 렌더러 테스트 페이지](https://logico-philosophical.github.io/m42kup/tests/client.html)
+[클라이언트 사이드 렌더러 테스트 페이지(bleeding edge)](https://logico-philosophical.github.io/m42kup/tests/client.html)
 
 ## 설치
 
