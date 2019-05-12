@@ -67,10 +67,12 @@ rf['displaymath'] = rf['$$'] = r => {
 	}));
 };
 
+var options = {rf};
+
 var ret = {};
 
 for (var k in m42kup) ret[k] = m42kup[k];
 
-ret.renderMore = input => m42kup.render(input, {rf});
+ret.renderMore = input => m42kup.render(input, options);
 
 module.exports = ret;
