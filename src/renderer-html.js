@@ -186,7 +186,7 @@ function generateHTMLFromAST(ast, options) {
 
 			ret = rf[el.name](el.render);
 		} catch (err) {
-			ret = html(error(`${err.message}: ${el.code}`));
+			ret = html(error(`${el.name}: ${err.message}: ${el.code}`));
 		} finally {
 			return ret;
 		}
