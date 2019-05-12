@@ -35,11 +35,11 @@ rf['comment'] = r => text('');
 
 rf['entity'] = r => {
 	if (r.type != 'text') {
-		throw new TypeError('entity: Non-text input');
+		throw new TypeError('Non-text input');
 	}
 
 	if(!/^([a-z]{1,50}|#[0-9]{1,10}|#x[0-9a-f]{1,10})$/i.test(r.text)) {
-		throw new SyntaxError('entity: invalid value');
+		throw new SyntaxError('Invalid value');
 	}
 
 	return html(`&${r.text};`);
@@ -66,7 +66,7 @@ rf['bi'] = pipe(rf['b'], rf['i']);
 
 rf['link'] = r => {
 	if (r.type != 'text') {
-		throw new TypeError('link: Non-text input');
+		throw new TypeError('Non-text input');
 	}
 	if (!/^(http:\/\/|https:\/\/)/.test(r.text)) {
 		r.text = 'http://' + r.text;
@@ -163,7 +163,7 @@ function generateHTMLFromAST(ast, options) {
 		
 		try {
 			if (!(el.name in rf)) {
-				throw new TypeError(`undefined tag name "${el.name}"`);
+				throw new TypeError('Undefined tag name');
 			}
 
 			el.children = el.children.map(c =>
@@ -186,7 +186,7 @@ function generateHTMLFromAST(ast, options) {
 
 			ret = rf[el.name](el.render);
 		} catch (err) {
-			ret = html(error(`${el.name}: ${err.message}: ${el.code}`));
+			ret = html(error(`[${el.name}]: ${err.message}: ${el.code}`));
 		} finally {
 			return ret;
 		}

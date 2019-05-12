@@ -31,7 +31,7 @@ var rf = {};
 
 rf['highlight'] = rf[';;;'] = r => {
 	if (r.type != 'text') {
-		throw new TypeError('highlight: Non-text input');
+		throw new TypeError('Non-text input');
 	}
 
 	var commonLangs = [
@@ -47,7 +47,7 @@ rf['highlight'] = rf[';;;'] = r => {
 
 rf['math'] = rf['$'] = r => {
 	if (r.type != 'text') {
-		throw new TypeError(`${name}: Non-text input`);
+		throw new TypeError('Non-text input');
 	}
 	return html(katex.renderToString(r.text, {
 		throwOnError: false,
@@ -58,7 +58,7 @@ rf['math'] = rf['$'] = r => {
 
 rf['displaymath'] = rf['$$'] = r => {
 	if (r.type != 'text') {
-		throw new TypeError(`${name}: Non-text input`);
+		throw new TypeError('Non-text input');
 	}
 	return html(katex.renderToString(r.text, {
 		throwOnError: false,
