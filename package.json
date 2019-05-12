@@ -2,9 +2,10 @@
 	"name": "m42kup",
 	"version": "0.3.1",
 	"description": "M42kup renderer in JavaScript",
-	"main": "index.js",
+	"main": "src/index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npx webpack --output dist/m42kup.js"
 	},
 	"author": {
 		"name": "logico-philosophical",
@@ -18,5 +19,9 @@
 	"dependencies": {
 		"highlight.js": "^9.15.6",
 		"katex": "^0.10.1"
+	},
+	"devDependencies": {
+		"webpack": "^4.31.0",
+		"webpack-cli": "^3.3.2"
 	}
 }
