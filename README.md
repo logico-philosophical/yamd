@@ -31,13 +31,26 @@ NPM에 올릴 예정입니다.
 
 ## API (불안정)
 
-### `m42kup.render(input)`
+### `m42kup.render(input, options)`
 
 #### 입력
-* `input`(`String`): M42kup 코드.
+* `input` (`String`): M42kup 코드.
+* `options` (`Object`)
+```js
+{
+  rf: {
+    (tagname): r => {
+      // return text or html, or throw error
+    },
+    ...
+  }
+}
+```
+
+만든 놈도 잘 모르겠음.
 
 #### 출력
-렌더링 된 HTML(`String`)이 출력됩니다. `<span class="m42kup">`이랑 `</span>`으로 감싸져 있음.
+렌더링 된 HTML(`String`)이 출력됩니다. `<span class="m42kup">`이랑 `</span>`으로 감싸져 있음. 굳이 그래야 할지 의문.
 
 #### 입출력 예시
 ```bash
