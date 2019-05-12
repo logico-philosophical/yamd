@@ -24,7 +24,7 @@ NPM에 올릴 예정입니다.
 ## 테스트
 ```bash
 ~/m42kup $ node
-> m42kup = require('./index')
+> m42kup = require('.')
 > m42kup.render('[*hi]')
 '<span class="m42kup"><i>hi</i></span>'
 ```
