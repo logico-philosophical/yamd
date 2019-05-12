@@ -16,6 +16,7 @@ var escapeHtml = s => s.replace(/[&<>"']/g, m => ({
 var htmlFilter = e => {
 	if (e.type == 'html') return e;
 	if (e.type == 'text') return html(escapeHtml(e.text));
+	// parser errors
 	if (e.type == 'error') return html(error(e.text));
 	
 	throw new TypeError(`Cannot convert type ${e.type} to HTML`);
@@ -129,7 +130,7 @@ for (var rfAliasName in rfAliases) {
 	rf[rfAliasName] = rf[rfAliases[rfAliasName]];
 }
 
-function generateHTMLFromAST(ast, options) {
+function convert(ast, options) {
 	if (!options) options = {};
 	
 
@@ -209,5 +210,12 @@ function generateHTMLFromAST(ast, options) {
 }
 
 module.exports = {
-	generateHTMLFromAST
+	convert,
+	text,
+	html,
+	helper: {
+		escapeHtml,
+		htmlFilter,
+		pipe
+	}
 };

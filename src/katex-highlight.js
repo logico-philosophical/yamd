@@ -2,30 +2,8 @@ var katex = require('katex');
 var hljs = require('highlight.js');
 var m42kup = require('./index');
 
-var text = s => ({type: 'text', text: s}),
-	html = s => ({type: 'html', html: s});
-
-var error = e => `<code class="error">${escapeHtml(e)}</code>`;
-
-var escapeHtml = s => s.replace(/[&<>"']/g, m => ({
-	'&': '&amp;', '<': '&lt;', '>': '&gt;',
-	'"': '&quot;', "'": '&#39;'
-})[m]);
-
-var htmlFilter = e => {
-	if (e.type == 'html') return e;
-	if (e.type == 'text') return html(escapeHtml(e.text));
-	if (e.type == 'error') return html(error(e.text));
-	
-	throw new TypeError(`Cannot convert type ${e.type} to HTML`);
-};
-
-var pipe = (...fns) => {
-	return arg => {
-		fns.forEach(fn => arg = fn(arg));
-		return arg;
-	}
-};
+var {text, html} = m42kup.converter;
+var {escapeHtml, htmlFilter, pipe} = m42kup.converter.helper;
 
 var rf = {};
 
@@ -73,6 +51,10 @@ var ret = {};
 
 for (var k in m42kup) ret[k] = m42kup[k];
 
-ret.renderMore = input => m42kup.render(input, options);
+
+
+ret.renderMore = function renderMore(input) {
+	return m42kup.render(input, options);
+};
 
 module.exports = ret;

@@ -1,30 +1,17 @@
-var {
-	generateParseTreeFromInput,
-	generateASTFromParseTree
-} = require('./parser');
-
-var {generateHTMLFromAST} = require('./renderer-html');
+var parser = require('./parser');
+var converter = require('./converter-html');
 
 function render(input, options) {
-	var pipe = (...fns) => {
-		return arg => {
-			fns.forEach(fn => arg = fn(arg));
-			return arg;
-		}
-	};
-
-	var ast = pipe(
-		generateParseTreeFromInput,
-		generateASTFromParseTree
-	)(input);
-
-	return generateHTMLFromAST(ast, options);
+	var pt = parser.generateParseTreeFromInput(input);
+	var ast = parser.generateASTFromParseTree(pt);
+	var html = converter.convert(ast, options);
+	
+	return html;
 }
 
 var m42kup = {
-	generateParseTreeFromInput,
-	generateASTFromParseTree,
-	generateHTMLFromAST,
+	parser,
+	converter,
 	render
 };
 
