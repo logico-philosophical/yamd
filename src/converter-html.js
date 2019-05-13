@@ -6,7 +6,7 @@
 var text = s => ({type: 'text', text: s}),
 	html = s => ({type: 'html', html: s});
 
-var error = e => `<code class="error">${escapeHtml(e)}</code>`;
+var error = e => `<code class="m42kup-error">${escapeHtml(e)}</code>`;
 
 var escapeHtml = s => s.replace(/[&<>"']/g, m => ({
 	'&': '&amp;', '<': '&lt;', '>': '&gt;',
