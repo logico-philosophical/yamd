@@ -199,14 +199,10 @@ function convert(ast, options) {
 		}
 	}
 
-	return [
-		'<span class="m42kup">',
-		ast
-			.map(htmlFilter)
-			.map(c => c.html)
-			.join(''),
-		'</span>'
-	].join('');
+	return ast
+		.map(htmlFilter)
+		.map(c => c.html)
+		.join('');
 }
 
 module.exports = {
