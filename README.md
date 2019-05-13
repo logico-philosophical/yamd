@@ -26,7 +26,7 @@ NPM에 올릴 예정입니다.
 ~/m42kup $ node
 > m42kup = require('.')
 > m42kup.render('[*hi]')
-'<span class="m42kup"><i>hi</i></span>'
+'<i>hi</i>'
 ```
 
 ## API (불안정)
