@@ -50,12 +50,12 @@ NPM에 올릴 예정입니다.
 만든 놈도 잘 모르겠음.
 
 #### 출력
-렌더링 된 HTML(`String`)이 출력됩니다. `<span class="m42kup">`이랑 `</span>`으로 감싸져 있음. 굳이 그래야 할지 의문.
+렌더링 된 HTML(`String`)이 출력됩니다.
 
 #### 입출력 예시
 ```bash
 > m42kup.render('[*hi]')
-'<span class="m42kup"><i>hi</i></span>'
+'<i>hi</i>'
 ```
 
 ## License
