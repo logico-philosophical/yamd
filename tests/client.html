@@ -98,9 +98,6 @@
 		<h2>Rendered output</h2>
 		<div id="output"></div>
 		<script>
-			var {text, html} = m42kup.converter;
-			var {escapeHtml, htmlFilter, pipe} = m42kup.converter.helper;
-
 			var rf = {};
 
 			rf['highlight'] = rf[';;;'] = r => {
@@ -115,34 +112,45 @@
 					'nginx', 'objectivec', 'perl', 'php', 'python',
 					'ruby', 'sql'
 				];
-				
-				return pipe(
-					r => text(r.text.replace(/(^[ \t]*\n)|(\n[ \t]*$)/g, '')),
-					r => html(hljs.highlightAuto(r.text, commonLangs).value),
-					r => html(`<pre class="hljs"><code>${r.html}\n</code></pre>`)
-				)(r);
+
+				var trimmed = r.text.replace(/(^[ \t]*\n)|(\n[ \t]*$)/g, ''),
+					highlighted = hljs.highlightAuto(trimmed, commonLangs).value;
+				return {
+					type: 'html',
+					html: `<pre class="hljs"><code>${highlighted}\n</code></pre>`
+				};
 			};
 
 			rf['math'] = rf['$'] = r => {
 				if (r.type != 'text') {
 					throw new TypeError(`Non-text input`);
 				}
-				return html(katex.renderToString(r.text, {
+				var rendered = katex.renderToString(r.text, {
 					throwOnError: false,
 					displayMode: false,
 					strict: 'error'
-				}));
+				});
+
+				return {
+					type: 'html',
+					html: rendered
+				};
 			};
 
 			rf['displaymath'] = rf['$$'] = r => {
 				if (r.type != 'text') {
 					throw new TypeError(`Non-text input`);
 				}
-				return html(katex.renderToString(r.text, {
+				var rendered = katex.renderToString(r.text, {
 					throwOnError: false,
 					displayMode: true,
 					strict: 'error'
-				}));
+				});
+
+				return {
+					type: 'html',
+					html: rendered
+				};
 			};
 
 			var options = {rf};
