@@ -41,7 +41,7 @@ var three = 3,
 
 ### NPM에서 받기
 
-NPM에 올릴 예정입니다.
+NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophical/m42kup/issues/2)).
 
 ### Release에서 받기
 
@@ -73,13 +73,33 @@ NPM에 올릴 예정입니다.
 ```js
 {
   rf: {
-    (tagname): r => {
+    (tag_name): r => {
       // return text or html, or throw error
     },
     ...
   }
 }
 ```
+
+이때 `options.rf[(tag_name)]`은 `text` 또는 `html` 타입의 인자 하나를 받아 `text` 또는 `html`을 반환하거나 `Error`를 `throw` 해야 합니다.
+
+* `text` 타입은 다음과 같이 생겼습니다.
+  ```js
+  {
+    type: 'text',
+    text: (text)
+  }
+  ```
+* `html` 타입은 다음과 같이 생겼습니다.
+  ```js
+  {
+    type: 'html',
+    html: (html)
+  }
+  ```
+* `throw`된 것은 `message` 프로퍼티가 에러 형식으로 출력되므로 `message` 프로퍼티를 읽을 수 있어야 합니다. `Error` 인스턴스면 되겠습니다.
+
+옵션의 예시([SSCCE](http://sscce.org/))를 추가할 예정입니다.
 
 만든 놈도 잘 모르겠음.
 
