@@ -32,12 +32,32 @@ var pipe = (...fns) => {
 /* default renderer functions */
 var rf = {};
 
+rf['lbrack'] = r => {
+	if (r.text || r.html || r.error)
+		throw new Error('Input to void element');
+	
+	return text('[');
+};
+
+rf['rbrack'] = r => {
+	if (r.text || r.html || r.error)
+		throw new Error('Input to void element');
+	
+	return text(']');
+};
+
+rf['grave'] = r => {
+	if (r.text || r.html || r.error)
+		throw new Error('Input to void element');
+
+	return text('`');
+};
+
 rf['comment'] = r => text('');
 
 rf['entity'] = r => {
-	if (r.type != 'text') {
+	if (r.type != 'text')
 		throw new TypeError('Non-text input');
-	}
 
 	if(!/^([a-z]{1,50}|#[0-9]{1,10}|#x[0-9a-f]{1,10})$/i.test(r.text)) {
 		throw new SyntaxError('Invalid value');
@@ -100,6 +120,7 @@ rf['link'] = r => {
 	return html(`${quotes[name][0]}${r.html}${quotes[name][1]}`);
 }));
 
+// rf aliases ordered by char code
 var rfAliases = {
 	'"': 'dquote',
 	'%': 'comment',
@@ -120,6 +141,9 @@ var rfAliases = {
 	'\\': 'br',
 	'^': 'sup',
 	'_': 'sub',
+	'`': 'grave',
+	'{': 'lbrack',
+	'}': 'rbrack',
 	'~': 'link'
 };
 
