@@ -16,10 +16,7 @@
 		"url": "http://github.com/logico-philosophical/m42kup.git"
 	},
 	"license": "MIT",
-	"dependencies": {
-		"highlight.js": "^9.15.6",
-		"katex": "^0.10.1"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"webpack": "^4.32.0",
 		"webpack-cli": "^3.3.2"
