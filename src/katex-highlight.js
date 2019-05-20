@@ -5,9 +5,9 @@ var m42kup = require('./index');
 var {text, html} = m42kup.converter;
 var {escapeHtml, htmlFilter, pipe} = m42kup.converter.helper;
 
-var rf = {};
+var elements = {};
 
-rf['highlight'] = rf[';;;'] = r => {
+elements['highlight'] = elements[';;;'] = r => {
 	if (r.type != 'text') {
 		throw new TypeError('Non-text input');
 	}
@@ -23,7 +23,7 @@ rf['highlight'] = rf[';;;'] = r => {
 	)(r);
 };
 
-rf['math'] = rf['$'] = r => {
+elements['math'] = elements['$'] = r => {
 	if (r.type != 'text') {
 		throw new TypeError('Non-text input');
 	}
@@ -34,7 +34,7 @@ rf['math'] = rf['$'] = r => {
 	}));
 };
 
-rf['displaymath'] = rf['$$'] = r => {
+elements['displaymath'] = elements['$$'] = r => {
 	if (r.type != 'text') {
 		throw new TypeError('Non-text input');
 	}
@@ -45,7 +45,7 @@ rf['displaymath'] = rf['$$'] = r => {
 	}));
 };
 
-var options = {rf};
+var options = {elements};
 
 var ret = {};
 
