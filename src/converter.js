@@ -190,7 +190,10 @@ function convert(ast, options) {
 		
 		try {
 			if (!(el.name in tags)) {
-				throw new TypeError('Undefined tag name');
+				if (!el.name) {
+					throw Error('No tag name');
+				}
+				throw Error('Undefined tag name');
 			}
 
 			el.children = el.children.map(c =>
