@@ -158,7 +158,6 @@ for (var k in aliases) {
 function convert(ast, options) {
 	if (!options) options = {};
 	
-
 	// shallow copy tags
 	var tags2 = {};
 	for (var k in tags) tags2[k] = tags[k];
