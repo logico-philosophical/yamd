@@ -1,4 +1,4 @@
-function generateParseTreeFromInput(text) {
+function generateParseTreeFromInput(input) {
 	var state = {
 		levels: [],
 		stack: []
@@ -34,7 +34,7 @@ function generateParseTreeFromInput(text) {
 				type: 'element',
 				start: elementStart,
 				end: elementEnd,
-				data: text.substring(elementStart, elementEnd),
+				data: input.substring(elementStart, elementEnd),
 				children: buf
 			};
 		}
@@ -55,7 +55,7 @@ function generateParseTreeFromInput(text) {
 				type: 'verbatim',
 				start: verbatimStart,
 				end: verbatimEnd,
-				data: text.substring(verbatimStart, verbatimEnd),
+				data: input.substring(verbatimStart, verbatimEnd),
 				children: buf
 			};
 		}
@@ -64,11 +64,11 @@ function generateParseTreeFromInput(text) {
 	}
 	
 	// main loop
-	for (var cur = 0; cur < text.length;) {
-		if (text[cur] == '`') {
+	for (var cur = 0; cur < input.length;) {
+		if (input[cur] == '`') {
 			var lvmStart = cur;
-			for (cur++; cur < text.length; cur++) {
-				if (text[cur] != '`') break;
+			for (cur++; cur < input.length; cur++) {
+				if (input[cur] != '`') break;
 			}
 			var lvmEnd = cur;
 
@@ -76,18 +76,18 @@ function generateParseTreeFromInput(text) {
 				type: 'left verbatim marker',
 				start: lvmStart,
 				end: lvmEnd,
-				data: text.substring(lvmStart, lvmEnd),
+				data: input.substring(lvmStart, lvmEnd),
 				level: lvmEnd - lvmStart
 			});
 
 			state.levels.push(-(lvmEnd - lvmStart));
 			
 			var rvmFound = false, rvmStart, rvmEnd;
-			for (cur++; cur < text.length; cur++) {
-				if (text[cur] == '`') {
+			for (cur++; cur < input.length; cur++) {
+				if (input[cur] == '`') {
 					var _rvmStart = cur;
-					for (cur++; cur < text.length; cur++) {
-						if (text[cur] != '`') break;
+					for (cur++; cur < input.length; cur++) {
+						if (input[cur] != '`') break;
 					}
 					var _rvmEnd = cur;
 
@@ -106,7 +106,7 @@ function generateParseTreeFromInput(text) {
 				type: 'text',
 				start: textStart,
 				end: textEnd,
-				data: text.substring(textStart, textEnd)
+				data: input.substring(textStart, textEnd)
 			});
 
 			if (rvmFound) {
@@ -114,16 +114,16 @@ function generateParseTreeFromInput(text) {
 					type: 'right verbatim marker',
 					start: rvmStart,
 					end: rvmEnd,
-					data: text.substring(rvmStart, rvmEnd),
+					data: input.substring(rvmStart, rvmEnd),
 					level: rvmEnd - rvmStart
 				});
 
 				state.levels.pop();
 			}
-		} else if (text[cur] == '[') {
+		} else if (input[cur] == '[') {
 			var lbmStart = cur;
-			for (cur++; cur < text.length; cur++) {
-				if (text[cur] != '[') break;
+			for (cur++; cur < input.length; cur++) {
+				if (input[cur] != '[') break;
 			}
 			var lbmEnd = cur;
 
@@ -133,7 +133,7 @@ function generateParseTreeFromInput(text) {
 					type: 'text',
 					start: lbmStart,
 					end: lbmEnd,
-					data: text.substring(lbmStart, lbmEnd)
+					data: input.substring(lbmStart, lbmEnd)
 				});
 				continue;
 			}
@@ -143,7 +143,7 @@ function generateParseTreeFromInput(text) {
 				type: 'left boundary marker',
 				start: lbmStart,
 				end: lbmEnd,
-				data: text.substring(lbmStart, lbmEnd),
+				data: input.substring(lbmStart, lbmEnd),
 				level: lbmEnd - lbmStart
 			});
 			
@@ -151,14 +151,14 @@ function generateParseTreeFromInput(text) {
 			// this regex always matches something
 			var tagNameRegex = /^(?:(?:\*{1,3}|={1,6}|\${1,2}|;{1,3}|[!"#$%&')*+,\-.\/;<=>?@\\^_`{}~]|[a-z][a-z0-9]*)|)/i,
 				tagNameStart = cur,
-				tagNameEnd = tagNameStart + text.substring(tagNameStart)
+				tagNameEnd = tagNameStart + input.substring(tagNameStart)
 						.match(tagNameRegex)[0].length;
 			
 			push({
 				type: 'tag name',
 				start: tagNameStart,
 				end: tagNameEnd,
-				data: text.substring(tagNameStart, tagNameEnd)
+				data: input.substring(tagNameStart, tagNameEnd)
 			});
 
 			cur = tagNameEnd;
@@ -166,24 +166,24 @@ function generateParseTreeFromInput(text) {
 			var separatorRegex = /^(?:[ \t|]|)/i,
 				separatorStart = cur,
 				separatorEnd = separatorStart
-					+ text.substring(separatorStart)
+					+ input.substring(separatorStart)
 						.match(separatorRegex)[0].length;
 			
 			push({
 				type: 'separator',
 				start: separatorStart,
 				end: separatorEnd,
-				data: text.substring(separatorStart, separatorEnd)
+				data: input.substring(separatorStart, separatorEnd)
 			});
 
 			cur = separatorEnd;
-		} else if (text[cur] == ']') {
+		} else if (input[cur] == ']') {
 			var currentLevel = state.levels[state.levels.length - 1] || 0;
 			
 			if (currentLevel == 0) {
 				var rbmAtRootStart = cur;
-				for (cur++; cur < text.length; cur++) {
-					if (text[cur] != ']') break;
+				for (cur++; cur < input.length; cur++) {
+					if (input[cur] != ']') break;
 				}
 				var rbmAtRootEnd = cur;
 
@@ -191,15 +191,15 @@ function generateParseTreeFromInput(text) {
 					type: 'mismatched right boundary marker',
 					start: rbmAtRootStart,
 					end: rbmAtRootEnd,
-					data: text.substring(rbmAtRootStart, rbmAtRootEnd)
+					data: input.substring(rbmAtRootStart, rbmAtRootEnd)
 				});
 				continue;
 			}
 
 			var rbmStart = cur;
 			for (cur++; cur - rbmStart < currentLevel
-					&& cur < text.length; cur++) {
-				if (text[cur] != ']') break;
+					&& cur < input.length; cur++) {
+				if (input[cur] != ']') break;
 			}
 			var rbmEnd = cur;
 
@@ -208,7 +208,7 @@ function generateParseTreeFromInput(text) {
 					type: 'text',
 					start: rbmStart,
 					end: rbmEnd,
-					data: text.substring(rbmStart, rbmEnd)
+					data: input.substring(rbmStart, rbmEnd)
 				});
 
 				continue;
@@ -218,7 +218,7 @@ function generateParseTreeFromInput(text) {
 				type: 'right boundary marker',
 				start: rbmStart,
 				end: rbmEnd,
-				data: text.substring(rbmStart, rbmEnd),
+				data: input.substring(rbmStart, rbmEnd),
 				level: rbmEnd - rbmStart
 			});
 
@@ -226,15 +226,15 @@ function generateParseTreeFromInput(text) {
 		} else /* none of '[', ']', '`' */ {
 			// reduce text normalization overhead
 			var textStart = cur;
-			for (cur++; cur < text.length; cur++) {
-				if (['[', ']', '`'].includes(text[cur])) break;
+			for (cur++; cur < input.length; cur++) {
+				if (['[', ']', '`'].includes(input[cur])) break;
 			}
 			var textEnd = cur;
 			push({
 				type: 'text',
 				start: textStart,
 				end: textEnd,
-				data: text.substring(textStart, textEnd)
+				data: input.substring(textStart, textEnd)
 			});
 		}
 	}
@@ -249,8 +249,8 @@ function generateParseTreeFromInput(text) {
 
 		push({
 			type: type,
-			start: text.length,
-			end: text.length,
+			start: input.length,
+			end: input.length,
 			data: '',
 			level: absLevel
 		});
