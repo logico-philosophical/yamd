@@ -150,7 +150,7 @@ var aliases = {
 
 for (var k in aliases) {
 	if (!tags[aliases[k]]) {
-		throw new TypeError(`aliases[${JSON.stringify(k)}] aliases non-existing function ${aliases[k]}`);
+		throw new TypeError(`aliases[${JSON.stringify(k)}] aliases non-existing function ${JSON.stringify(aliases[k])}`);
 	}
 	tags[k] = tags[aliases[k]];
 }
@@ -176,7 +176,7 @@ function convert(ast, options) {
 			}
 			// throw error otherwise
 			else {
-				throw new TypeError(`Unsupported value: options.tags[${JSON.stringify(k)}] == ${options.tags[k]}`);
+				throw new TypeError(`Unsupported value: options.tags[${JSON.stringify(k)}] == ${JSON.stringify(options.tags[k])}`);
 			}
 		}
 	}
