@@ -126,9 +126,23 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 렌더링 된 HTML(`String`)이 출력됩니다.
 
 #### 입출력 예시
-```bash
-> m42kup.render('[*hi]')
-'<i>hi</i>'
+```js
+m42kup.render('[greet [**M42kup]]!', {
+    elements: {
+        greet: r => {
+            // Converts content type to HTML
+            r = m42kup.converter.helper.htmlFilter(r);
+            return {
+                type: 'html',
+                html: `Hello ${r.html}`
+            };
+        }
+    }
+});
+```
+
+```html
+Hello <b>M42kup</b>!
 ```
 
 ## License
