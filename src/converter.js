@@ -30,33 +30,33 @@ var pipe = (...fns) => {
 	}
 };
 
-/* default elements */
-var elements = {};
+/* default tags */
+var tags = {};
 
-elements['lbrack'] = r => {
+tags['lbrack'] = r => {
 	if (r.text || r.html)
 		throw new Error('Input to void element');
 	
 	return text('[');
 };
 
-elements['rbrack'] = r => {
+tags['rbrack'] = r => {
 	if (r.text || r.html)
 		throw new Error('Input to void element');
 	
 	return text(']');
 };
 
-elements['grave'] = r => {
+tags['grave'] = r => {
 	if (r.text || r.html)
 		throw new Error('Input to void element');
 
 	return text('`');
 };
 
-elements['comment'] = r => text('');
+tags['comment'] = r => text('');
 
-elements['entity'] = r => {
+tags['entity'] = r => {
 	if (r.type != 'text')
 		throw new TypeError('Non-text input');
 
@@ -70,23 +70,23 @@ elements['entity'] = r => {
 
 [
 	'b', 'blockquote', 'code', 'i', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'sup', 'sub'
-].forEach(name => elements[name] = pipe(htmlFilter, r => {
+].forEach(name => tags[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}</${name}>`);
 }));
 
-elements['blockcode'] = pipe(htmlFilter, r => {
+tags['blockcode'] = pipe(htmlFilter, r => {
 	return html(`<pre><code>${r.html}</code></pre>`);
 });
 
-elements['bi'] = pipe(elements['b'], elements['i']);
+tags['bi'] = pipe(tags['b'], tags['i']);
 
 [
 	'br', 'hr'
-].forEach(name => elements[name] = pipe(htmlFilter, r => {
+].forEach(name => tags[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}`);
 }));
 
-elements['link'] = r => {
+tags['link'] = r => {
 	if (r.type != 'text') {
 		throw new TypeError('Non-text input');
 	}
@@ -100,19 +100,19 @@ elements['link'] = r => {
 
 [
 	'ol', 'ul', 'li'
-].forEach(name => elements[name] = pipe(htmlFilter, r => {
+].forEach(name => tags[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}</${name}>`);
 }));
 
 [
 	'table', 'tr', 'td', 'th'
-].forEach(name => elements[name] = pipe(htmlFilter, r => {
+].forEach(name => tags[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}</${name}>`);
 }));
 
 [
 	'squote', 'dquote'
-].forEach(name => elements[name] = pipe(htmlFilter, r => {
+].forEach(name => tags[name] = pipe(htmlFilter, r => {
 	var quotes = {
 		'squote': ['\u2018', '\u2019'],
 		'dquote': ['\u201c', '\u201d']
@@ -149,47 +149,47 @@ var aliases = {
 };
 
 for (var k in aliases) {
-	if (!elements[aliases[k]]) {
+	if (!tags[aliases[k]]) {
 		throw new TypeError(`aliases[${JSON.stringify(k)}] aliases non-existing function ${aliases[k]}`);
 	}
-	elements[k] = elements[aliases[k]];
+	tags[k] = tags[aliases[k]];
 }
 
 function convert(ast, options) {
 	if (!options) options = {};
 	
 
-	// shallow copy elements
-	var elements2 = {};
-	for (var k in elements) elements2[k] = elements[k];
+	// shallow copy tags
+	var tags2 = {};
+	for (var k in tags) tags2[k] = tags[k];
 
-	// overwrite options.elements to elements2
-	if (options.elements) {
-		for (var k in options.elements) {
+	// overwrite options.tags to tags2
+	if (options.tags) {
+		for (var k in options.tags) {
 			// overwrite if function
-			if (options.elements[k] instanceof Function) {
-				elements2[k] = options.elements[k];
+			if (options.tags[k] instanceof Function) {
+				tags2[k] = options.tags[k];
 			}
 			// delete if false
-			else if (options.elements[k] === false) {
-				delete elements2[k];
+			else if (options.tags[k] === false) {
+				delete tags2[k];
 			}
 			// throw error otherwise
 			else {
-				throw new TypeError(`Unsupported value: options.elements[${JSON.stringify(k)}] == ${options.elements[k]}`);
+				throw new TypeError(`Unsupported value: options.tags[${JSON.stringify(k)}] == ${options.tags[k]}`);
 			}
 		}
 	}
 	
-	// use elements2 as elements
-	elements = elements2;
+	// use tags2 as tags
+	tags = tags2;
 
 	// recurse top-down, render bottom-up
 	var recurse = el => {
 		var ret;
 		
 		try {
-			if (!(el.name in elements)) {
+			if (!(el.name in tags)) {
 				throw new TypeError('Undefined tag name');
 			}
 
@@ -211,7 +211,7 @@ function convert(ast, options) {
 				};
 			}
 
-			ret = elements[el.name](el.render);
+			ret = tags[el.name](el.render);
 		} catch (err) {
 			ret = html(error(`[${el.name}]: ${err.message}: ${el.code}`));
 		} finally {

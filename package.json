@@ -2,7 +2,9 @@
 	"name": "m42kup",
 	"version": "0.3.1",
 	"description": "M42kup renderer in JavaScript (unstable)",
-	"keywords": ["markup"],
+	"keywords": [
+		"markup"
+	],
 	"author": {
 		"name": "logico-philosophical",
 		"url": "http://github.com/logico-philosophical",

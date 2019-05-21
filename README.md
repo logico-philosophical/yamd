@@ -108,7 +108,7 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 * `options` (`Object`)
 ```js
 {
-  elements: {
+  tags: {
     (tag_name): r => {
       // return text or html, or throw error
     },
@@ -117,7 +117,7 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 }
 ```
 
-이때 `options.elements[(tag_name)]`은 `text` 또는 `html` 타입의 인자 하나를 받아 `text` 또는 `html`을 반환하거나 `Error`를 `throw` 해야 합니다.
+이때 `options.tags[(tag_name)]`은 `text` 또는 `html` 타입의 인자 하나를 받아 `text` 또는 `html`을 반환하거나 `Error`를 `throw` 해야 합니다.
 
 * `text` 타입은 다음과 같이 생겼습니다.
   ```js
@@ -145,7 +145,7 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 #### 입출력 예시
 ```js
 m42kup.render('[greet [**M42kup]]!', {
-    elements: {
+    tags: {
         greet: r => {
             // Converts content type to HTML
             r = m42kup.converter.htmlFilter(r);
