@@ -84,6 +84,26 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 
 ## API (불안정)
 
+```js
+{
+    parser: {
+        generateParseTreeFromInput: [Function],
+        generateASTFromParseTree: [Function]
+    },
+    converter: {
+        convert: [Function],
+        text: [Function],
+        html: [Function],
+        helper: {
+            escapeHtml: [Function],
+            htmlFilter: [Function],
+            pipe: [Function]
+        }
+    },
+    render: [Function]
+}
+```
+
 ### `m42kup.render(input, options)`
 
 #### 입력
