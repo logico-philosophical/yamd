@@ -1,4 +1,4 @@
-# M42kup
+# `m42kup.js`
 
 JavaScript로 [M42kup](https://github.com/logico-philosophical/m42kup/wiki)의 HTML 렌더러를 구현한 것입니다. 아직 작동 방식이나 API가 불안정합니다.
 
