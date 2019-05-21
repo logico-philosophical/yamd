@@ -1,5 +1,5 @@
 var parser = require('./parser');
-var converter = require('./converter-html');
+var converter = require('./converter');
 
 function render(input, options) {
 	var pt = parser.generateParseTreeFromInput(input);
