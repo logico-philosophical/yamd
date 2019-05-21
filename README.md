@@ -94,11 +94,8 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
         convert: [Function],
         text: [Function],
         html: [Function],
-        helper: {
-            escapeHtml: [Function],
-            htmlFilter: [Function],
-            pipe: [Function]
-        }
+        escapeHtml: [Function],
+        htmlFilter: [Function]
     },
     render: [Function]
 }
@@ -151,11 +148,8 @@ m42kup.render('[greet [**M42kup]]!', {
     elements: {
         greet: r => {
             // Converts content type to HTML
-            r = m42kup.converter.helper.htmlFilter(r);
-            return {
-                type: 'html',
-                html: `Hello ${r.html}`
-            };
+            r = m42kup.converter.htmlFilter(r);
+            return m42kup.converter.html(`Hello ${r.html}`);
         }
     }
 });

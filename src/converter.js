@@ -235,9 +235,6 @@ module.exports = {
 	convert,
 	text,
 	html,
-	helper: {
-		escapeHtml,
-		htmlFilter,
-		pipe
-	}
+	escapeHtml,
+	htmlFilter
 };
