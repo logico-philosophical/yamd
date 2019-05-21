@@ -1,19 +1,24 @@
 {
 	"name": "m42kup",
 	"version": "0.3.1",
-	"description": "M42kup renderer in JavaScript",
-	"main": "src/index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "npx webpack"
-	},
+	"description": "M42kup renderer in JavaScript (unstable)",
+	"keywords": ["markup"],
 	"author": {
 		"name": "logico-philosophical",
-		"url": "http://github.com/logico-philosophical"
+		"url": "http://github.com/logico-philosophical",
+		"email": "ossia@korea.ac.kr"
 	},
 	"repository": {
 		"type": "git",
 		"url": "http://github.com/logico-philosophical/m42kup.git"
+	},
+	"bugs": {
+		"url": "http://github.com/logico-philosophical/m42kup/issues"
+	},
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npx webpack"
 	},
 	"license": "MIT",
 	"dependencies": {},
