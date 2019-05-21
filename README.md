@@ -75,12 +75,11 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 * `npm install --save git+ssh://git@github.com/logico-philosophical/m42kup.git` (SSH)
 * `npm install --save github:logico-philosophical/m42kup`
 
-#### 테스트
-```bash
-~/my-project-dir $ node
-> m42kup = require('m42kup')
-> m42kup.render('[*hi]')
-'<i>hi</i>'
+#### 사용법
+```js
+const m42kup = require('m42kup');
+var options = {...};
+var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 ```
 
 ## API (불안정)
