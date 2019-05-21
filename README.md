@@ -47,7 +47,7 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 
 아직 릴리즈가 없습니다.
 
-### Bleeding-edge
+### Bleeding-edge (clone)
 
 ```bash
 ~ $ git clone https://github.com/logico-philosophical/m42kup.git
@@ -55,10 +55,30 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 ~/m42kup $ npm install
 ```
 
-## 테스트
+#### 테스트
 ```bash
 ~/m42kup $ node
 > m42kup = require('.')
+> m42kup.render('[*hi]')
+'<i>hi</i>'
+```
+
+### Bleeding-edge (npm)
+
+```bash
+~ $ cd my-project-dir/
+```
+
+아무거나 하나 입력하세요.
+
+* `npm install --save git+https://git@github.com/logico-philosophical/m42kup.git` (HTTPS)
+* `npm install --save git+ssh://git@github.com/logico-philosophical/m42kup.git` (SSH)
+* `npm install --save github:logico-philosophical/m42kup`
+
+#### 테스트
+```bash
+~/my-project-dir $ node
+> m42kup = require('m42kup')
 > m42kup.render('[*hi]')
 '<i>hi</i>'
 ```
