@@ -98,9 +98,9 @@
 		<h2>Rendered output</h2>
 		<div id="output"></div>
 		<script>
-			var elements = {};
+			var tags = {};
 
-			elements['highlight'] = elements[';;;'] = r => {
+			tags['highlight'] = tags[';;;'] = r => {
 				if (r.type != 'text') {
 					throw new TypeError('Non-text input');
 				}
@@ -121,7 +121,7 @@
 				};
 			};
 
-			elements['math'] = elements['$'] = r => {
+			tags['math'] = tags['$'] = r => {
 				if (r.type != 'text') {
 					throw new TypeError(`Non-text input`);
 				}
@@ -137,7 +137,7 @@
 				};
 			};
 
-			elements['displaymath'] = elements['$$'] = r => {
+			tags['displaymath'] = tags['$$'] = r => {
 				if (r.type != 'text') {
 					throw new TypeError(`Non-text input`);
 				}
@@ -153,7 +153,7 @@
 				};
 			};
 
-			var options = {elements};
+			var options = {tags};
 			
 			$ = q => document.querySelector(q);
 			$('#input').addEventListener('input', () => {
