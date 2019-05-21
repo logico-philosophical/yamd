@@ -69,11 +69,22 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 ~ $ cd my-project-dir/
 ```
 
-아무거나 하나 입력하세요.
+다음 중 아무거나 하나 입력하세요.
 
-* `npm install --save git+https://git@github.com/logico-philosophical/m42kup.git` (HTTPS)
-* `npm install --save git+ssh://git@github.com/logico-philosophical/m42kup.git` (SSH)
-* `npm install --save github:logico-philosophical/m42kup`
+**HTTPS**
+```bash
+~/my-project-dir $ npm install --save git+https://git@github.com/logico-philosophical/m42kup.git
+```
+
+**SSH**
+```bash
+~/my-project-dir $ npm install --save git+ssh://git@github.com/logico-philosophical/m42kup.git
+```
+
+**간단한 방법**
+```bash
+~/my-project-dir $ npm install --save github:logico-philosophical/m42kup
+```
 
 #### 사용법
 ```js
