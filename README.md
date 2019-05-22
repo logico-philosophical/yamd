@@ -121,12 +121,12 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 * `options` (`Object`)
 ```js
 {
-  tags: {
-    (tag_name): r => {
-      // return text or html, or throw error
-    },
-    ...
-  }
+    tags: {
+        (tag_name): r => {
+            // return text or html, or throw error
+        },
+        ...
+    }
 }
 ```
 
@@ -135,15 +135,15 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 * `text` 타입은 다음과 같이 생겼습니다.
   ```js
   {
-    type: 'text',
-    text: (text)
+      type: 'text',
+      text: (text)
   }
   ```
 * `html` 타입은 다음과 같이 생겼습니다.
   ```js
   {
-    type: 'html',
-    html: (html)
+      type: 'html',
+      html: (html)
   }
   ```
 * `throw`된 것은 `Error`의 인스턴스여야 합니다.
