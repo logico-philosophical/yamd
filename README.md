@@ -108,7 +108,9 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
         escapeHtml: [Function],
         htmlFilter: [Function]
     },
-    render: [Function]
+    render: [Function],
+	cascade: [Function],
+	set: [Function]
 }
 ```
 

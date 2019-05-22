@@ -31,32 +31,32 @@ var pipe = (...fns) => {
 };
 
 /* default tags */
-var tags = {};
+var dt = {};
 
-tags['lbrack'] = r => {
+dt['lbrack'] = r => {
 	if (r.text || r.html)
 		throw new Error('Input to void element');
 	
 	return text('[');
 };
 
-tags['rbrack'] = r => {
+dt['rbrack'] = r => {
 	if (r.text || r.html)
 		throw new Error('Input to void element');
 	
 	return text(']');
 };
 
-tags['grave'] = r => {
+dt['grave'] = r => {
 	if (r.text || r.html)
 		throw new Error('Input to void element');
 
 	return text('`');
 };
 
-tags['comment'] = r => text('');
+dt['comment'] = r => text('');
 
-tags['entity'] = r => {
+dt['entity'] = r => {
 	if (r.type != 'text')
 		throw new TypeError('Non-text input');
 
@@ -70,23 +70,23 @@ tags['entity'] = r => {
 
 [
 	'b', 'blockquote', 'code', 'i', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'sup', 'sub'
-].forEach(name => tags[name] = pipe(htmlFilter, r => {
+].forEach(name => dt[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}</${name}>`);
 }));
 
-tags['blockcode'] = pipe(htmlFilter, r => {
+dt['blockcode'] = pipe(htmlFilter, r => {
 	return html(`<pre><code>${r.html}</code></pre>`);
 });
 
-tags['bi'] = pipe(tags['b'], tags['i']);
+dt['bi'] = pipe(dt['b'], dt['i']);
 
 [
 	'br', 'hr'
-].forEach(name => tags[name] = pipe(htmlFilter, r => {
+].forEach(name => dt[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}`);
 }));
 
-tags['link'] = r => {
+dt['link'] = r => {
 	if (r.type != 'text') {
 		throw new TypeError('Non-text input');
 	}
@@ -100,19 +100,19 @@ tags['link'] = r => {
 
 [
 	'ol', 'ul', 'li'
-].forEach(name => tags[name] = pipe(htmlFilter, r => {
+].forEach(name => dt[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}</${name}>`);
 }));
 
 [
 	'table', 'tr', 'td', 'th'
-].forEach(name => tags[name] = pipe(htmlFilter, r => {
+].forEach(name => dt[name] = pipe(htmlFilter, r => {
 	return html(`<${name}>${r.html}</${name}>`);
 }));
 
 [
 	'squote', 'dquote'
-].forEach(name => tags[name] = pipe(htmlFilter, r => {
+].forEach(name => dt[name] = pipe(htmlFilter, r => {
 	var quotes = {
 		'squote': ['\u2018', '\u2019'],
 		'dquote': ['\u201c', '\u201d']
@@ -149,40 +149,20 @@ var aliases = {
 };
 
 for (var k in aliases) {
-	if (!tags[aliases[k]]) {
+	if (!dt[aliases[k]]) {
 		throw new TypeError(`aliases[${JSON.stringify(k)}] aliases non-existing function ${JSON.stringify(aliases[k])}`);
 	}
-	tags[k] = tags[aliases[k]];
+	dt[k] = dt[aliases[k]];
 }
 
 function convert(ast, options) {
 	if (!options) options = {};
-	
-	// shallow copy tags
-	var tags2 = {};
-	for (var k in tags) tags2[k] = tags[k];
+	if (!options.tags) options.tags = {};
 
-	// overwrite options.tags to tags2
-	if (options.tags) {
-		for (var k in options.tags) {
-			// overwrite if function
-			if (options.tags[k] instanceof Function) {
-				tags2[k] = options.tags[k];
-			}
-			// delete if false
-			else if (options.tags[k] === false) {
-				delete tags2[k];
-			}
-			// throw error otherwise
-			else {
-				throw new TypeError(`Unsupported value: options.tags[${JSON.stringify(k)}] == ${JSON.stringify(options.tags[k])}`);
-			}
-		}
-	}
+	var tags = require('./cascade').tags(dt, options.tags);
 	
-	// use tags2 as tags
-	tags = tags2;
-
+	for (var k in tags) if (tags[k] === false) delete tags[k];
+	
 	// recurse top-down, render bottom-up
 	var recurse = el => {
 		var ret;

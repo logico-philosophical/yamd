@@ -1,27 +1,23 @@
 var parser = require('./parser');
 var converter = require('./converter');
-var overwriter = require('./options-overwrite');
+var cascade = require('./cascade');
 
 var globalOptions = {};
 
-function configure(options) {
-	overwriter.overwrite(globalOptions, options);
+function cascadeOptions(options) {
+	globalOptions = cascade.options(globalOptions, options);
 }
 
-function clearConfig() {
-	globalOptions = {};
+function setOptions(options) {
+	globalOptions = options;
 }
 
 function render(input, options) {
+	input += '';
 	if (!options) options = {};
-	// deep copy globalOptions
-	var options2 = overwriter.clone(globalOptions);
-
-	// overwrite
-	overwriter.overwrite(options2, options);
-
-	// use options2 as options
-	options = options2;
+	if (!options.tags) options.tags = {};
+	
+	options = cascade.options(globalOptions, options);
 
 	var pt = parser.generateParseTreeFromInput(input);
 	var ast = parser.generateASTFromParseTree(pt);
@@ -34,7 +30,8 @@ var m42kup = {
 	parser,
 	converter,
 	render,
-	configure
+	cascade: cascadeOptions,
+	set: setOptions
 };
 
 module.exports = m42kup;

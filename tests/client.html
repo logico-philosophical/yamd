@@ -154,10 +154,11 @@
 			};
 
 			var options = {tags};
+			m42kup.set(options);
 			
 			$ = q => document.querySelector(q);
 			$('#input').addEventListener('input', () => {
-				var output = m42kup.render($('#input').value, options);
+				var output = m42kup.render($('#input').value);
 				$('#output-html').innerHTML = '';
 				$('#output-html').appendChild(document.createTextNode(output));
 
