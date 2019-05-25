@@ -121,9 +121,18 @@ dt['link'] = r => {
 	return html(`${quotes[name][0]}${r.html}${quotes[name][1]}`);
 }));
 
+// unimplemented elements
+[
+	'highlight', 'math', 'displaymath'
+].forEach(name => dt[name] = content => {
+	throw Error('Element not implemented');
+});
+
 // element aliases ordered by char code
 var aliases = {
 	'"': 'dquote',
+	'$': 'math',
+	'$$': 'displaymath',
 	'%': 'comment',
 	'&': 'entity',
 	"'": 'squote',
@@ -132,6 +141,7 @@ var aliases = {
 	'***': 'bi',
 	';': 'code',
 	';;': 'blockcode',
+	';;;': 'highlight',
 	'=': 'h1',
 	'==': 'h2',
 	'===': 'h3',
