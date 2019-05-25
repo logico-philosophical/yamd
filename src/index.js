@@ -5,10 +5,14 @@ var cascade = require('./cascade');
 var globalOptions = {};
 
 function cascadeOptions(options) {
+	if (typeof options != 'object')
+		throw TypeError('typeof options != \'object\'');
 	globalOptions = cascade.options(globalOptions, options);
 }
 
 function setOptions(options) {
+	if (typeof options != 'object')
+		throw TypeError('typeof options != \'object\'');
 	globalOptions = options;
 }
 
