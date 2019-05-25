@@ -114,13 +114,12 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 }
 ```
 
-### `m42kup.render(input, options)`
+### 렌더링 옵션
 
-#### 입력
-* `input` (`String`): M42kup 코드.
-* `options` (`Object`)
+`m42kup.render(input, options)`나 `m42kup.cascade(options)`나 `m42kup.set(options)`에서 쓸 수 있는 옵션은 다음과 같습니다.
+
 ```js
-{
+options = {
     tags: {
         (tag_name): r => {
             // return text or html, or throw error
@@ -148,9 +147,48 @@ var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
   ```
 * `throw`된 것은 `Error`의 인스턴스여야 합니다.
 
-옵션의 예시를 추가할 예정입니다.
+#### 옵션의 예시
 
-만든 놈도 잘 모르겠음.
+```js
+options = {
+    tags: {
+        greet: r => {
+            // Converts content type to HTML
+            r = m42kup.converter.htmlFilter(r);
+            return {
+                type: 'html',
+                html: `Hello ${r.html}`
+            };
+        }
+    }
+}
+```
+
+### `m42kup.cascade(options)`
+
+현재의 글로벌 옵션을 보존하면서 `options`로 적당히 덮어 씁니다. `m42kup.cascade`나 `m42kup.set`을 한 번도 호출하지 않은 경우 `m42kup.set`과 효과가 같습니다.
+
+#### 입력
+* `options` (`Object`): [렌더링 옵션](#렌더링-옵션)을 보세요.
+
+#### 출력
+출력은 의미가 없습니다.
+
+### `m42kup.set(options)`
+
+현재의 글로벌 옵션을 버리고 `options`로 설정합니다. `m42kup.cascade`나 `m42kup.set`을 한 번도 호출하지 않은 경우 `m42kup.cascade`와 효과가 같습니다.
+
+#### 입력
+* `options` (`Object`): [렌더링 옵션](#렌더링-옵션)을 보세요.
+
+#### 출력
+출력은 의미가 없습니다.
+
+### `m42kup.render(input, options)`
+
+#### 입력
+* `input` (`String`): M42kup 코드.
+* `options` (`Object`): [렌더링 옵션](#렌더링-옵션)을 보세요. 글로벌 옵션을 cascade 합니다.
 
 #### 출력
 렌더링 된 HTML(`String`)이 출력됩니다.
@@ -171,6 +209,26 @@ m42kup.render('[greet [**M42kup]]!', {
 ```html
 Hello <b>M42kup</b>!
 ```
+
+## 꿀팁
+
+### Node.js에서 글로벌 옵션을 설정해 주는 방법
+
+**`m42kup.config.js`**
+```js
+const m42kup = require('m42kup');
+
+options = {...};
+
+m42kup.set(options);
+```
+
+**`m42kup`이 사용되기 전인 앱의 시작점에서**
+```js
+require('/path/to/config/m42kup.config');
+```
+
+`m42kup.config.js`를 `require` 한 이후부터 글로벌 옵션이 적용됩니다.
 
 ## License
 [MIT](LICENSE)
