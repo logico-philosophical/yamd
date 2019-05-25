@@ -2,7 +2,7 @@
 
 JavaScript로 [m42kup](https://github.com/logico-philosophical/m42kup/wiki)의 HTML 렌더러를 구현한 것입니다. 아직 작동 방식이나 API가 불안정합니다.
 
-또 제대로 된 m42kup 언어 스펙이 없습니다. 렌더러 버전이 바뀌면서 스펙도 바뀌고 있으니 레퍼런스 렌더러라고 할 수 있음.
+또 제대로 된 m42kup 언어 스펙이 없습니다. 렌더러 버전이 바뀌면서 스펙도 바뀌고 있으니 레퍼런스 렌더러라고 할 수 있음. 이슈에 보면 렌더러가 아니라 언어 자체에 관한 의견이 많은데 이런 것들은 사실 스펙의 문제고 렌더러의 문제가 아님. 근데도 통합해서 쓰고 있음.
 
 * [클라이언트 사이드 렌더러 테스트 페이지(bleeding edge)](https://logico-philosophical.github.io/m42kup/tests/client.html)
 
