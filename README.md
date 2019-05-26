@@ -327,5 +327,20 @@ require('/path/to/config/m42kup.config');
 
 `m42kup.config.js`를 `require` 한 이후부터 글로벌 옵션이 적용됩니다.
 
+### 클라이언트 사이드에서 글로벌 옵션을 설정해 주는 방법
+
+**`entry.js`**
+```js
+const m42kup = require('m42kup');
+
+options = {...};
+
+m42kup.set(options);
+
+module.exports = m42kup;
+```
+
+`library: "m42kup"`으로 `entry.js`를 `webpack` 해서 쓰면 될듯 (안해봄).
+
 ## License
 [MIT](LICENSE)
