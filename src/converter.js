@@ -94,6 +94,11 @@ dt['link'] = r => {
 		r.text = 'http://' + r.text;
 	}
 
+	// see issue #17
+	if (!/^(http:\/\/|https:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^ ]*)?$/.test(r.text)) {
+		throw Error('Invalid URL');
+	}
+
 	r = htmlFilter(r);
 	return html(`<a href="${r.html}">${r.html}</a>`);
 };
