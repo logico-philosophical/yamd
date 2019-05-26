@@ -93,6 +93,10 @@
 		<a href="https://github.com/logico-philosophical/m42kup">GitHub repo</a>
 		<h2>Input</h2>
 		<textarea id="input" placeholder="input"></textarea>
+		<h2>Parse tree</h2>
+		<pre id="output-pt"></pre>
+		<h2>Abstract syntax tree</h2>
+		<pre id="output-ast"></pre>
 		<h2>Output HTML</h2>
 		<pre id="output-html"></pre>
 		<h2>Rendered output</h2>
@@ -158,6 +162,12 @@
 			
 			$ = q => document.querySelector(q);
 			$('#input').addEventListener('input', () => {
+				var pt = m42kup.parser.generateParseTreeFromInput($('#input').value);
+				$('#output-pt').innerHTML = '';
+				$('#output-pt').innerText = JSON.stringify(pt);
+				var ast = m42kup.parser.generateASTFromParseTree(pt);
+				$('#output-ast').innerHTML = '';
+				$('#output-ast').innerText = JSON.stringify(ast);
 				var output = m42kup.render($('#input').value);
 				$('#output-html').innerHTML = '';
 				$('#output-html').appendChild(document.createTextNode(output));
