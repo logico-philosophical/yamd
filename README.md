@@ -69,31 +69,14 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 
 ```bash
 ~ $ cd my-project-dir/
-```
-
-다음 중 아무거나 하나 입력하세요.
-
-**HTTPS**
-```bash
-~/my-project-dir $ npm install --save git+https://git@github.com/logico-philosophical/m42kup.git
-```
-
-**SSH**
-```bash
-~/my-project-dir $ npm install --save git+ssh://git@github.com/logico-philosophical/m42kup.git
-```
-
-**간단한 방법**
-```bash
 ~/my-project-dir $ npm install --save github:logico-philosophical/m42kup
 ```
 
-#### 사용법
+이후
 ```js
 const m42kup = require('m42kup');
-var options = {...};
-var rendered = m42kup.render('[*hi]', options); // <i>hi</i>
 ```
+하여 사용하면 됩니다.
 
 ## API (불안정)
 
