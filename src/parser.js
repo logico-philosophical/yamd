@@ -1,15 +1,13 @@
 function generateParseTreeFromInput(input) {
-	var state = {
-		levels: [],
-		stack: []
-	};
+	var levels = [],
+		stack = [];
 	
 	function push(fragment) {
 		// normalize text
 		if (fragment.type == 'text'
-				&& state.stack.length
-				&& state.stack[state.stack.length - 1].type == 'text') {
-			var prepend = state.stack.pop();
+				&& stack.length
+				&& stack[stack.length - 1].type == 'text') {
+			var prepend = stack.pop();
 			fragment = {
 				type: 'text',
 				start: prepend.start,
@@ -21,7 +19,7 @@ function generateParseTreeFromInput(input) {
 		if (fragment.type == 'right boundary marker') {
 			var buf = [fragment], tmp;
 			while (true) {
-				tmp = state.stack.pop();
+				tmp = stack.pop();
 				if (!tmp) throw new Error('No lbm found');
 				buf.unshift(tmp);
 				if (tmp.type == 'left boundary marker' && tmp.level == fragment.level) break;
@@ -42,7 +40,7 @@ function generateParseTreeFromInput(input) {
 		if (fragment.type == 'right verbatim marker') {
 			var buf = [fragment], tmp;
 			while (true) {
-				tmp = state.stack.pop();
+				tmp = stack.pop();
 				if (!tmp) throw new Error('No lvm found');
 				buf.unshift(tmp);
 				if (tmp.type == 'left verbatim marker' && tmp.level == fragment.level) break;
@@ -60,7 +58,7 @@ function generateParseTreeFromInput(input) {
 			};
 		}
 
-		state.stack.push(fragment);
+		stack.push(fragment);
 	}
 	
 	// main loop
@@ -80,7 +78,7 @@ function generateParseTreeFromInput(input) {
 				level: lvmEnd - lvmStart
 			});
 
-			state.levels.push(-(lvmEnd - lvmStart));
+			levels.push(-(lvmEnd - lvmStart));
 			
 			var rvmFound = false, rvmStart, rvmEnd;
 			for (cur++; cur < input.length; cur++) {
@@ -118,7 +116,7 @@ function generateParseTreeFromInput(input) {
 					level: rvmEnd - rvmStart
 				});
 
-				state.levels.pop();
+				levels.pop();
 			}
 		} else if (input[cur] == '[') {
 			var lbmStart = cur;
@@ -127,7 +125,7 @@ function generateParseTreeFromInput(input) {
 			}
 			var lbmEnd = cur;
 
-			var currentLevel = state.levels[state.levels.length - 1] || 0;
+			var currentLevel = levels[levels.length - 1] || 0;
 			if (lbmEnd - lbmStart < currentLevel) {
 				push({
 					type: 'text',
@@ -138,7 +136,7 @@ function generateParseTreeFromInput(input) {
 				continue;
 			}
 			
-			state.levels.push(lbmEnd - lbmStart);
+			levels.push(lbmEnd - lbmStart);
 			push({
 				type: 'left boundary marker',
 				start: lbmStart,
@@ -178,7 +176,7 @@ function generateParseTreeFromInput(input) {
 
 			cur = separatorEnd;
 		} else if (input[cur] == ']') {
-			var currentLevel = state.levels[state.levels.length - 1] || 0;
+			var currentLevel = levels[levels.length - 1] || 0;
 			
 			if (currentLevel == 0) {
 				var rbmAtRootStart = cur;
@@ -222,7 +220,7 @@ function generateParseTreeFromInput(input) {
 				level: rbmEnd - rbmStart
 			});
 
-			state.levels.pop();
+			levels.pop();
 		} else /* none of '[', ']', '`' */ {
 			// reduce text normalization overhead
 			var textStart = cur;
@@ -240,12 +238,12 @@ function generateParseTreeFromInput(input) {
 	}
 	
 	// close the unclosed
-	for (var i = state.levels.length - 1; i >= 0; i--) {
-		var type = state.levels[i] > 0
+	for (var i = levels.length - 1; i >= 0; i--) {
+		var type = levels[i] > 0
 				? 'right boundary marker'
 				: 'right verbatim marker';
-		var absLevel = state.levels[i] > 0
-				? state.levels[i] : -state.levels[i];
+		var absLevel = levels[i] > 0
+				? levels[i] : -levels[i];
 
 		push({
 			type: type,
@@ -256,7 +254,7 @@ function generateParseTreeFromInput(input) {
 		});
 	}
 
-	return state.stack;
+	return stack;
 }
 
 function generateASTFromParseTree(pt) {
