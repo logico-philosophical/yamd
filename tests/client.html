@@ -211,7 +211,7 @@
 				$('#output-ast').innerText = JSON.stringify(ast);
 				
 				var output = m42kup.render($('#input').value);
-				$('#output-html').appendChild(document.createTextNode(output));
+				$('#output-html').innerText = output;
 				$('#output').innerHTML = output;
 			});
 
