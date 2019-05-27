@@ -205,15 +205,13 @@
 			$('#input').addEventListener('input', () => {
 				var pt = m42kup.parser.generateParseTreeFromInput($('#input').value);
 				$('#input-highlighted').innerHTML = syntaxHighlight(pt) + '\n';
-				$('#output-pt').innerHTML = '';
 				$('#output-pt').innerText = JSON.stringify(pt);
-				var ast = m42kup.parser.generateASTFromParseTree(pt);
-				$('#output-ast').innerHTML = '';
-				$('#output-ast').innerText = JSON.stringify(ast);
-				var output = m42kup.render($('#input').value);
-				$('#output-html').innerHTML = '';
-				$('#output-html').appendChild(document.createTextNode(output));
 
+				var ast = m42kup.parser.generateASTFromParseTree(pt);
+				$('#output-ast').innerText = JSON.stringify(ast);
+				
+				var output = m42kup.render($('#input').value);
+				$('#output-html').appendChild(document.createTextNode(output));
 				$('#output').innerHTML = output;
 			});
 
