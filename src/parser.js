@@ -175,42 +175,75 @@ function generateParseTreeFromInput(input) {
 			});
 
 			cur = separatorEnd;
-		} else if (input[cur] == ']') {
+		} else if (input[cur] == '>' || input[cur] == ']') {
 			var currentLevel = levels[levels.length - 1] || 0;
+
+			var gtStart = cur;
+
+			for (; cur < input.length; cur++) {
+				if (input[cur] != '>') break;
+			}
+
+			var gtEnd = cur;
 			
+			// >>... does not end with a ]
+			if (gtEnd == input.length || input[gtEnd] != ']') {
+				push({
+					type: 'text',
+					start: gtStart,
+					end: gtEnd,
+					data: input.substring(gtStart, gtEnd)
+				});
+				continue;
+			}
+
+			// invalid ]
 			if (currentLevel == 0) {
+				push({
+					type: 'text',
+					start: gtStart,
+					end: gtEnd,
+					data: input.substring(gtStart, gtEnd)
+				});
+
 				var rbmAtRootStart = cur;
-				for (cur++; cur < input.length; cur++) {
-					if (input[cur] != ']') break;
-				}
-				var rbmAtRootEnd = cur;
+				var rbmAtRootEnd = ++cur;
 
 				push({
 					type: 'mismatched right boundary marker',
 					start: rbmAtRootStart,
 					end: rbmAtRootEnd,
-					data: input.substring(rbmAtRootStart, rbmAtRootEnd)
+					data: input.subString(rbmAtRootStart, rbmAtRootEnd)
 				});
+
 				continue;
 			}
 
-			var rbmStart = cur;
-			for (cur++; cur - rbmStart < currentLevel
-					&& cur < input.length; cur++) {
-				if (input[cur] != ']') break;
-			}
-			var rbmEnd = cur;
-
-			if (rbmEnd - rbmStart < currentLevel) {
+			cur++;
+			
+			// not enough level
+			if (cur - gtStart < currentLevel) {
 				push({
 					type: 'text',
-					start: rbmStart,
-					end: rbmEnd,
-					data: input.substring(rbmStart, rbmEnd)
+					start: gtStart,
+					end: cur,
+					data: input.substring(gtStart, cur)
 				});
-
 				continue;
 			}
+			
+			// too much >
+			if (cur - gtStart > currentLevel) {
+				push({
+					type: 'text',
+					start: gtStart,
+					end: cur - currentLevel,
+					data: input.substring(gtStart, cur - currentLevel)
+				});
+			}
+
+			var rbmStart = cur - currentLevel,
+				rbmEnd = cur;
 
 			push({
 				type: 'right boundary marker',
@@ -221,11 +254,11 @@ function generateParseTreeFromInput(input) {
 			});
 
 			levels.pop();
-		} else /* none of '[', ']', '`' */ {
+		} else /* none of '[', ']', '`', '>' */ {
 			// reduce text normalization overhead
 			var textStart = cur;
 			for (cur++; cur < input.length; cur++) {
-				if (['[', ']', '`'].includes(input[cur])) break;
+				if (['[', ']', '`', '>'].includes(input[cur])) break;
 			}
 			var textEnd = cur;
 			push({
