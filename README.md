@@ -329,6 +329,24 @@ require('/path/to/config/m42kup.config');
 
 ### 클라이언트 사이드에서 글로벌 옵션을 설정해 주는 방법
 
+#### 설정 파일을 만드는 방법
+
+**`m42kup.config.js`**
+```js
+options = {...};
+m42kup.set(options);
+```
+
+이후 다음과 같이 사용합니다.
+```html
+<script src="/path/to/m42kup/m42kup.js"></script>
+<script src="/path/to/config/m42kup.config.js"></script>
+```
+
+`m42kup.config.js`는 `m42kup.js`가 해석된 이후 해석되어야 한다는 것에 주의하세요.
+
+#### Webpack 하는 방법
+
 **`entry.js`**
 ```js
 const m42kup = require('m42kup');
