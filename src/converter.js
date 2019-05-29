@@ -75,7 +75,8 @@ dt['entity'] = r => {
 }));
 
 dt['blockcode'] = pipe(htmlFilter, r => {
-	return html(`<pre><code>${r.html}</code></pre>`);
+	var trimmed = r.html.replace(/(^[ \t]*\n)|(\n[ \t]*$)/g, '');
+	return html(`<pre><code>${trimmed}\n</code></pre>`);
 });
 
 dt['bi'] = pipe(dt['b'], dt['i']);
