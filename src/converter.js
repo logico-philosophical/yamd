@@ -33,27 +33,6 @@ var pipe = (...fns) => {
 /* default tags */
 var dt = {};
 
-dt['lbrack'] = r => {
-	if (r.text || r.html)
-		throw new Error('Input to void element');
-	
-	return text('[');
-};
-
-dt['rbrack'] = r => {
-	if (r.text || r.html)
-		throw new Error('Input to void element');
-	
-	return text(']');
-};
-
-dt['grave'] = r => {
-	if (r.text || r.html)
-		throw new Error('Input to void element');
-
-	return text('`');
-};
-
 dt['comment'] = r => text('');
 
 dt['entity'] = r => {
@@ -158,9 +137,6 @@ var aliases = {
 	'\\': 'br',
 	'^': 'sup',
 	'_': 'sub',
-	'`': 'grave',
-	'{': 'lbrack',
-	'}': 'rbrack',
 	'~': 'link'
 };
 

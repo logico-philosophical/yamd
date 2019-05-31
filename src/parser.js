@@ -145,9 +145,9 @@ function generateParseTreeFromInput(input) {
 				level: lbmEnd - lbmStart
 			});
 			
-			// excludes: '(', ':', '[', ']', '|', '<'
+			// excludes: '(', ':', '[', ']', '|', '<', '`'
 			// this regex always matches something
-			var tagNameRegex = /^(?:(?:\*{1,3}|={1,6}|\${1,2}|;{1,3}|[!"#$%&')*+,\-.\/;=>?@\\^_`{}~]|[a-z][a-z0-9]*)|)/i,
+			var tagNameRegex = /^(?:(?:\*{1,3}|={1,6}|\${1,2}|;{1,3}|[!"#$%&')*+,\-.\/;=>?@\\^_{}~]|[a-z][a-z0-9]*)|)/i,
 				tagNameStart = cur,
 				tagNameEnd = tagNameStart + input.substring(tagNameStart)
 						.match(tagNameRegex)[0].length;
