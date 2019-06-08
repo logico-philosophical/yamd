@@ -213,7 +213,7 @@ function generateParseTreeFromInput(input) {
 					type: 'mismatched right boundary marker',
 					start: rbmAtRootStart,
 					end: rbmAtRootEnd,
-					data: input.subString(rbmAtRootStart, rbmAtRootEnd)
+					data: input.substring(rbmAtRootStart, rbmAtRootEnd)
 				});
 
 				continue;
