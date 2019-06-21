@@ -188,7 +188,9 @@ function convert(ast, options) {
 
 			ret = tags[el.name](el.render);
 		} catch (err) {
-			ret = html(error(`[${el.name}]: ${err.message}: ${el.code}`));
+			// err.message should not be printed
+			// @see issue #30
+			ret = html(error(el.code));
 		} finally {
 			return ret;
 		}
