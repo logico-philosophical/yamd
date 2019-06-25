@@ -16,8 +16,7 @@ var escapeHtml = s => s.replace(/[&<>"']/g, m => ({
 
 var htmlFilter = e => {
 	if (e.type == 'html') return e;
-	if (e.type == 'text') return html(escapeHtml(e.text)
-			.replace(/\n/g, '<br>'));
+	if (e.type == 'text') return html(escapeHtml(e.text));
 	// parser errors
 	if (e.type == 'error') return html(error(e.text));
 	
