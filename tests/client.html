@@ -254,15 +254,15 @@
 							case 'verbatim':
 								output.push({
 									type: 'lvm',
-									data: pt[0].data
+									data: pt[i].children[0].data
 								});
 								output.push({
 									type: 'vbt-tx',
-									data: pt[1].data
+									data: pt[i].children[1].data
 								});
 								output.push({
 									type: 'rvm',
-									data: pt[2].data
+									data: pt[i].children[2].data
 								});
 								break;
 							case 'mismatched right boundary marker':
