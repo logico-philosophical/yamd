@@ -1,4 +1,5 @@
 # `m42kup.js`
+<img src="https://i.imgur.com/WiJuFSK.png" height="48">
 
 JavaScript로 [m42kup](https://github.com/logico-philosophical/m42kup/wiki)의 HTML 렌더러를 구현한 것입니다. 아직 작동 방식이나 API가 불안정합니다.
 
