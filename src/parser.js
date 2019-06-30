@@ -66,8 +66,17 @@ function generateParseTreeFromInput(input) {
 		if (input[cur] == '`') {
 			var lvmStart = cur;
 			for (cur++; cur < input.length; cur++) {
-				if (input[cur] != '`') break;
+				if (input[cur] != '<') break;
 			}
+
+			var lvmLevel = cur - lvmStart;
+
+			if (cur < input.length - 1
+					&& input[cur] == ';'
+					&& input[cur + 1] == '<') {
+				cur++;
+			}
+
 			var lvmEnd = cur;
 
 			push({
@@ -75,28 +84,18 @@ function generateParseTreeFromInput(input) {
 				start: lvmStart,
 				end: lvmEnd,
 				data: input.substring(lvmStart, lvmEnd),
-				level: lvmEnd - lvmStart
+				level: lvmLevel
 			});
 
-			levels.push(-(lvmEnd - lvmStart));
+			levels.push(-lvmLevel);
 			
-			var rvmFound = false, rvmStart, rvmEnd;
-			for (cur++; cur < input.length; cur++) {
-				if (input[cur] == '`') {
-					var _rvmStart = cur;
-					for (cur++; cur < input.length; cur++) {
-						if (input[cur] != '`') break;
-					}
-					var _rvmEnd = cur;
-
-					if (_rvmEnd - _rvmStart == lvmEnd - lvmStart) {
-						rvmFound = true;
-						[rvmStart, rvmEnd] = [_rvmStart, _rvmEnd];
-						break;
-					}
-				}
-			}
-
+			var rvmString = '>'.repeat(lvmLevel - 1) + '`';
+			var rvmIndex = input.indexOf(rvmString, cur);
+			var rvmFound = rvmIndex >= 0, rvmStart, rvmEnd;
+			if (rvmFound)
+				[rvmStart, rvmEnd] = [rvmIndex, rvmIndex + rvmString.length];
+			cur = rvmFound ? rvmEnd : input.length;
+			
 			var textStart = lvmEnd,
 				textEnd = rvmFound ? rvmStart : cur;
 
