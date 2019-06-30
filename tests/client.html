@@ -116,8 +116,13 @@
 				font-weight: bold;
 			}
 
-			.m42kup-hl-vbt {
-				color: #6a737d;
+			.m42kup-hl-lvm, .m42kup-hl-rvm {
+				color: #2e7d32;
+				font-weight: bold;
+			}
+
+			.m42kup-hl-vbt-tx {
+				color: #2e7d32;
 			}
 
 			.m42kup-hl-mrbm {
@@ -248,9 +253,16 @@
 								break;
 							case 'verbatim':
 								output.push({
-									type: 'vbt',
-									data: pt[i].children.map(e => e.data)
-											.join('')
+									type: 'lvm',
+									data: pt[0].data
+								});
+								output.push({
+									type: 'vbt-tx',
+									data: pt[1].data
+								});
+								output.push({
+									type: 'rvm',
+									data: pt[2].data
 								});
 								break;
 							case 'mismatched right boundary marker':
