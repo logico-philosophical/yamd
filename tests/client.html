@@ -163,7 +163,7 @@
 					'ruby', 'sql'
 				];
 
-				var trimmed = r.text.replace(/(^[ \t]*\n)|(\n[ \t]*$)/g, ''),
+				var trimmed = r.text.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, ''),
 					highlighted = hljs.highlightAuto(trimmed, commonLangs).value;
 				return {
 					type: 'html',
