@@ -27,7 +27,9 @@ var three = 3,
   <tr><td><pre><code>[;;;`
 var three = 3,
     four = 4;
-`]</code></pre></td><td><i>(syntax highlighted block of code)</i></td></tr>
+`]</code></pre></td><td><pre><code><b>var</b> <i>three</i> = 3,
+    <i>four</i> = 4;
+</code></pre></td></tr>
   <tr><td><code>[$\sum_{n=1}^4 e^{in\pi}=0]</code></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
   <tr><td><code>[$$\sum_{n=1}^4 e^{in\pi}=0]</code></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
 </table>
