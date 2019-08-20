@@ -54,7 +54,7 @@ dt['entity'] = r => {
 }));
 
 dt['blockcode'] = pipe(htmlFilter, r => {
-	var trimmed = r.html.replace(/(^[ \t]*\n)|(\n[ \t]*$)/g, '');
+	var trimmed = r.html.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
 	return html(`<pre><code>${trimmed}\n</code></pre>`);
 });
 
