@@ -28,8 +28,8 @@ var three = 3,
 var three = 3,
     four = 4;
 `]</code></pre></td><td><i>(syntax highlighted block of code)</i></td></tr>
-  <tr><td><code>[$e^{i\pi}=-1]</code></td><td><i>(Euler's identity, inline)</i></td></tr>
-  <tr><td><code>[$$e^{i\pi}=-1]</code></td><td><i>(Euler's identity, block)</i></td></tr>
+  <tr><td><code>[$\sum_{n=1}^4 e^{in\pi}=0]</code></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
+  <tr><td><code>[$$\sum_{n=1}^4 e^{in\pi}=0]</code></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
 </table>
 
 단 `[;;;]`, `[$]`, `[$$]`를 사용하기 위해서는 추가적인 설정이 필요합니다.
