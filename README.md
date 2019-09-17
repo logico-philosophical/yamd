@@ -59,6 +59,8 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 ~/m42kup $ npm install
 ```
 
+git이 설치되어 있어야 합니다.
+
 #### 테스트
 ```bash
 ~/m42kup $ node
@@ -74,7 +76,8 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 ~/my-project-dir $ npm install --save github:logico-philosophical/m42kup
 ```
 
-이후
+역시 git이 설치되어 있어야 합니다. 이후
+
 ```js
 const m42kup = require('m42kup');
 ```
