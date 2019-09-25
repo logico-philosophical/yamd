@@ -147,7 +147,7 @@ for (var k in aliases) {
 	dt[k] = dt[aliases[k]];
 }
 
-function convert(ast, options) {
+function ast2html(ast, options) {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 
@@ -208,7 +208,7 @@ function convert(ast, options) {
 }
 
 module.exports = {
-	convert,
+	ast2html,
 	text,
 	html,
 	escapeHtml,

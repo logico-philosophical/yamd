@@ -1,4 +1,4 @@
-function generateParseTreeFromInput(input) {
+function input2pt(input) {
 	var levels = [],
 		stack = [];
 	
@@ -289,7 +289,7 @@ function generateParseTreeFromInput(input) {
 	return stack;
 }
 
-function generateASTFromParseTree(pt) {
+function pt2ast(pt) {
 	function recurse(pt) {
 		var ast = pt.map(e => {
 			switch (e.type) {
@@ -327,6 +327,6 @@ function generateASTFromParseTree(pt) {
 }
 
 module.exports = {
-	generateParseTreeFromInput,
-	generateASTFromParseTree
+	input2pt,
+	pt2ast
 };

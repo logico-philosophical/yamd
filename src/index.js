@@ -1,5 +1,5 @@
 var parser = require('./parser');
-var converter = require('./converter');
+var renderer = require('./renderer');
 var cascade = require('./cascade');
 
 var globalOptions = {};
@@ -23,16 +23,16 @@ function render(input, options) {
 	
 	options = cascade.options(globalOptions, options);
 
-	var pt = parser.generateParseTreeFromInput(input);
-	var ast = parser.generateASTFromParseTree(pt);
-	var html = converter.convert(ast, options);
+	var pt = parser.input2pt(input);
+	var ast = parser.pt2ast(pt);
+	var html = renderer.ast2html(ast, options);
 	
 	return html;
 }
 
 var m42kup = {
 	parser,
-	converter,
+	renderer,
 	render,
 	cascade: cascadeOptions,
 	set: setOptions

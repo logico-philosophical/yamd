@@ -208,11 +208,11 @@
 			
 			$ = q => document.querySelector(q);
 			$('#input').addEventListener('input', () => {
-				var pt = m42kup.parser.generateParseTreeFromInput($('#input').value);
+				var pt = m42kup.parser.input2pt($('#input').value);
 				$('#input-highlighted').innerHTML = syntaxHighlight(pt) + '\n';
 				$('#output-pt').innerText = JSON.stringify(pt);
 
-				var ast = m42kup.parser.generateASTFromParseTree(pt);
+				var ast = m42kup.parser.pt2ast(pt);
 				$('#output-ast').innerText = JSON.stringify(ast);
 				
 				var output = m42kup.render($('#input').value);
@@ -278,7 +278,7 @@
 				walkPT(pt);
 
 				return output
-						.map(e => `<span class="m42kup-hl-${e.type}">${m42kup.converter.escapeHtml(e.data)}</span>`)
+						.map(e => `<span class="m42kup-hl-${e.type}">${m42kup.renderer.escapeHtml(e.data)}</span>`)
 						.join('');
 			}
 		</script>

@@ -88,11 +88,11 @@ const m42kup = require('m42kup');
 ```js
 {
     parser: {
-        generateParseTreeFromInput: [Function],
-        generateASTFromParseTree: [Function]
+        input2pt: [Function],
+        pt2ast: [Function]
     },
-    converter: {
-        convert: [Function],
+    renderer: {
+        ast2html: [Function],
         text: [Function],
         html: [Function],
         escapeHtml: [Function],
@@ -144,7 +144,7 @@ m42kup 코드 `[*a < 3]`을 예로 들어 보자면, 먼저
     text: 'a < 3'
 }
 ```
-이 `[*]`에게 입력되는데, `m42kup.converter.htmlFilter`가 적용되어서 타입이 `html`로 바뀝니다.
+이 `[*]`에게 입력되는데, `m42kup.renderer.htmlFilter`가 적용되어서 타입이 `html`로 바뀝니다.
 ```js
 {
     type: 'html',
@@ -182,7 +182,7 @@ options = {
     tags: {
         greet: content => {
             // Converts content type to HTML
-            content = m42kup.converter.htmlFilter(content);
+            content = m42kup.renderer.htmlFilter(content);
             return {
                 type: 'html',
                 html: `Hello ${content.html}`
@@ -301,8 +301,8 @@ m42kup.render('[greet [**M42kup]]!', {
     tags: {
         greet: content => {
             // Converts content type to HTML
-            content = m42kup.converter.htmlFilter(content);
-            return m42kup.converter.html(`Hello ${content.html}`);
+            content = m42kup.renderer.htmlFilter(content);
+            return m42kup.renderer.html(`Hello ${content.html}`);
         }
     }
 });
