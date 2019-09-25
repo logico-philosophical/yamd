@@ -318,16 +318,15 @@ Hello <b>M42kup</b>!
 
 **`m42kup.config.js`**
 ```js
-const m42kup = require('m42kup');
-
-options = {...};
-
-m42kup.set(options);
+module.exports = m42kup => {
+    options = {...};
+    m42kup.set(options);
+};
 ```
 
-**`m42kup`이 사용되기 전인 앱의 시작점에서**
+**적용 방법**
 ```js
-require('/path/to/config/m42kup.config');
+require('/path/to/config/m42kup.config')(m42kup);
 ```
 
 `m42kup.config.js`를 `require` 한 이후부터 글로벌 옵션이 적용됩니다.
