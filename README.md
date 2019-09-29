@@ -4,6 +4,26 @@ JavaScript로 미완성 마크업 언어인 [m42kup](https://github.com/logico-p
 
 * [클라이언트 사이드 렌더러 테스트 페이지(bleeding edge)](https://logico-philosophical.github.io/m42kup/tests/client.html)
 
+**목차**
+* 특징
+* 설치
+  + NPM에서 받기
+  + Release에서 받기
+  + 최-신 (clone)
+  + 최-신 (npm)
+* API (불안정)
+  + 렌더링 옵션
+    - 옵션의 예시
+  + `m42kup.cascade(options)`
+  + `m42kup.set(options)`
+  + `m42kup.render(input, options)`
+* 꿀팁
+  + Node.js에서 글로벌 옵션을 설정해 주는 방법
+  + 클라이언트 사이드에서 글로벌 옵션을 설정해 주는 방법
+    - 설정 파일을 만드는 방법
+    - Webpack 하는 방법
+* License
+
 ## 특징
 
 * m42kup의 구문론적 특성상 새로운 태그를 도입하기가 쉽습니다. 옵션을 통해 원하는 태그를 추가해서 사용할 수 있습니다.
@@ -30,7 +50,7 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 
 git이 설치되어 있어야 합니다.
 
-#### 테스트
+**테스트**
 ```bash
 ~/m42kup $ node
 > m42kup = require('.')
@@ -165,13 +185,10 @@ options = {
 
 현재의 글로벌 옵션을 보존하면서 `options`로 적당히 덮어 씁니다. `m42kup.cascade`나 `m42kup.set`을 한 번도 호출하지 않은 경우 `m42kup.set`과 효과가 같습니다.
 
-#### 입력
+**입력**
 * `options` (`Object`): [렌더링 옵션](#렌더링-옵션)을 보세요.
 
-#### 출력
-출력은 의미가 없습니다.
-
-#### 예시
+**예시**
 ```js
 // global options: {}
 
@@ -213,13 +230,12 @@ m42kup.cascade({
 
 `m42kup.set({})`으로 글로벌 옵션을 없애버릴 수 있습니다.
 
-#### 입력
+**입력**
+
 * `options` (`Object`): [렌더링 옵션](#렌더링-옵션)을 보세요.
 
-#### 출력
-출력은 의미가 없습니다.
+**예시**
 
-#### 예시
 ```js
 // global options: {}
 
@@ -257,14 +273,17 @@ m42kup.set({
 
 ### `m42kup.render(input, options)`
 
-#### 입력
+**입력**
+
 * `input` (`String`): M42kup 코드.
 * `options` (`Object`): [렌더링 옵션](#렌더링-옵션)을 보세요. 글로벌 옵션을 cascade 합니다.
 
-#### 출력
+**출력**
+
 렌더링 된 HTML(`String`)이 출력됩니다.
 
-#### 예시
+**예시**
+
 ```js
 m42kup.render('[greet [**M42kup]]!', {
     tags: {
