@@ -14,6 +14,9 @@ JavaScript로 미완성 마크업 언어인 [m42kup](https://github.com/logico-p
 * API (불안정)
   + 렌더링 옵션
     - 옵션의 예시
+  + 입출력 형식
+    - parse tree의 형식
+    - AST의 형식
   + `m42kup.cascade(options)`
   + `m42kup.set(options)`
   + `m42kup.render(input, options)`
@@ -92,6 +95,8 @@ const m42kup = require('m42kup');
     set: [Function]
 }
 ```
+
+여기다 다 쓰려니 좀 긴 듯;;
 
 ### 렌더링 옵션
 
@@ -180,6 +185,116 @@ options = {
     }
 }
 ```
+
+### 입출력 형식
+
+#### parse tree의 형식
+
+근본 없는 언어로 써 봤는데 알아볼 수 있을 거라 생각합니다.
+
+```
+parse-tree = [ (block+ mismatched-rbm?)? ]
+
+where:
+    block = text | element | verbatim
+
+    where:
+        text = {
+            type: 'text',
+            start, end, data
+        }
+
+        element = {
+            type: 'element',
+            start, end, data,
+            children: [ lbm tag-name separator block* rbm ]
+        }
+
+        where:
+            lbm = {
+                type: 'left boundary marker',
+                start, end, data,
+                level
+            }
+
+            tag-name = {
+                type: 'tag name',
+                start, end, data
+            }
+
+            separator = {
+                type: 'separator',
+                start, end, data
+            }
+
+            rbm = {
+                type: 'right boundary marker',
+                start, end, data,
+                level
+            }
+
+        verbatim = {
+            type: 'verbatim',
+            start, end, data,
+            children: [ lvm text rvm ]
+        }
+
+        where:
+            lvm = {
+              type: 'left verbatim marker',
+              start, end, data,
+              level
+            }
+
+            rvm = {
+              type: 'right verbatim marker',
+              start, end, data,
+              level
+            }
+
+    mismatched-rbm = {
+        type: 'mismatched right boundary marker',
+        start, end, data
+    } 
+```
+
+애들이 공통적으로 `start`, `end`, `data` 프로퍼티를 가집니다.
+
+<table>
+  <tr><th><code>start</code></th><td>입력 문자열에서의 시작 index (inclusive)</td></tr>
+  <tr><th><code>end</code></th><td>입력 문자열에서의 끝 index (exclusive)</td></tr>
+  <tr><th><code>data</code></th><td><code>input.substring(start, end)</code></td></tr>
+</table>
+
+#### AST의 형식
+
+똑같은 근본 없는 언어.
+
+```
+ast = [ (block+ error?)? ]
+
+where:
+    block = text | element
+
+    where:
+        text = {
+            type: 'text',
+            text
+        }
+
+        element = {
+            type: 'element',
+            name, code,
+            children: [ block* ]
+        }
+
+    error = {
+        type: 'error',
+        text
+    } 
+```
+
+`verbatim`이 `text`가 되고(marker들은 없어짐) `mismatched-rbm`이 `error`가 됩니다. `element.name`이 요소 이름이고 `element.code`가 m42kup 코드.
 
 ### `m42kup.cascade(options)`
 
