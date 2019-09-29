@@ -1,39 +1,8 @@
 # <img src="https://i.imgur.com/WiJuFSK.png" height="48">
 
-JavaScript로 [m42kup](https://github.com/logico-philosophical/m42kup/wiki)의 HTML 렌더러를 구현한 것입니다. 아직 작동 방식이나 API가 불안정합니다.
-
-또 제대로 된 m42kup 언어 스펙이 없습니다. 렌더러 버전이 바뀌면서 스펙도 바뀌고 있으니 레퍼런스 렌더러라고 할 수 있음. 이슈에 보면 렌더러가 아니라 언어 자체에 관한 의견이 많은데 이런 것들은 사실 스펙의 문제고 렌더러의 문제가 아님. 근데도 통합해서 쓰고 있음.
+JavaScript로 미완성 마크업 언어인 [m42kup](https://github.com/logico-philosophical/m42kup/wiki)의 HTML 렌더러를 구현한 것입니다. API가 대단히 불안정하니 조심하세요.
 
 * [클라이언트 사이드 렌더러 테스트 페이지(bleeding edge)](https://logico-philosophical.github.io/m42kup/tests/client.html)
-
-## m42kup의 간추린 사용법
-
-<table>
-  <tr><th>m42kup 코드</th><th>HTML 렌더링 결과</th></tr>
-  <tr><td><code>[=== Heading 3]</code></td><td><h3>Heading 3</h3></td></tr>
-  <tr><td><code>[*italic text]</code></td><td><i>italic text</i></td></tr>
-  <tr><td><code>[**bold text]</code></td><td><b>bold text</b></td></tr>
-  <tr><td><code>[***bolditalic text]</code></td><td><i><b>bolditalic text</b></i></td></tr>
-  <tr><td><code>[~example.com]</code></td><td><a href="http://example.com">http://example.com</a></td></tr>
-  <tr><td><code>[&rarr]</code></td><td>&rarr;</td></tr>
-  <tr><td><code>`[*not italic]`</code></td><td>[*not italic]</td></tr>
-  <tr><td><code>[;`[*not italic]`]</code></td><td><code>[*not italic]</code></td></tr>
-  <tr><td><pre><code>[;;`
-var three = 3,
-    four = 4;
-`]</code></pre></td><td><pre><code>var three = 3,
-    four = 4;</code></pre></td></tr>
-  <tr><td><pre><code>[;;;`
-var three = 3,
-    four = 4;
-`]</code></pre></td><td><pre><code><b>var</b> <i>three</i> = 3,
-    <i>four</i> = 4;
-</code></pre></td></tr>
-  <tr><td><code>[$\sum_{n=1}^4 e^{in\pi}=0]</code></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
-  <tr><td><code>[$$\sum_{n=1}^4 e^{in\pi}=0]</code></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
-</table>
-
-단 `[;;;]`, `[$]`, `[$$]`를 사용하기 위해서는 추가적인 설정이 필요합니다.
 
 ## 특징
 
@@ -51,7 +20,7 @@ NPM에 올릴 예정입니다 ([이슈 #2](https://github.com/logico-philosophic
 
 아직 릴리즈가 없습니다.
 
-### Bleeding-edge (clone)
+### 최-신 (clone)
 
 ```bash
 ~ $ git clone https://github.com/logico-philosophical/m42kup.git
@@ -69,7 +38,7 @@ git이 설치되어 있어야 합니다.
 '<i>hi</i>'
 ```
 
-### Bleeding-edge (npm)
+### 최-신 (npm)
 
 ```bash
 ~ $ cd my-project-dir/
@@ -111,7 +80,7 @@ const m42kup = require('m42kup');
 ```js
 options = {
     tags: {
-        (tag_name): r => {
+        (tag_name): content => {
             // return text or html, or throw error
         },
         ...
