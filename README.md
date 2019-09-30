@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/WiJuFSK.png" height="48">
+# <img src="https://i.imgur.com/WiJuFSK.png" height="48" style="vertical-align: middle">.js
 
 [![Documentation Status](https://readthedocs.org/projects/m42kup/badge/?version=latest)](https://m42kup.readthedocs.io/en/latest/?badge=latest)
 [![GitHub](https://img.shields.io/github/license/logico-philosophical/m42kup)](https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)
