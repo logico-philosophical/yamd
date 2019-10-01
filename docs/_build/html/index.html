@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>m42kup.js의 문서화!! &mdash; m42kup  문서</title>
+  <title>m42kup.js의 문서화!! &mdash; m42kup  documentation</title>
   
 
   
@@ -25,7 +25,6 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -34,8 +33,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="색인" href="genindex.html" />
-    <link rel="search" title="검색" href="search.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="m42kup.js의 특징" href="getting-started/features.html" /> 
 </head>
 
@@ -89,6 +88,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/the-big-picture.html">큰 그림</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/options.html">렌더링 옵션</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/formats.html">입출력 형식</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/api.html">API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">여러가지</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misc/tips.html">꿀팁</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/license.html">License</a></li>
 </ul>
 
             
@@ -154,7 +160,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="m42kup-js">
-<h1>m42kup.js의 문서화!!<a class="headerlink" href="#m42kup-js" title="제목 주소">¶</a></h1>
+<h1>m42kup.js의 문서화!!<a class="headerlink" href="#m42kup-js" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://m42kup.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/m42kup/badge/?version=latest" /></a>
 <a class="reference external image-reference" href="https://github.com/logico-philosophical/m42kup/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/logico-philosophical/m42kup" /></a>
 <p>m42kup.js는 JavaScript로 미완성 마크업 언어인 m42kup의 HTML 렌더러를 구현한 것입니다. API가 대단히 불안정하니 조심하세요.</p>
@@ -179,6 +185,33 @@
 <li class="toctree-l2"><a class="reference internal" href="api/options.html#id2">옵션의 예시</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api/formats.html">입출력 형식</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/formats.html#parse-tree">parse tree의 형식</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/formats.html#ast">AST의 형식</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-parser-input2pt-input"><code class="docutils literal notranslate"><span class="pre">m42kup.parser.input2pt(input)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-parser-pt2ast-pt"><code class="docutils literal notranslate"><span class="pre">m42kup.parser.pt2ast(pt)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-renderer-ast2html-ast-options"><code class="docutils literal notranslate"><span class="pre">m42kup.renderer.ast2html(ast,</span> <span class="pre">options)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-renderer-escapehtml-string"><code class="docutils literal notranslate"><span class="pre">m42kup.renderer.escapeHtml(string)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-renderer-htmlfilter-content"><code class="docutils literal notranslate"><span class="pre">m42kup.renderer.htmlFilter(content)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-render-input-options"><code class="docutils literal notranslate"><span class="pre">m42kup.render(input,</span> <span class="pre">options)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-cascade-options"><code class="docutils literal notranslate"><span class="pre">m42kup.cascade(options)</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#m42kup-set-options"><code class="docutils literal notranslate"><span class="pre">m42kup.set(options)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">여러가지</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misc/tips.html">꿀팁</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="misc/tips.html#node-js">Node.js에서 글로벌 옵션을 설정해 주는 방법</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/tips.html#id2">클라이언트 사이드에서 글로벌 옵션을 설정해 주는 방법</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="misc/license.html">License</a></li>
 </ul>
 </div>
 </div>

@@ -209,8 +209,6 @@ function ast2html(ast, options) {
 
 module.exports = {
 	ast2html,
-	text,
-	html,
 	escapeHtml,
 	htmlFilter
 };

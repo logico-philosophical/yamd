@@ -1,8 +1,3 @@
-.. m42kup documentation master file, created by
-   sphinx-quickstart on Mon Sep 30 19:46:03 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 m42kup.js의 문서화!!
 =======================
 
@@ -28,3 +23,12 @@ m42kup.js는 JavaScript로 미완성 마크업 언어인 m42kup의 HTML 렌더�
 
 	api/the-big-picture
 	api/options
+	api/formats
+	api/api
+
+.. toctree::
+	:maxdepth: 2
+	:caption: 여러가지
+
+	misc/tips
+	misc/license

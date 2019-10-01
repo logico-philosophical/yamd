@@ -12,8 +12,6 @@
 	    },
 	    renderer: {
 	        ast2html: [Function],
-	        text: [Function],
-	        html: [Function],
 	        escapeHtml: [Function],
 	        htmlFilter: [Function]
 	    },
