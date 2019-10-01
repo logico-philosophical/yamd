@@ -45,8 +45,8 @@ m42kup의 간추린 사용법
 	`]</pre></td><td><pre><b>var</b> <i>three</i> = 3,
 	    <i>four</i> = 4;
 	</pre></td></tr>
-			<tr><td><pre>[$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
-			<tr><td><pre>[$$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
+			<tr><td><pre>[$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0" style="max-width:999px"></td></tr>
+			<tr><td><pre>[$$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0" style="max-width:999px"></td></tr>
 		</tbody>
 	</table>
 
@@ -110,8 +110,8 @@ TeX 문법을 써서 수식을 작성할 수도 있습니다.
 			</tr>
 		</thead>
 		<tbody>
-			<tr><td><pre>[$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
-			<tr><td><pre>[$$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0"></td></tr>
+			<tr><td><pre>[$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\textstyle\sum_{n=1}^4 e^{in\pi}=0" style="max-width:999px"></td></tr>
+			<tr><td><pre>[$$\sum_{n=1}^4 e^{in\pi}=0]</pre></td><td><img src="https://math.now.sh/?from=\displaystyle\sum_{n=1}^4 e^{in\pi}=0" style="max-width:999px"></td></tr>
 		</tbody>
 	</table>
 

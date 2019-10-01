@@ -22,7 +22,7 @@
 
 		{
 		    type: 'text',
-		    text: (text)
+		    text: <String>
 		}
 
 * ``html`` 타입은 다음과 같이 생겼습니다.
@@ -31,7 +31,7 @@
 		
 		{
 			type: 'html',
-			html: (html)
+			html: <String>
 		}
 
 * ``throw``\ 된 것은 ``Error``\ 의 인스턴스여야 합니다.

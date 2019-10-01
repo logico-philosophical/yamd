@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>큰 그림 &mdash; m42kup  documentation</title>
+  <title>m42kup.js 소개 &mdash; m42kup  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="렌더링 옵션" href="options.html" />
-    <link rel="prev" title="m42kup 명세 소개" href="../m42kup-spec/introduction.html" /> 
+    <link rel="next" title="m42kup 찍먹 해보기" href="quick-m42kup.html" />
+    <link rel="prev" title="m42kup.js의 문서화" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,21 +81,24 @@
             
             
               <p class="caption"><span class="caption-text">시작하기</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/introduction.html">m42kup.js 소개</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/quick-m42kup.html">m42kup 찍먹 해보기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">설치</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">m42kup.js 소개</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">m42kup.js의 특징</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quick-m42kup.html">m42kup 찍먹 해보기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">설치</a></li>
 </ul>
 <p class="caption"><span class="caption-text">m42kup 명세</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../m42kup-spec/introduction.html">m42kup 명세 소개</a></li>
 </ul>
 <p class="caption"><span class="caption-text">불안정한 API</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">큰 그림</a></li>
-<li class="toctree-l1"><a class="reference internal" href="options.html">렌더링 옵션</a></li>
-<li class="toctree-l1"><a class="reference internal" href="formats.html">입출력 형식</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/the-big-picture.html">큰 그림</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/options.html">렌더링 옵션</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/formats.html">입출력 형식</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">여러가지</span></p>
 <ul>
@@ -146,13 +149,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>큰 그림</li>
+      <li>m42kup.js 소개</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/api/the-big-picture.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/getting-started/introduction.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -165,24 +168,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
-<h1>큰 그림<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">require('m42kup')</span></code> 했을 때 나오는 애는 전체적으로 다음과 같습니다.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nx">parser</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">input2pt</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">],</span>
-        <span class="nx">pt2ast</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">]</span>
-    <span class="p">},</span>
-    <span class="nx">renderer</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">ast2html</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">],</span>
-        <span class="nx">escapeHtml</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">],</span>
-        <span class="nx">htmlFilter</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">]</span>
-    <span class="p">},</span>
-    <span class="nx">render</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">],</span>
-    <span class="nx">cascade</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">],</span>
-    <span class="nx">set</span><span class="o">:</span> <span class="p">[</span><span class="nb">Function</span><span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
+  <div class="section" id="m42kup-js">
+<h1>m42kup.js 소개<a class="headerlink" href="#m42kup-js" title="Permalink to this headline">¶</a></h1>
+<p>m42kup.js는 JavaScript로 미완성 마크업 언어인 m42kup의 HTML 렌더러를 구현한 것입니다. API가 대단히 불안정하니 조심하세요.</p>
+<div class="section" id="id1">
+<h2>m42kup.js의 특징<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>m42kup은 구문론적 특성상 새로운 태그를 도입하기가 쉽습니다. m42kup.js에서는 옵션을 통해 원하는 태그를 추가해서 사용할 수 있습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/highlightjs/highlight.js">highlight.js</a> 등을 써서 구문 강조(syntax highlighting)를 위한 태그를 만들 수 있습니다.</p></li>
+<li><p><a class="reference external" href="https://github.com/KaTeX/KaTeX">KaTeX</a> 등을 써서 수식 렌더링을 위한 태그를 만들 수 있습니다.</p></li>
+</ul>
 </div>
 </div>
 
@@ -194,10 +189,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="options.html" class="btn btn-neutral float-right" title="렌더링 옵션" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="quick-m42kup.html" class="btn btn-neutral float-right" title="m42kup 찍먹 해보기" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../m42kup-spec/introduction.html" class="btn btn-neutral float-left" title="m42kup 명세 소개" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="m42kup.js의 문서화" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="큰 그림" href="../api/the-big-picture.html" />
-    <link rel="prev" title="m42kup.js의 특징" href="features.html" /> 
+    <link rel="next" title="m42kup 명세 소개" href="../m42kup-spec/introduction.html" />
+    <link rel="prev" title="m42kup 찍먹 해보기" href="quick-m42kup.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,20 +80,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">시작하기!</span></p>
+              <p class="caption"><span class="caption-text">시작하기</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="introduction-to-m42kup.html">m42kup 찍먹 해보기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">m42kup.js의 특징</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">m42kup.js 소개</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-m42kup.html">m42kup 찍먹 해보기</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">설치</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#npm">npm에서 받기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#release">release에서 받기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#clone">최-신 버전 clone 하기</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">테스트</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#npm">npm으로 최-신 버전 받기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clone">최-신 버전 clone 하기</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">npm으로 최-신 버전 받기</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">m42kup 명세</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../m42kup-spec/introduction.html">m42kup 명세 소개</a></li>
 </ul>
 <p class="caption"><span class="caption-text">불안정한 API</span></p>
 <ul>
@@ -173,12 +172,21 @@
   <div class="section" id="id1">
 <h1>설치<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="npm">
-<h2>npm에서 받기<a class="headerlink" href="#npm" title="Permalink to this headline">¶</a></h2>
-<p>npm에 올릴 예정입니다(<a class="reference external" href="https://github.com/logico-philosophical/m42kup/issues/2">이슈 #2</a>).</p>
+<h2>npm으로 최-신 버전 받기<a class="headerlink" href="#npm" title="Permalink to this headline">¶</a></h2>
+<p>m42kup을 git 저장소에서 받아서 node.js 프로젝트의 <code class="docutils literal notranslate"><span class="pre">node_modules</span></code> 디렉터리에 저장합니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~ $ <span class="nb">cd</span> my-project-dir/
+~/my-project-dir $ npm install --save logico-philosophical/m42kup
+</pre></div>
 </div>
-<div class="section" id="release">
-<h2>release에서 받기<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h2>
-<p>아직 릴리즈가 없습니다.</p>
+<p>단 git이 설치되어 있어야 합니다. 이후</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">m42kup</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;m42kup&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>하여 사용하면 됩니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>이 프로젝트는 npm에 올려지지 않았으며 초기 개발 버전입니다(버전이 0.1.0으로 고정되어 있음). 공개 API가 안정되어 있지 않으므로 업데이트를 했더니 어느 날 갑자기 작동 방식이 바뀌거나 고장날 수 있습니다.</p>
+</div>
 </div>
 <div class="section" id="clone">
 <h2>최-신 버전 clone 하기<a class="headerlink" href="#clone" title="Permalink to this headline">¶</a></h2>
@@ -187,29 +195,14 @@
 ~/m42kup $ npm install
 </pre></div>
 </div>
-<p>git이 설치되어 있어야 합니다.</p>
-<div class="section" id="id3">
-<h3>테스트<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>git이 설치되어 있어야 합니다. 아니면 GitHub에서 ZIP 파일 다운로드 옵션을 제공하므로 웹으로 다운로드 해도 됩니다. clone 후 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> 을 해줘야 합니다.</p>
+<p><strong>테스트</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/m42kup $ node
 &gt; <span class="nv">m42kup</span> <span class="o">=</span> require<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>
 &gt; m42kup.render<span class="o">(</span><span class="s1">&#39;[*hi]&#39;</span><span class="o">)</span>
 <span class="s1">&#39;&lt;i&gt;hi&lt;/i&gt;&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id4">
-<h2>npm으로 최-신 버전 받기<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>이것도 git 저장소에서 가져오는데 <code class="docutils literal notranslate"><span class="pre">node_modules</span></code> 디렉터리로 들어간다는 점이 다릅니다.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~ $ <span class="nb">cd</span> my-project-dir/
-~/my-project-dir $ npm install --save logico-philosophical/m42kup
-</pre></div>
-</div>
-<p>역시 git이 설치되어 있어야 합니다. 이후</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">m42kup</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;m42kup&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>하여 사용하면 됩니다.</p>
 </div>
 </div>
 
@@ -221,10 +214,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../api/the-big-picture.html" class="btn btn-neutral float-right" title="큰 그림" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../m42kup-spec/introduction.html" class="btn btn-neutral float-right" title="m42kup 명세 소개" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="features.html" class="btn btn-neutral float-left" title="m42kup.js의 특징" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="quick-m42kup.html" class="btn btn-neutral float-left" title="m42kup 찍먹 해보기" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

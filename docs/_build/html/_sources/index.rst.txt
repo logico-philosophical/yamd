@@ -1,4 +1,4 @@
-m42kup.js의 문서화!!
+m42kup.js의 문서화
 =======================
 
 .. image :: https://readthedocs.org/projects/m42kup/badge/?version=latest
@@ -8,15 +8,19 @@ m42kup.js의 문서화!!
 	:alt: GitHub
 	:target: https://github.com/logico-philosophical/m42kup/blob/master/LICENSE
 
-m42kup.js는 JavaScript로 미완성 마크업 언어인 m42kup의 HTML 렌더러를 구현한 것입니다. API가 대단히 불안정하니 조심하세요.
+.. toctree::
+	:maxdepth: 2
+	:caption: 시작하기
+
+	getting-started/introduction
+	getting-started/quick-m42kup
+	getting-started/installation
 
 .. toctree::
 	:maxdepth: 2
-	:caption: 시작하기!
+	:caption: m42kup 명세
 
-	getting-started/introduction-to-m42kup
-	getting-started/features
-	getting-started/installation
+	m42kup-spec/introduction
 
 .. toctree::
 	:maxdepth: 2
