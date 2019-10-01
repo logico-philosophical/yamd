@@ -14,6 +14,7 @@ m42kup.js는 JavaScript로 미완성 마크업 언어인 m42kup의 HTML 렌더�
 	:maxdepth: 2
 	:caption: 시작하기!
 
+	getting-started/introduction-to-m42kup
 	getting-started/features
 	getting-started/installation
 
