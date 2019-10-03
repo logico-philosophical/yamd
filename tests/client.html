@@ -96,6 +96,10 @@
 				color: #202124;
 			}
 
+			.m42kup-hl-elem {
+				background-color: rgba(215, 58, 73, .1);
+			}
+
 			.m42kup-hl-lbm {
 				color: #d73a49;
 				font-weight: bold;
@@ -114,6 +118,10 @@
 			.m42kup-hl-rbm {
 				color: #d73a49;
 				font-weight: bold;
+			}
+
+			.m42kup-hl-verb {
+				background-color: rgba(200, 230, 201, .8);
 			}
 
 			.m42kup-hl-lvm, .m42kup-hl-rvm {
@@ -221,65 +229,81 @@
 			});
 
 			function syntaxHighlight(pt) {
-				var output = [];
+				var escapeHtml = s => s.replace(/[&<>"']/g, m => ({
+					'&': '&amp;', '<': '&lt;', '>': '&gt;',
+					'"': '&quot;', "'": '&#39;'
+				})[m]);
+
+				function makeHtml(fragment) {
+					return `<span class="m42kup-hl-${fragment.type}">${fragment.html || escapeHtml(fragment.text)}</span>`;
+				}
 
 				function walkPT(pt) {
+					var ret = '';
 					for (var i = 0; i < pt.length; i++) {
 						switch(pt[i].type) {
 							case 'text':
-								output.push({
+								ret += makeHtml({
 									type: 'tx',
-									data: pt[i].data
+									text: pt[i].data
 								});
 								break;
 							case 'element':
-								output.push({
+								var tmp = makeHtml({
 									type: 'lbm',
-									data: pt[i].children[0].data
-								});
-								output.push({
+									text: pt[i].children[0].data
+								})
+									+ makeHtml({
 									type: 'tn',
-									data: pt[i].children[1].data
-								});
-								output.push({
+									text: pt[i].children[1].data
+								})
+									+ makeHtml({
 									type: 'sp',
-									data: pt[i].children[2].data
-								});
-								walkPT(pt[i].children.slice(3, -1));
-								output.push({
+									text: pt[i].children[2].data
+								})
+									+ walkPT(pt[i].children.slice(3, -1))
+									+ makeHtml({
 									type: 'rbm',
-									data: pt[i].children[pt[i].children.length - 1].data
+									text: pt[i].children[pt[i].children.length - 1].data
+								});
+
+								ret += makeHtml({
+									type: 'elem',
+									html: tmp
 								});
 								break;
 							case 'verbatim':
-								output.push({
+								var tmp = makeHtml({
 									type: 'lvm',
-									data: pt[i].children[0].data
-								});
-								output.push({
+									text: pt[i].children[0].data
+								})
+									+ makeHtml({
 									type: 'vbt-tx',
-									data: pt[i].children[1].data
-								});
-								output.push({
+									text: pt[i].children[1].data
+								})
+									+ makeHtml({
 									type: 'rvm',
-									data: pt[i].children[2].data
+									text: pt[i].children[2].data
+								});
+
+								ret += makeHtml({
+									type: 'verb',
+									html: tmp
 								});
 								break;
 							case 'mismatched right boundary marker':
 								output.push({
 									type: 'mrbm',
-									data: pt[i].data
+									text: pt[i].data
 								});
 								break;
 						}
 					}
+
+					return ret;
 				}
 
-				walkPT(pt);
-
-				return output
-						.map(e => `<span class="m42kup-hl-${e.type}">${m42kup.renderer.escapeHtml(e.data)}</span>`)
-						.join('');
+				return walkPT(pt);
 			}
 		</script>
 	</body>
