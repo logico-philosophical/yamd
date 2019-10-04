@@ -72,7 +72,7 @@ function input2pt(input) {
 			var lvmLevel = cur - lvmStart;
 
 			if (cur < input.length - 1
-					&& input[cur] == ';'
+					&& input[cur] == '.'
 					&& input[cur + 1] == '<') {
 				cur++;
 			}
@@ -144,9 +144,9 @@ function input2pt(input) {
 				level: lbmEnd - lbmStart
 			});
 			
-			// excludes: '(', ':', '[', ']', '|', '<', '`'
+			// excludes: '(', '.', ':', '[', ']', '<', '`'
 			// this regex always matches something
-			var tagNameRegex = /^(?:(?:\*{1,3}|={1,6}|\${1,2}|;{1,3}|[!"#$%&')*+,\-.\/;=>?@\\^_{}~]|[a-z][a-z0-9]*)|)/i,
+			var tagNameRegex = /^(?:(?:\*{1,3}|={1,6}|\${1,2}|;{1,3}|[!"#$%&')*+,\-\/;=>?@\\^_{|}~]|[a-z][a-z0-9]*)|)/i,
 				tagNameStart = cur,
 				tagNameEnd = tagNameStart + input.substring(tagNameStart)
 						.match(tagNameRegex)[0].length;
@@ -160,7 +160,7 @@ function input2pt(input) {
 
 			cur = tagNameEnd;
 
-			var separatorRegex = /^(?:[ \t|]|)/i,
+			var separatorRegex = /^(?:[.]|)/i,
 				separatorStart = cur,
 				separatorEnd = separatorStart
 					+ input.substring(separatorStart)
