@@ -8,7 +8,7 @@ parse tree의 형식
 
 .. code-block:: js
 
-	parse-tree = [ (block+ mismatched-rbm?)? ]
+	parse-tree = [ (block | mismatched-rbm)* ]
 
 	where:
 	    block = text | element | verbatim
@@ -85,7 +85,7 @@ AST의 형식
 
 .. code-block:: js
 
-	ast = [ (block+ error?)? ]
+	ast = [ (block | error)* ]
 
 	where:
 	    block = text | element

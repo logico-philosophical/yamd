@@ -15,7 +15,11 @@
 	        escapeHtml: [Function],
 	        htmlFilter: [Function]
 	    },
+	    highlighter: {
+	    	pt2hl: [Function]
+	    },
 	    render: [Function],
+	    highlight: [Function],
 	    cascade: [Function],
 	    set: [Function]
 	}

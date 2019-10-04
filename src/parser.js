@@ -198,21 +198,22 @@ function input2pt(input) {
 
 			// invalid ]
 			if (currentLevel == 0) {
-				push({
-					type: 'text',
-					start: gtStart,
-					end: gtEnd,
-					data: input.substring(gtStart, gtEnd)
-				});
+				if (gtStart < gtEnd)
+					push({
+						type: 'text',
+						start: gtStart,
+						end: gtEnd,
+						data: input.substring(gtStart, gtEnd)
+					});
 
-				var rbmAtRootStart = cur;
-				var rbmAtRootEnd = ++cur;
+				var mrbmStart = cur;
+				var mrbmEnd = ++cur;
 
 				push({
 					type: 'mismatched right boundary marker',
-					start: rbmAtRootStart,
-					end: rbmAtRootEnd,
-					data: input.substring(rbmAtRootStart, rbmAtRootEnd)
+					start: mrbmStart,
+					end: mrbmEnd,
+					data: input.substring(mrbmStart, mrbmEnd)
 				});
 
 				continue;

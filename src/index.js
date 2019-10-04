@@ -1,5 +1,6 @@
 var parser = require('./parser');
 var renderer = require('./renderer');
+var highlighter = require('./highlighter');
 var cascade = require('./cascade');
 
 var globalOptions = {};
@@ -30,10 +31,21 @@ function render(input, options) {
 	return html;
 }
 
+function highlight(input) {
+	input += '';
+
+	var pt = parser.input2pt(input);
+	var hl = highlighter.pt2hl(pt);
+
+	return hl;
+}
+
 var m42kup = {
 	parser,
 	renderer,
+	highlighter,
 	render,
+	highlight,
 	cascade: cascadeOptions,
 	set: setOptions
 };

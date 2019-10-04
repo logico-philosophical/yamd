@@ -86,14 +86,13 @@
 			.katex {
 				color: #202124;
 			}
-
-			/* m42kup-highlight */
+		</style>
+		<style>
 			.m42kup-hl {
 				color: #222;
 			}
 
 			.m42kup-hl-tx {
-				color: #202124;
 			}
 
 			.m42kup-hl-elem {
@@ -129,10 +128,6 @@
 				font-weight: bold;
 			}
 
-			.m42kup-hl-vbt-tx {
-				color: #5f6368;
-			}
-
 			.m42kup-hl-mrbm {
 				font-weight: bold;
 				color: red;
@@ -146,7 +141,7 @@
 		<h2>Input</h2>
 		<textarea id="input" placeholder="input"></textarea>
 		<h2>Highlighted input</h2>
-		<pre id="input-highlighted" class="m42khl"></pre>
+		<pre id="input-highlighted" class="m42kup-hl"></pre>
 		<h2>Parse tree</h2>
 		<pre id="output-pt"></pre>
 		<h2>Abstract syntax tree</h2>
@@ -217,7 +212,7 @@
 			$ = q => document.querySelector(q);
 			$('#input').addEventListener('input', () => {
 				var pt = m42kup.parser.input2pt($('#input').value);
-				$('#input-highlighted').innerHTML = syntaxHighlight(pt) + '\n';
+				$('#input-highlighted').innerHTML = m42kup.highlight($('#input').value) + '\n';
 				$('#output-pt').innerText = JSON.stringify(pt);
 
 				var ast = m42kup.parser.pt2ast(pt);
@@ -227,84 +222,6 @@
 				$('#output-html').innerText = output;
 				$('#output').innerHTML = output;
 			});
-
-			function syntaxHighlight(pt) {
-				var escapeHtml = s => s.replace(/[&<>"']/g, m => ({
-					'&': '&amp;', '<': '&lt;', '>': '&gt;',
-					'"': '&quot;', "'": '&#39;'
-				})[m]);
-
-				function makeHtml(fragment) {
-					return `<span class="m42kup-hl-${fragment.type}">${fragment.html || escapeHtml(fragment.text)}</span>`;
-				}
-
-				function walkPT(pt) {
-					var ret = '';
-					for (var i = 0; i < pt.length; i++) {
-						switch(pt[i].type) {
-							case 'text':
-								ret += makeHtml({
-									type: 'tx',
-									text: pt[i].data
-								});
-								break;
-							case 'element':
-								var tmp = makeHtml({
-									type: 'lbm',
-									text: pt[i].children[0].data
-								})
-									+ makeHtml({
-									type: 'tn',
-									text: pt[i].children[1].data
-								})
-									+ makeHtml({
-									type: 'sp',
-									text: pt[i].children[2].data
-								})
-									+ walkPT(pt[i].children.slice(3, -1))
-									+ makeHtml({
-									type: 'rbm',
-									text: pt[i].children[pt[i].children.length - 1].data
-								});
-
-								ret += makeHtml({
-									type: 'elem',
-									html: tmp
-								});
-								break;
-							case 'verbatim':
-								var tmp = makeHtml({
-									type: 'lvm',
-									text: pt[i].children[0].data
-								})
-									+ makeHtml({
-									type: 'vbt-tx',
-									text: pt[i].children[1].data
-								})
-									+ makeHtml({
-									type: 'rvm',
-									text: pt[i].children[2].data
-								});
-
-								ret += makeHtml({
-									type: 'verb',
-									html: tmp
-								});
-								break;
-							case 'mismatched right boundary marker':
-								output.push({
-									type: 'mrbm',
-									text: pt[i].data
-								});
-								break;
-						}
-					}
-
-					return ret;
-				}
-
-				return walkPT(pt);
-			}
 		</script>
 	</body>
 </html>

@@ -174,7 +174,7 @@
 <div class="section" id="parse-tree">
 <h2>parse tree의 형식<a class="headerlink" href="#parse-tree" title="Permalink to this headline">¶</a></h2>
 <p>근본 없는 언어로 써 봤는데 알아볼 수 있을 거라 생각합니다.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">parse</span><span class="o">-</span><span class="nx">tree</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="nx">block</span><span class="o">+</span> <span class="nx">mismatched</span><span class="o">-</span><span class="nx">rbm</span><span class="o">?</span><span class="p">)</span><span class="o">?</span> <span class="p">]</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">parse</span><span class="o">-</span><span class="nx">tree</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="nx">block</span> <span class="o">|</span> <span class="nx">mismatched</span><span class="o">-</span><span class="nx">rbm</span><span class="p">)</span><span class="o">*</span> <span class="p">]</span>
 
 <span class="nx">where</span><span class="o">:</span>
     <span class="nx">block</span> <span class="o">=</span> <span class="nx">text</span> <span class="o">|</span> <span class="nx">element</span> <span class="o">|</span> <span class="nx">verbatim</span>
@@ -249,7 +249,7 @@
 <div class="section" id="ast">
 <h2>AST의 형식<a class="headerlink" href="#ast" title="Permalink to this headline">¶</a></h2>
 <p>근본 없는 언어로 써 봤는데 알아볼 수 있을 거라 생각합니다.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">ast</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="nx">block</span><span class="o">+</span> <span class="nx">error</span><span class="o">?</span><span class="p">)</span><span class="o">?</span> <span class="p">]</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">ast</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="nx">block</span> <span class="o">|</span> <span class="nx">error</span><span class="p">)</span><span class="o">*</span> <span class="p">]</span>
 
 <span class="nx">where</span><span class="o">:</span>
     <span class="nx">block</span> <span class="o">=</span> <span class="nx">text</span> <span class="o">|</span> <span class="nx">element</span>
