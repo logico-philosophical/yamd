@@ -242,7 +242,16 @@
 			var editor = CodeMirror.fromTextArea($('#input'), {
 				mode: 'm42kup',
 				lineNumbers: true,
-				lineWrapping: true
+				lineWrapping: true,
+				/*
+				 * "textarea" | "contenteditable"
+				 * According to the documentation
+				 * (https://codemirror.net/doc/manual.html#option_inputStyle),
+				 * This value defaults to "contenteditable" on mobile browsers
+				 * and "textarea" on desktop browsers. However, contenteditable
+				 * model seems to have issues with composition strings.
+				 */
+				inputStyle: 'textarea'
 			});
 
 			editor.on('change', () => {
