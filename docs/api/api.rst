@@ -134,7 +134,10 @@ AST로부터 HTML을 렌더링 합니다.
 	        greet: content => {
 	            // Converts content type to HTML
 	            content = m42kup.renderer.htmlFilter(content);
-	            return m42kup.renderer.html(`Hello ${content.html}`);
+	            return {
+	                type: 'html',
+	                html: `Hello ${content.html}`
+	            }
 	        }
 	    }
 	});
