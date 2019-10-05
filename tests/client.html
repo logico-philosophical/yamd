@@ -94,8 +94,22 @@
 		<style>
 			.CodeMirror {
 				border: 1px #666 solid;
-				font-size: 1em;
+				font-size: .85em;
 				font-family: 'Roboto Mono';
+				height: auto;
+				padding: 1em;
+			}
+
+			.CodeMirror-focused .CodeMirror-selected {
+				background-color: #90CAF9;
+			}
+
+			.CodeMirror-scroll {
+				min-height: 50px;
+			}
+
+			.CodeMirror-readonly {
+				background-color: #f3f3f3;
 			}
 
 			.CodeMirror-placeholder {
@@ -241,8 +255,9 @@
 			
 			var editor = CodeMirror.fromTextArea($('#input'), {
 				mode: 'm42kup',
-				lineNumbers: true,
 				lineWrapping: true,
+				indentWithTabs: true,
+				viewportMargin: Infinity,
 				/*
 				 * "textarea" | "contenteditable"
 				 * According to the documentation
