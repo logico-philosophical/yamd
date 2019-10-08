@@ -3,7 +3,7 @@ m42kup.js의 문서화
 
 .. image :: https://readthedocs.org/projects/m42kup/badge/?version=latest
 	:alt: Documentation Status
-	:target: https://m42kup.readthedocs.io/en/latest/?badge=latest
+	:target: https://m42kup.readthedocs.io/ko/latest/?badge=latest
 .. image :: https://img.shields.io/github/license/logico-philosophical/m42kup
 	:alt: GitHub
 	:target: https://github.com/logico-philosophical/m42kup/blob/master/LICENSE
