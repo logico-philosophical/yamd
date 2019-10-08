@@ -133,7 +133,7 @@ dt['math'] = (content, options) => {
 	if (content.type != 'text')
 		throw TypeError('Non-text input');
 
-	var rendered = katex.renderToString(content.text, {
+	var rendered = options.katex.renderToString(content.text, {
 		throwOnError: false,
 		displayMode: false,
 		strict: 'error'
@@ -149,7 +149,7 @@ dt['displaymath'] = (content, options) => {
 	if (content.type != 'text')
 		throw TypeError('Non-text input');
 
-	var rendered = katex.renderToString(content.text, {
+	var rendered = options.katex.renderToString(content.text, {
 		throwOnError: false,
 		displayMode: true,
 		strict: 'error'
