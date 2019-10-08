@@ -9,6 +9,8 @@ function shallow(o) {
 function copyOptions(o) {
 	var o2 = {};
 	if (o.tags) o2.tags = shallow(o.tags);
+	if (o.hljs) o2.hljs = o.hljs;
+	if (o.katex) o2.katex = o.katex;
 	return o2;
 }
 
@@ -37,6 +39,9 @@ function options(o1, o2) {
 		
 		o1.tags = tags(o1.tags, o2.tags);
 	}
+
+	if (o2.hljs) o1.hljs = o2.hljs;
+	if (o2.katex) o1.katex = o2.katex;
 
 	return o1;
 }

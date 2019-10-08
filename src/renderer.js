@@ -106,12 +106,57 @@ dt['link'] = r => {
 	return html(`${quotes[name][0]}${r.html}${quotes[name][1]}`);
 }));
 
-// unimplemented elements
-[
-	'highlight', 'math', 'displaymath'
-].forEach(name => dt[name] = content => {
-	throw Error('Element not implemented');
-});
+dt['highlight'] = (content, options) => {
+	if (!options.hljs)
+		throw Error('Element not implemented (options.highlight not given)');
+
+	if (content.type != 'text')
+		throw TypeError('Non-text input');
+
+	var commonLangs = [
+		'apache', 'bash', 'coffeescript', 'cpp', 'cs',
+		'css', 'diff', 'http', 'ini', 'java',
+		'javascript', 'json', 'makefile', 'xml', 'markdown',
+		'nginx', 'objectivec', 'perl', 'php', 'python',
+		'ruby', 'sql'
+	];
+
+	var trimmed = content.text.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, ''),
+		highlighted = options.hljs.highlightAuto(trimmed, commonLangs).value;
+	return html(`<pre class="hljs"><code>${highlighted}\n</code></pre>`);
+};
+
+dt['math'] = (content, options) => {
+	if (!options.katex)
+		throw Error('Element not implemented (options.katex not given)');
+
+	if (content.type != 'text')
+		throw TypeError('Non-text input');
+
+	var rendered = katex.renderToString(content.text, {
+		throwOnError: false,
+		displayMode: false,
+		strict: 'error'
+	});
+
+	return html(rendered);
+};
+
+dt['displaymath'] = (content, options) => {
+	if (!options.katex)
+		throw Error('options.katex not given');
+
+	if (content.type != 'text')
+		throw TypeError('Non-text input');
+
+	var rendered = katex.renderToString(content.text, {
+		throwOnError: false,
+		displayMode: true,
+		strict: 'error'
+	});
+
+	return html(rendered);
+};
 
 // element aliases ordered by char code
 var aliases = {
@@ -172,20 +217,20 @@ function ast2html(ast, options) {
 
 			if (el.children.every(c => c.type == 'text')) {
 				// join as text
-				el.render = {
+				el.content = {
 					type: 'text',
 					text: el.children.map(c => c.text).join('')
 				};
 			} else {
 				// join as HTML
-				el.render = {
+				el.content = {
 					type: 'html',
 					html: el.children.map(htmlFilter)
 							.map(c => c.html).join('')
 				};
 			}
 
-			ret = tags[el.name](el.render);
+			ret = tags[el.name](el.content, options);
 		} catch (err) {
 			// err.message should not be printed
 			// @see issue #30

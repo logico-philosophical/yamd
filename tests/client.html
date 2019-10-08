@@ -198,63 +198,7 @@
 		<script>
 			$ = (q, n) => (n || document).querySelector(q);
 
-			var tags = {};
-
-			tags['highlight'] = tags[';;;'] = r => {
-				if (r.type != 'text') {
-					throw new TypeError('Non-text input');
-				}
-
-				var commonLangs = [
-					'apache', 'bash', 'coffeescript', 'cpp', 'cs',
-					'css', 'diff', 'http', 'ini', 'java',
-					'javascript', 'json', 'makefile', 'xml', 'markdown',
-					'nginx', 'objectivec', 'perl', 'php', 'python',
-					'ruby', 'sql'
-				];
-
-				var trimmed = r.text.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, ''),
-					highlighted = hljs.highlightAuto(trimmed, commonLangs).value;
-				return {
-					type: 'html',
-					html: `<pre class="hljs"><code>${highlighted}\n</code></pre>`
-				};
-			};
-
-			tags['math'] = tags['$'] = r => {
-				if (r.type != 'text') {
-					throw new TypeError(`Non-text input`);
-				}
-				var rendered = katex.renderToString(r.text, {
-					throwOnError: false,
-					displayMode: false,
-					strict: 'error'
-				});
-
-				return {
-					type: 'html',
-					html: rendered
-				};
-			};
-
-			tags['displaymath'] = tags['$$'] = r => {
-				if (r.type != 'text') {
-					throw new TypeError(`Non-text input`);
-				}
-				var rendered = katex.renderToString(r.text, {
-					throwOnError: false,
-					displayMode: true,
-					strict: 'error'
-				});
-
-				return {
-					type: 'html',
-					html: rendered
-				};
-			};
-
-			var options = {tags};
-			m42kup.set(options);
+			m42kup.set({hljs, katex});
 			
 			var editor = CodeMirror.fromTextArea($('#input'), {
 				mode: 'm42kup',
