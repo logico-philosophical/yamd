@@ -63,6 +63,112 @@ AST로부터 HTML을 렌더링 합니다.
 
 ``<String>`` HTML 이스케이프 된 문자열.
 
+``m42kup.renderer.Element({name, display, render})``
+-------------------------------------------------------
+
+m42kup 요소 인스턴스를 생성합니다. ``new`` 키워드와 함께 사용하세요.
+
+**Parameters**
+
+* ``arguments[0].name <String>``: 요소 이름.
+
+* ``arguments[0].display <"inline" | "leaf-block" | "container-block">``: 요소의 디스플레이 타입.
+
+* ``arguments[0].render <Function>``: 렌더링 함수. ``text`` 또는 ``html`` 타입의 인자 하나와 렌더링 옵션을 받아 ``text`` 또는 ``html``\ 을 반환하거나 ``Error``\ 를 ``throw`` 해야 합니다.
+
+	* ``text`` 타입은 다음과 같이 생겼습니다.
+
+		.. code-block:: js
+
+			{
+			    type: 'text',
+			    text: <String>
+			}
+
+	* ``html`` 타입은 다음과 같이 생겼습니다.
+
+		.. code-block:: js
+			
+			{
+				type: 'html',
+				html: <String>
+			}
+
+	* ``throw``\ 된 것은 ``Error``\ 의 인스턴스여야 합니다.
+
+	m42kup 코드 ``[*a < 3]``\ 을 예로 들어 보자면, 먼저
+
+	.. code-block:: js
+
+		{
+		    type: 'text',
+		    text: 'a < 3'
+		}
+
+	이 ``[*]``\ 에게 입력되는데, ``m42kup.renderer.htmlFilter``\ 가 적용되어서 타입이 ``html``\ 로 바뀝니다.
+
+	.. code-block:: js
+
+		{
+		    type: 'html',
+		    html: 'a &lt; 3'
+		}
+
+
+	이후 ``<i>``\ 와 ``</i>``\ 로 둘러싸인 값이 반환됩니다.
+
+	.. code-block:: js
+
+		{
+		    type: 'html',
+		    html: '<i>a &lt; 3</i>'
+		}
+
+
+	.. warning::
+
+		``text`` 값을 ``html`` 값으로 잘못 사용하면 XSS 위협에 노출될 수 있습니다. 예를 들어
+
+		.. code-block:: js
+
+			{
+			    type: 'text',
+			    text: '<script>alert(1337)</script>'
+			}
+
+
+		위와 같은 데이터를 ``[*]`` 요소가 ``htmlFilter`` 없이 사용하여 ``html`` 타입으로 변환한다면
+
+		.. code-block:: js
+
+			{
+			    type: 'html',
+			    html: '<i><script>alert(1337)</script></i>'
+			}
+
+
+		위와 같은 출력이 발생하여 악의적 스크립트가 실행될 수 있습니다. 이를 예방하기 위하여 ``text``\ 와 ``html``\ 의 데이터 부는 ``text``\ 와 ``html``\ 로 다르게 레이블 되어 있습니다.
+
+**Examples**
+
+.. code-block:: js
+
+	options.tags.greet = new m42kup.renderer.Element({
+	    name: 'greet',
+	    display: 'inline',
+	    render: (content, options) => {
+	        // Converts content type to HTML
+	        content = m42kup.renderer.htmlFilter(content);
+	        return {
+	            type: 'html',
+	            html: `Hello ${content.html}`
+	        };
+	    }
+	});
+
+``[greet.[*world]]``\ 라고 치면 Hello *world*\ 가 나옵니다.
+
+
 ``m42kup.renderer.htmlFilter(content)``
 ------------------------------------------------
 
@@ -125,27 +231,6 @@ AST로부터 HTML을 렌더링 합니다.
 
 ``<String>`` 렌더링 된 HTML.
 
-**Example**
-
-.. code-block:: js
-
-	m42kup.render('[greet [**M42kup]]!', {
-	    tags: {
-	        greet: content => {
-	            // Converts content type to HTML
-	            content = m42kup.renderer.htmlFilter(content);
-	            return {
-	                type: 'html',
-	                html: `Hello ${content.html}`
-	            }
-	        }
-	    }
-	});
-
-.. code-block:: html
-
-	Hello <b>M42kup</b>!
-
 ``m42kup.highlight(input)``
 --------------------------------
 
@@ -175,7 +260,7 @@ AST로부터 HTML을 렌더링 합니다.
 
 undefined
 
-**Example**
+**Examples**
 
 .. code-block:: js
 
@@ -227,7 +312,7 @@ undefined
 
 undefined
 
-**Example**
+**Examples**
 
 .. code-block:: js
 

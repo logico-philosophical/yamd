@@ -198,7 +198,25 @@
 		<script>
 			$ = (q, n) => (n || document).querySelector(q);
 
-			m42kup.set({hljs, katex});
+			var options = {
+				tags: {
+					greet: new m42kup.renderer.Element({
+						name: 'greet',
+						display: 'inline',
+						render: (content, options) => {
+							// Converts content type to HTML
+							content = m42kup.renderer.htmlFilter(content);
+							return {
+								type: 'html',
+								html: `Hello ${content.html}`
+							};
+						}
+					})
+				},
+				hljs, katex
+			};
+
+			m42kup.set(options);
 			
 			var editor = CodeMirror.fromTextArea($('#input'), {
 				mode: 'm42kup',

@@ -30,133 +30,192 @@ var pipe = (...fns) => {
 	}
 };
 
-/* default tags */
-var dt = {};
+function Element({name, display, render}) {
+	if (!name) throw TypeError('!name');
+	if (!['inline', 'leaf-block', 'container-block'].includes(display))
+		throw TypeError('display != "inline" | "leaf-block" | "container-block"');
+	if (!(render instanceof Function))
+		throw TypeError('!(render instanceof Function)');
 
-dt['comment'] = r => text('');
+	[this.name, this.display, this.render] = [name, display, render];
+}
 
-dt['entity'] = r => {
-	if (r.type != 'text')
-		throw new TypeError('Non-text input');
+var elements = {};
 
-	if(!/^([a-z]{1,50}|#[0-9]{1,10}|#x[0-9a-f]{1,10})$/i.test(r.text)) {
-		throw new SyntaxError('Invalid value');
-	}
-
-	return html(`&${r.text};`);
-};
-
-
-[
-	'b', 'blockquote', 'code', 'i', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'sup', 'sub'
-].forEach(name => dt[name] = pipe(htmlFilter, r => {
-	return html(`<${name}>${r.html}</${name}>`);
-}));
-
-dt['blockcode'] = pipe(htmlFilter, r => {
-	var trimmed = r.html.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
-	return html(`<pre><code>${trimmed}\n</code></pre>`);
+elements.comment = new Element({
+	name: 'comment',
+	display: 'inline',
+	render: (content) => text('')
 });
 
-dt['bi'] = pipe(dt['b'], dt['i']);
+elements.entity = new Element({
+	name: 'entity',
+	display: 'inline',
+	render: (content) => {
+		if (content.type != 'text')
+			throw TypeError('Non-text input');
+
+		if(!/^([a-z]{1,50}|#[0-9]{1,10}|#x[0-9a-f]{1,10})$/i.test(content.text))
+			throw SyntaxError('Invalid value');
+
+		return html(`&${content.text};`);
+	}
+});
+
+[
+	'b', 'code', 'i', 'u', 'sup', 'sub'
+].forEach(name => elements[name] = new Element({
+	name: name,
+	display: 'inline',
+	render: pipe(htmlFilter, content => {
+		return html(`<${name}>${content.html}</${name}>`);
+	})
+}));
+
+[
+	'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'
+].forEach(name => elements[name] = new Element({
+	name: name,
+	display: 'leaf-block',
+	render: pipe(htmlFilter, content => {
+		return html(`<${name}>${content.html}</${name}>`);
+	})
+}));
+
+[
+	'blockquote',
+	'ol', 'ul', 'li',
+	'table', 'tr', 'td', 'th'
+].forEach(name => elements[name] = new Element({
+	name,
+	display: 'container-block',
+	render: pipe(htmlFilter, content => {
+		return html(`<${name}>${content.html}</${name}>`);
+	})
+}));
 
 [
 	'br', 'hr'
-].forEach(name => dt[name] = pipe(htmlFilter, r => {
-	return html(`<${name}>${r.html}`);
+].forEach(name => elements[name] = new Element({
+	name,
+	display: 'leaf-block',
+	render: pipe(htmlFilter, content => {
+		return html(`<${name}>${content.html}`);
+	})
 }));
 
-dt['link'] = r => {
-	if (r.type != 'text') {
-		throw new TypeError('Non-text input');
+elements.blockcode = new Element({
+	name: 'blockcode',
+	display: 'leaf-block',
+	render: pipe(htmlFilter, content => {
+		var trimmed = content.html.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
+		return html(`<pre><code>${trimmed}\n</code></pre>`);
+	})
+});
+
+elements.bi = new Element({
+	name: 'bi',
+	display: 'inline',
+	render: pipe(elements.b.render, elements.i.render)
+});
+
+elements.link = new Element({
+	name: 'link',
+	display: 'inline',
+	render: content => {
+		if (content.type != 'text')
+			throw TypeError('Non-text input');
+
+		if (!/^(http:\/\/|https:\/\/)/.test(content.text))
+			content.text = 'http://' + content.text;
+
+		// see issue #17
+		if (!/^(http:\/\/|https:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^ ]*)?$/.test(content.text))
+			throw Error('Invalid URL');
+
+		content = htmlFilter(content);
+		return html(`<a href="${content.html}">${content.html}</a>`);
 	}
-	if (!/^(http:\/\/|https:\/\/)/.test(r.text)) {
-		r.text = 'http://' + r.text;
-	}
-
-	// see issue #17
-	if (!/^(http:\/\/|https:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^ ]*)?$/.test(r.text)) {
-		throw Error('Invalid URL');
-	}
-
-	r = htmlFilter(r);
-	return html(`<a href="${r.html}">${r.html}</a>`);
-};
-
-[
-	'ol', 'ul', 'li'
-].forEach(name => dt[name] = pipe(htmlFilter, r => {
-	return html(`<${name}>${r.html}</${name}>`);
-}));
-
-[
-	'table', 'tr', 'td', 'th'
-].forEach(name => dt[name] = pipe(htmlFilter, r => {
-	return html(`<${name}>${r.html}</${name}>`);
-}));
+});
 
 [
 	'squote', 'dquote'
-].forEach(name => dt[name] = pipe(htmlFilter, r => {
-	var quotes = {
-		'squote': ['\u2018', '\u2019'],
-		'dquote': ['\u201c', '\u201d']
-	};
+].forEach(name => elements[name] = new Element({
+	name,
+	display: 'inline',
+	render: pipe(htmlFilter, content => {
+		var quotes = {
+			'squote': ['\u2018', '\u2019'],
+			'dquote': ['\u201c', '\u201d']
+		};
 
-	return html(`${quotes[name][0]}${r.html}${quotes[name][1]}`);
+		return html(`${quotes[name][0]}${content.html}${quotes[name][1]}`);
+	})
 }));
 
-dt['highlight'] = (content, options) => {
-	if (!options.hljs)
-		throw Error('Element not implemented (options.highlight not given)');
+elements.highlight = new Element({
+	name: 'highlight',
+	display: 'leaf-block',
+	render: (content, options) => {
+		if (!options.hljs)
+			throw Error('Element not implemented (options.highlight not given)');
 
-	if (content.type != 'text')
-		throw TypeError('Non-text input');
+		if (content.type != 'text')
+			throw TypeError('Non-text input');
 
-	var commonLangs = [
-		'apache', 'bash', 'coffeescript', 'cpp', 'cs',
-		'css', 'diff', 'http', 'ini', 'java',
-		'javascript', 'json', 'makefile', 'xml', 'markdown',
-		'nginx', 'objectivec', 'perl', 'php', 'python',
-		'ruby', 'sql'
-	];
+		var commonLangs = [
+			'apache', 'bash', 'coffeescript', 'cpp', 'cs',
+			'css', 'diff', 'http', 'ini', 'java',
+			'javascript', 'json', 'makefile', 'xml', 'markdown',
+			'nginx', 'objectivec', 'perl', 'php', 'python',
+			'ruby', 'sql'
+		];
 
-	var trimmed = content.text.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, ''),
-		highlighted = options.hljs.highlightAuto(trimmed, commonLangs).value;
-	return html(`<pre class="hljs"><code>${highlighted}\n</code></pre>`);
-};
+		var trimmed = content.text.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, ''),
+			highlighted = options.hljs.highlightAuto(trimmed, commonLangs).value;
+		return html(`<pre class="hljs"><code>${highlighted}\n</code></pre>`);
+	}
+});
 
-dt['math'] = (content, options) => {
-	if (!options.katex)
-		throw Error('Element not implemented (options.katex not given)');
+elements.math = new Element({
+	name: 'math',
+	display: 'inline',
+	render: (content, options) => {
+		if (!options.katex)
+			throw Error('Element not implemented (options.katex not given)');
 
-	if (content.type != 'text')
-		throw TypeError('Non-text input');
+		if (content.type != 'text')
+			throw TypeError('Non-text input');
 
-	var rendered = options.katex.renderToString(content.text, {
-		throwOnError: false,
-		displayMode: false,
-		strict: 'error'
-	});
+		var rendered = options.katex.renderToString(content.text, {
+			throwOnError: false,
+			displayMode: false,
+			strict: 'error'
+		});
 
-	return html(rendered);
-};
+		return html(rendered);
+	}
+});
 
-dt['displaymath'] = (content, options) => {
-	if (!options.katex)
-		throw Error('options.katex not given');
+elements.displaymath = new Element({
+	name: 'displaymath',
+	display: 'leaf-block',
+	render: (content, options) => {
+		if (!options.katex)
+			throw Error('Element not implemented (options.katex not given)');
 
-	if (content.type != 'text')
-		throw TypeError('Non-text input');
+		if (content.type != 'text')
+			throw TypeError('Non-text input');
 
-	var rendered = options.katex.renderToString(content.text, {
-		throwOnError: false,
-		displayMode: true,
-		strict: 'error'
-	});
+		var rendered = options.katex.renderToString(content.text, {
+			throwOnError: false,
+			displayMode: true,
+			strict: 'error'
+		});
 
-	return html(rendered);
-};
+		return html(rendered);
+	}
+});
 
 // element aliases ordered by char code
 var aliases = {
@@ -186,17 +245,17 @@ var aliases = {
 };
 
 for (var k in aliases) {
-	if (!dt[aliases[k]]) {
+	if (!elements[aliases[k]]) {
 		throw new TypeError(`aliases[${JSON.stringify(k)}] aliases non-existing function ${JSON.stringify(aliases[k])}`);
 	}
-	dt[k] = dt[aliases[k]];
+	elements[k] = elements[aliases[k]];
 }
 
 function ast2html(ast, options) {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 
-	var tags = require('./cascade').tags(dt, options.tags);
+	var tags = require('./cascade').tags(elements, options.tags);
 	
 	for (var k in tags) if (tags[k] === false) delete tags[k];
 	
@@ -230,7 +289,7 @@ function ast2html(ast, options) {
 				};
 			}
 
-			ret = tags[el.name](el.content, options);
+			ret = tags[el.name].render(el.content, options);
 		} catch (err) {
 			// err.message should not be printed
 			// @see issue #30
@@ -255,5 +314,6 @@ function ast2html(ast, options) {
 module.exports = {
 	ast2html,
 	escapeHtml,
-	htmlFilter
+	htmlFilter,
+	Element
 };

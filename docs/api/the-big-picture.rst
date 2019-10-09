@@ -13,7 +13,8 @@
 	    renderer: {
 	        ast2html: [Function],
 	        escapeHtml: [Function],
-	        htmlFilter: [Function]
+	        htmlFilter: [Function],
+	        Element: [Function]
 	    },
 	    highlighter: {
 	    	pt2hl: [Function]
