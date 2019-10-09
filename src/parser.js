@@ -319,7 +319,18 @@ function pt2ast(pt) {
 				default:
 					throw new TypeError(`Unknown type: ${e.type}`);
 			}
-		});
+		})
+
+		// join text nodes & renmove empty
+		.reduce((l, r, i) => {
+			if (r.type == 'text') {
+				if (!r.text) return l;
+				if (i > 0 && l[l.length - 1].type == 'text')
+					return l[l.length - 1].text += r.text, l;
+			}
+
+			return l.push(r), l;
+		}, []);
 
 		return ast;
 	};
