@@ -4,7 +4,7 @@ m42kup 찍먹 해보기
 m42kup이란?
 ---------------
 
-**m42kup**\ ('markup'을 `leet <http://en.wikipedia.org/wiki/Leet>`__\ 로 쓴 것으로 '마크업'이라고 읽음)은 `m42.kr <http://m42.kr>`__\ 의 곳곳에서 사용하기 위하여 만들고 있는 마크업 언어입니다.
+**m42kup**\ (‘m42kup’을 `leet <http://en.wikipedia.org/wiki/Leet>`__\ 로 쓴 것으로 ‘마크업’이라고 읽음)은 `m42.kr <http://m42.kr>`__\ 의 곳곳에서 사용하기 위하여 만들고 있는 마크업 언어입니다.
 
 m42kup의 간추린 사용법
 ------------------------
