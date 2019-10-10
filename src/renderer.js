@@ -330,8 +330,6 @@ function ast2html(ast, options) {
 								return add(c);
 							}
 
-							console.log(split);
-
 							split.forEach((s, i) => {
 								if (s.length) add({
 									type: 'text',
@@ -378,7 +376,7 @@ function ast2html(ast, options) {
 		} catch (err) {
 			// err.message should not be printed
 			// @see issue #30
-			ret = html(error(err.stack));
+			ret = html(error(el.code));
 			ret.display = 'inline';
 		} finally {
 			return ret;
