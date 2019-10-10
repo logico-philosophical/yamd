@@ -176,7 +176,7 @@ elements.highlight = new Element({
 		return html(`<pre class="hljs"><code>${highlighted}\n</code></pre>`);
 	}
 });
-
+ 
 elements.math = new Element({
 	name: 'math',
 	display: 'inline',
@@ -301,7 +301,7 @@ function ast2html(ast, options) {
 				if (text && el.display == 'container-block') {
 					el.content = {
 						type: 'html',
-						html: text.split(/(?:\r\n|\r|\n){2,}/).map(escapeHtml)
+						html: text.split(/(\r\n){2,}|\r{2,}|\n{2,}/).map(escapeHtml)
 							.map(s => `<p>${s}</p>`).join('')
 					};
 				} else {
@@ -325,7 +325,7 @@ function ast2html(ast, options) {
 
 					el.children.forEach(c => {
 						if (c.type == 'text') {
-							var split = c.text.split(/(?:\r\n|\r|\n){2,}/);
+							var split = c.text.split(/(\r\n){2,}|\r{2,}|\n{2,}/);
 							if (split.length < 2) {
 								return add(c);
 							}
