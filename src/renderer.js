@@ -258,57 +258,132 @@ function ast2html(ast, options) {
 	var tags = require('./cascade').tags(elements, options.tags);
 	
 	for (var k in tags) if (tags[k] === false) delete tags[k];
+
+	var root = {
+		type: 'element',
+		root: true,
+		children: ast
+	};
+
+	var labelDisplayTypes = el => {
+		el.display = el.root
+			? 'container-block'
+			: el.name in tags
+				? tags[el.name].display
+				: 'inline';
+
+		el.children.forEach(c => c.type == 'element' && labelDisplayTypes(c));
+	};
+
+	labelDisplayTypes(root);
 	
 	// recurse top-down, render bottom-up
 	var recurse = el => {
 		var ret;
 		
 		try {
-			if (!(el.name in tags)) {
-				if (!el.name) {
-					throw Error('No tag name');
+			if (!el.root) {
+				if (!(el.name in tags)) {
+					if (!el.name) {
+						throw Error('No tag name');
+					}
+					throw Error('Undefined tag name');
 				}
-				throw Error('Undefined tag name');
 			}
 
 			el.children = el.children.map(c =>
-				c.type == 'element' ? recurse(c) : c);
+				c.type == 'element' ? (c.displayContext = el.display, recurse(c)) : c);
 
 			if (el.children.every(c => c.type == 'text')) {
 				// join as text
-				el.content = {
-					type: 'text',
-					text: el.children.map(c => c.text).join('')
-				};
+				var text = el.children.map(c => c.text).join('');
+
+				if (text && el.display == 'container-block') {
+					el.content = {
+						type: 'html',
+						html: text.split(/(?:\r\n|\r|\n){2,}/).map(escapeHtml)
+							.map(s => `<p>${s}</p>`).join('')
+					};
+				} else {
+					el.content = {
+						type: 'text',
+						text
+					};
+				}
 			} else {
-				// join as HTML
-				el.content = {
-					type: 'html',
-					html: el.children.map(htmlFilter)
-							.map(c => c.html).join('')
-				};
+				if (el.display == 'container-block') {
+					var paragraphs = [], p = [];
+
+					var commit = () => {
+						if (p.length) {
+							paragraphs.push(p);
+							p = [];
+						}
+					}
+
+					var add = e => p.push(e);
+
+					el.children.forEach(c => {
+						if (c.type == 'text') {
+							var split = c.text.split(/(?:\r\n|\r|\n){2,}/);
+							if (split.length < 2) {
+								return add(c);
+							}
+
+							split.forEach((s, i) => {
+								if (s.length) add({
+									type: 'text',
+									text: s
+								});
+
+								if (i < split.length - 1) commit();
+							});
+						} else {
+							if (c.display != 'inline') {
+								commit();
+								// direct push to list differentiates non-paragraphs
+								paragraphs.push(c);
+								commit();
+							} else {
+								add(c);
+							}
+						}
+					});
+
+					commit();
+
+					el.content = {
+						type: 'html',
+						html: paragraphs.map(p => {
+							if (p instanceof Array)
+								return '<p>' + p.map(htmlFilter).map(c => c.html).join('') + '</p>';
+							else return p.html;
+						}).join('')
+					};
+				} else {
+					// join as HTML
+					el.content = {
+						type: 'html',
+						html: el.children.map(htmlFilter)
+								.map(c => c.html).join('')
+					};
+				}
 			}
 
-			ret = tags[el.name].render(el.content, options);
+			if (el.root) ret = el.content;
+			else ret = tags[el.name].render(el.content, options);
+			ret.display = el.display;
 		} catch (err) {
 			// err.message should not be printed
 			// @see issue #30
 			ret = html(error(el.code));
+			ret.display = 'inline';
 		} finally {
 			return ret;
 		}
 	};
 
-	for (var i = 0; i < ast.length; i++) {
-		if (ast[i].type == 'element') {
-			ast[i] = recurse(ast[i]);
-		}
-	}
-
-	return ast
-		.map(htmlFilter)
-		.map(c => c.html)
-		.join('');
+	return htmlFilter(recurse(root)).html;
 }
 
 module.exports = {

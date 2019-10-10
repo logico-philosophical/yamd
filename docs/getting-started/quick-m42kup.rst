@@ -26,6 +26,9 @@ m42kup의 간추린 사용법
 			</tr>
 		</thead>
 		<tbody>
+			<tr><td><pre>text text</pre></td><td><p>text text</p></td></tr>
+			<tr><td><pre>text<br>text</pre></td><td><p>text text</p></td></tr>
+			<tr><td><pre>text<br><br>text</pre></td><td><p>text</p><p>text</p></td></tr>
 			<tr><td><pre>[===Heading 3]</pre></td><td><h3>Heading 3</h3></td></tr>
 			<tr><td><pre>[*italic text]</pre></td><td><p><i>italic text</i></p></td></tr>
 			<tr><td><pre>[**bold text]</pre></td><td><p><b>bold text</b></p></td></tr>
@@ -176,7 +179,7 @@ TeX 문법을 써서 수식을 작성할 수도 있습니다.
 		</tbody>
 	</table>
 
-내용에 `````\ 가 포함된 경우 ```<``\ 와 ``>```\ 로 감싸면 됩니다. 내용에 ``>```\ 가 포함된 경우 ```<<``\ 와 ``>>```\ 로 감싸면 됩니다. ``<``\ 랑 ``>``\ 를 늘릴 수 있습니다. 내용을 ``<``\ 로 시작하려면 ``.<``\ 로 시작하면 됩니다.
+내용에 `````\ 가 포함된 경우 ```<``\ 와 ``>```\ 로 감싸면 됩니다. 내용에 ``>```\ 가 포함된 경우 ```<<``\ 와 ``>>```\ 로 감싸면 되며 이와 같이 ``<``\ 랑 ``>``\ 를 늘릴 수 있습니다. 내용을 ``<``\ 로 시작하려면 ``.<``\ 로 시작하면 됩니다.
 
 .. raw:: html
 	

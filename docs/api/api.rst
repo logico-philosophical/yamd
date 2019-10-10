@@ -176,7 +176,10 @@ m42kup 요소 인스턴스를 생성합니다. ``new`` 키워드와 함께 사�
 
 **Parameters**
 
-* ``content <Object>``: HTML 렌더링 과정에서 생성되는 ``html``, ``text``, 또는 ``error`` 타입의 객체. `렌더링 옵션 <options.html>`__\ 에 설명이 있습니다.
+* ``content <Object>``: HTML 렌더링 과정에서 생성되는 ``html``, ``text``, 또는 ``error`` 타입의 객체. |m42kup.renderer.Element|_ 에 설명이 있습니다.
+
+.. |m42kup.renderer.Element| replace:: ``m42kup.renderer.Element``
+.. _m42kup.renderer.Element: api.html#m42kup-renderer-element-name-display-render
 
 **Throws**
 
