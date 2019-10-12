@@ -60,6 +60,8 @@ AST로부터 노드의 트리를 만듭니다. ``m42kup.renderer.ast2nt``\ 와 �
 
 ``<string>`` 렌더링 된 HTML.
 
+**Examples**
+
 .. code-block:: js
 
     m42kup.render('[*hello]')
