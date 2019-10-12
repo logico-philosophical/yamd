@@ -26,10 +26,12 @@ m42kup.js의 문서화
 	:maxdepth: 2
 	:caption: 불안정한 API
 
-	api/the-big-picture
 	api/options
 	api/formats
-	api/api
+	api/m42kup
+	api/m42kup.parser
+	api/m42kup.renderer
+	api/m42kup.highlighter
 
 .. toctree::
 	:maxdepth: 2

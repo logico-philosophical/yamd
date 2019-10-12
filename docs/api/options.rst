@@ -7,7 +7,7 @@
 
 	options = {
 	    tags: {
-	        <tag name>: <m42kup.renderer.Element instance>,
+	        <tag name>: <m42kup.renderer.ElementClass instance>,
 	        ...
 	    },
 	    hljs: <highlight.js object>,
@@ -17,10 +17,7 @@
 ``options.tags``
 ---------------------
 
-태그 이름과 |m42kup.renderer.Element|_ 인스턴스의 키-값 쌍입니다. 커스텀 요소를 정의하기 위해 사용됩니다.
-
-.. |m42kup.renderer.Element| replace:: ``m42kup.renderer.Element``
-.. _m42kup.renderer.Element: api.html#m42kup-renderer-element-name-display-render
+태그 이름과 ``m42kup.renderer.ElementClass`` 인스턴스의 키-값 쌍입니다. 커스텀 요소를 정의하기 위해 사용됩니다.
 
 ``options.hljs``
 ----------------------

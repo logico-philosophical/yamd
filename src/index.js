@@ -17,6 +17,17 @@ function setOptions(options) {
 	globalOptions = options;
 }
 
+function ast2nt(ast, options) {
+	if (!options) options = {};
+	if (!options.tags) options.tags = {};
+
+	options = cascade.options(globalOptions, options);
+
+	var nt = renderer.ast2nt(ast, options);
+
+	return nt;
+}
+
 function render(input, options) {
 	input += '';
 	if (!options) options = {};
@@ -26,7 +37,7 @@ function render(input, options) {
 
 	var pt = parser.input2pt(input);
 	var ast = parser.pt2ast(pt);
-	var html = renderer.ast2html(ast, options);
+	var html = renderer.ast2nt(ast, options).outerHtml;
 	
 	return html;
 }
@@ -44,6 +55,7 @@ var m42kup = {
 	parser,
 	renderer,
 	highlighter,
+	ast2nt,
 	render,
 	highlight,
 	cascade: cascadeOptions,
