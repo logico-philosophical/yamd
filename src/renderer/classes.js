@@ -118,6 +118,27 @@ classMap.link = new ElementClass({
 	}
 });
 
+classMap.img = new ElementClass({
+	name: 'img',
+	display: 'leaf-block',
+	render: el => {
+		if (!el.innerIsText)
+			return el.error('Non-text input');
+
+		var url = el.innerText;
+
+		if (!/^(http:\/\/|https:\/\/)/.test(url))
+			url = 'http://' + url;
+
+		// see issue #17
+		if (!/^(http:\/\/|https:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^ ]*)?$/.test(url))
+			return el.error('Invalid URL');
+
+		var htmlUrl = el.escapeHtml(url);
+		return el.html(`<div><img src="${htmlUrl}"></div>`);
+	}
+});
+
 [
 	'squote', 'dquote'
 ].forEach(name => classMap[name] = new ElementClass({
@@ -221,7 +242,8 @@ var aliases = {
 	'\\': 'br',
 	'^': 'sup',
 	'_': 'sub',
-	'~': 'link'
+	'~': 'link',
+	'~~': 'img'
 };
 
 for (var k in aliases) {
