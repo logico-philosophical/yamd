@@ -135,7 +135,7 @@ classMap.img = new ElementClass({
 			return el.error('Invalid URL');
 
 		var htmlUrl = el.escapeHtml(url);
-		return el.html(`<div><img src="${htmlUrl}"></div>`);
+		return el.html(`<div class="m42kup-img-block"><img src="${htmlUrl}"></div>`);
 	}
 });
 
