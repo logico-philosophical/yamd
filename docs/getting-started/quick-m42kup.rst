@@ -34,7 +34,12 @@ m42kup의 간추린 사용법
 			<tr><td><pre>[**bold text]</pre></td><td><p><b>bold text</b></p></td></tr>
 			<tr><td><pre>[***bolditalic text]</pre></td><td><p><i><b>bolditalic text</b></i></p></td></tr>
 			<tr><td><pre>[~example.com]</pre></td><td><p><a href="http://example.com">http://example.com</a></p></td></tr>
+			<tr><td><pre>[~~m42.kr/logomark.svg]</pre></td><td><div><img src="http://m42.kr/logomark.svg"></div></td></tr>
 			<tr><td><pre>[&rarr]</pre></td><td><p>&rarr;</p></td></tr>
+			<tr><td><pre>[ol<br>  [*] list item 1<br>  [*] list item 2<br>]</pre></td><td><ol><li><p>list item 1</p></li><li><p>list item 2</p></li></ol></td></tr>
+			<tr><td><pre>[ul.list item 1 [*] list item 2]</pre></td><td><ul><li><p>list item 1</p></li><li><p>list item 2</p></li></ul></td></tr>
+			<tr><td>TeX style<pre>[table<br>  a [*] b [**]<br>  c [*] d<br>]</pre></td><td><table><tr><td><p>a</p></td><td><p>b</p></td></tr><tr><td><p>c</p></td><td><p>d</p></td></tr></table></td></tr>
+			<tr><td>nested style<pre>[table<br>  [**]<br>    [*] a<br>    [*] b<br>  [**]<br>    [*] c<br>    [*] d<br>]</pre></td><td><table><tr><td><p>a</p></td><td><p>b</p></td></tr><tr><td><p>c</p></td><td><p>d</p></td></tr></table></td></tr>
 			<tr><td><pre>`[*not italic]`</pre></td><td><p>[*not italic]</p></td></tr>
 			<tr><td><pre>[;`[*not italic]`]</pre></td><td><p><code class="docutils literal notranslate">[*not italic]</code></p></td></tr>
 			<tr><td><pre>[;;`

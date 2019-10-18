@@ -91,7 +91,7 @@ AST로부터 노드의 트리를 만듭니다.
 
 * ``Node``
 
-``ElementClass({name, display, render})``
+``ElementClass({name, display, render, ?split})``
 ------------------------------------------------------------
 
 새로운 m42kup 요소 종류를 만듭니다. ``new`` 키워드와 함께 사용하세요.
@@ -101,6 +101,7 @@ AST로부터 노드의 트리를 만듭니다.
 * ``arguments[0].name <string>``: 요소 이름.
 * ``arguments[0].display <"inline" | "leaf-block" | "container-block">``: 요소의 디스플레이 타입.
 * ``arguments[0].render <Function (element <Element>, options <Object>) => <TextNode | HtmlNode | ErrorNode>>``: 렌더링 함수. 렌더링 할 ``Element``\ (이름이 해당 ``ElementClass``\ 와 같음)와 렌더링 옵션을 입력받아 ``TextNode``, ``HtmlNode``, ``ErrorNode`` 중 하나를 반환합니다.
+* ``arguments[0].split <string | string[]>`` (*optional*): 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 ``[ol]``\ 의 경우 ``'*'``\ 이고 ``[table]``\ 의 경우 ``['*', '**']``.
 
 **Examples**
 
@@ -115,7 +116,7 @@ AST로부터 노드의 트리를 만듭니다.
 	});
 
 
-``Element({name, display, render, code, children, options})``
+``Element({name, display, render, code, children, ?split, options})``
 --------------------------------------------------------------------------------
 
 노드 트리에서 텍스트를 표현하는 클래스입니다. 이걸 직접 생성하는 것은 현재 지원하지 않고 내부적으로 ``ElementClass``\ 로부터 생성됩니다.
@@ -204,6 +205,7 @@ AST로부터 노드의 트리를 만듭니다.
 * ``<Element>.children <Node[]>``: 요소의 자식 노드 리스트.
 * ``<Element>.display <"inline" | "leaf-block" | "container-block">``: 요소의 디스플레이 타입.
 * ``<Element>.code <string>``: 요소의 m42kup 코드.
+* ``<Element>.split <string | string[]>``: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 ``[ol]``\ 의 경우 ``'*'``\ 이고 ``[table]``\ 의 경우 ``['*', '**']``. 구분하지 않으면 ``undefined``.
 * ``<Element>.isError <boolean>``: 렌더링 결과 에러가 났는지 여부.
 
 	.. warning::
@@ -216,9 +218,9 @@ AST로부터 노드의 트리를 만듭니다.
 
 		렌더링 되기 위해 인자로 넘겨진 ``Element`` 인스턴스의 경우 렌더링 되기 전이므로 ``errorMessage`` 속성을 사용할 수 없습니다.
 
-* ``<Element>.innerIsText <boolean>``: 내부 컨텐트가 텍스트로 인식될 수 있는지 여부.
-* ``<Element>.innerText <string>``: 텍스트 형태의 내부 컨텐트. ``<Element>.innerIsText == false``\ 일 경우 ``null``.
-* ``<Element>.innerHtml <string>``: HTML 형태의 내부 컨텐트. 내부 컨텐트의 타입과 관련 없이 항상 제공됩니다.
+* ``<Element>.innerIsText <boolean>``: 내부 컨텐트가 텍스트로 인식될 수 있는지 여부. ``<Element>.split``\ 이 설정되어 있을 경우 구분자에 의해 분리된 내부 컨텐트의 차원과 일치하는 중첩 배열입니다.
+* ``<Element>.innerText <string>``: 텍스트 형태의 내부 컨텐트. ``<Element>.innerIsText == false``\ 일 경우 ``null``. ``<Element>.split``\ 이 설정되어 있을 경우 구분자에 의해 분리된 내부 컨텐트의 차원과 일치하는 중첩 배열입니다.
+* ``<Element>.innerHtml <string>``: HTML 형태의 내부 컨텐트. 내부 컨텐트의 타입과 관련 없이 항상 제공됩니다. ``<Element>.split``\ 이 설정되어 있을 경우 구분자에 의해 분리된 내부 컨텐트의 차원과 일치하는 중첩 배열입니다.
 * ``<Element>.outerIsText <boolean>``: 렌더링 결과가 텍스트로 인식될 수 있는지 여부.
 
 	.. warning::

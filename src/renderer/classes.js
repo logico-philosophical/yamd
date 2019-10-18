@@ -49,9 +49,7 @@ classMap.entity = new ElementClass({
 }));
 
 [
-	'blockquote',
-	'ol', 'ul', 'li',
-	'table', 'tr', 'td', 'th'
+	'blockquote'
 ].forEach(name => classMap[name] = new ElementClass({
 	name,
 	display: 'container-block',
@@ -79,6 +77,32 @@ classMap.entity = new ElementClass({
 		return el.html(`<${name}>${el.innerHtml}`);
 	}
 }));
+
+['ul', 'ol'].forEach(name => {
+	classMap[name] = new ElementClass({
+		name,
+		display: 'container-block',
+		split: '*',
+		render: el => {
+			return el.html(`<${name}>`
+				+ el.innerHtml.map(h => `<li>${h}</li>`).join('')
+				+ `</${name}>`);
+		}
+	});
+});
+
+classMap.table = new ElementClass({
+	name: 'table',
+	display: 'container-block',
+	split: ['*', '**'],
+	render: el => {
+		return el.html('<table>'
+			+ el.innerHtml.map(hh => '<tr>'
+				+ hh.map(h => `<td>${h}</td>`).join('')
+				+ '</tr>').join('')
+			+ '</table>')
+	}
+})
 
 classMap.blockcode = new ElementClass({
 	name: 'blockcode',
