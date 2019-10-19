@@ -8,6 +8,3 @@
 [![GitHub](https://img.shields.io/github/license/logico-philosophical/m42kup)](https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)
 
 JavaScript로 미완성 마크업 언어인 [m42kup](https://m42kup.readthedocs.io/ko/latest/getting-started/quick-m42kup.html)의 HTML 렌더러를 구현한 것입니다. API가 대단히 불안정하니 조심하세요.
-
-## License
-[MIT](LICENSE)
