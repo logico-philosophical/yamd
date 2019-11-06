@@ -1,29 +1,22 @@
 설치
 ======
 
-npm으로 최-신 버전 받기
+npm으로 최신 버전 받기
 -------------------------------
 
-m42kup을 git 저장소에서 받아서 node.js 프로젝트의 ``node_modules`` 디렉터리에 저장합니다.
-
 .. code-block:: bash
+	
+	~/my-project-dir $ npm install m42kup
 
-	~ $ cd my-project-dir/
-	~/my-project-dir $ npm install --save logico-philosophical/m42kup
-
-단 git이 설치되어 있어야 합니다. 이후
+이후
 
 .. code-block:: js
 
 	const m42kup = require('m42kup');
 
-하여 사용하면 됩니다.
+와 같이 ``require`` 하여 사옹하면 됩니다.
 
-.. warning::
-
-	이 프로젝트는 npm에 올려지지 않았으며 초기 개발 버전입니다(버전이 0.1.0으로 고정되어 있음). 공개 API가 안정되어 있지 않으므로 업데이트를 했더니 어느 날 갑자기 작동 방식이 바뀌거나 고장날 수 있습니다.
-
-최-신 버전 clone 하기
+기여를 위해 최-신 버전 clone 하기
 ----------------------------------
 
 .. code-block:: bash
