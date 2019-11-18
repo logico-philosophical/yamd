@@ -1,9 +1,10 @@
-<h1 align="center"><code>m42kup.js</code></h1>
+<h1 align="center"><code>M42/markup</code></h1>
 <p align="center">
   <a href="https://m42kup.readthedocs.io/ko/latest/?badge=latest"><i>★Read the Docs★</i></a> ·
   <a href="https://logico-philosophical.github.io/m42kup/tests/client.html">Demonstration</a>
 </p>
 
+[![npm](https://img.shields.io/npm/v/m42kup)](https://www.npmjs.com/package/m42kup)
 [![Documentation Status](https://readthedocs.org/projects/m42kup/badge/?version=latest)](https://m42kup.readthedocs.io/ko/latest/?badge=latest)
 [![GitHub](https://img.shields.io/github/license/logico-philosophical/m42kup)](https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)
 
