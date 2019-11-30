@@ -205,7 +205,7 @@ function Element({name, display, render, code, children,
 				if (it.trim() && this.display == 'container-block') {
 					return it
 						// ?: is important
-						.split(/(?:\r\n){2,}|\r{2,}|\n{2,}/)
+						.split(/(?:\r\n[ \t]*){2,}|(?:\r[ \t]*){2,}|(?:\n[ \t]*){2,}/)
 						.filter(text => !!text.trim())
 						.map(this.escapeHtml)
 						.map(s => `<p>${s}</p>`).join('');
@@ -239,7 +239,7 @@ function Element({name, display, render, code, children,
 			li.forEach(c => {
 				if (c instanceof TextNode) {
 					// ?: is important
-					var split = c.text.split(/(?:\r\n){2,}|\r{2,}|\n{2,}/);
+					var split = c.text.split(/(?:\r\n[ \t]*){2,}|(?:\r[ \t]*){2,}|(?:\n[ \t]*){2,}/);
 					if (split.length < 2) {
 						if (c.text.trim()) add(c);
 						return;
