@@ -241,8 +241,7 @@ function Element({name, display, render, code, children,
 					// ?: is important
 					var split = c.text.split(/(?:\r\n[ \t]*){2,}|(?:\r[ \t]*){2,}|(?:\n[ \t]*){2,}/);
 					if (split.length < 2) {
-						if (c.text.trim()) add(c);
-						return;
+						return add(c);
 					}
 
 					split.forEach((s, i) => {
