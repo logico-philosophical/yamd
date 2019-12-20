@@ -321,7 +321,7 @@ function pt2ast(pt) {
 			}
 		})
 
-		// join text nodes & renmove empty
+		// join text nodes & remove empty
 		.reduce((l, r, i) => {
 			if (r.type == 'text') {
 				if (!r.text) return l;

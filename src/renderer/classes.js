@@ -121,6 +121,32 @@ classMap.bi = new ElementClass({
 	}
 });
 
+function normalizeUrl(url) {
+	url = url.trim();
+
+	// fragment
+	if (/^\#/.test(url)) {
+		if (/^\#[^\s]*$/.test(url)) {
+			return url;
+		} else return false;
+	}
+
+	// relative URL
+	if (/^(\/|\.\/|\.\.\/)/.test(url)) {
+		if (/^(\/|\.\/|\.\.\/)[^\s]*$/.test(url)) {
+			return url;
+		} else return false;
+	}
+
+	if (!/^(http:\/\/|https:\/\/|ftp:\/\/)/.test(url))
+		url = 'http://' + url;
+
+	// see issue #17
+	if (/^(http:\/\/|https:\/\/|ftp:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^\s]*)?$/.test(url)) {
+		return url;
+	} else return false;
+}
+
 classMap.link = new ElementClass({
 	name: 'link',
 	display: 'inline',
@@ -128,14 +154,8 @@ classMap.link = new ElementClass({
 		if (!el.innerIsText)
 			return el.error('Non-text input');
 
-		var url = el.innerText;
-
-		if (!/^(http:\/\/|https:\/\/)/.test(url))
-			url = 'http://' + url;
-
-		// see issue #17
-		if (!/^(http:\/\/|https:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^ ]*)?$/.test(url))
-			return el.error('Invalid URL');
+		var url = normalizeUrl(el.innerText);
+		if (!url) return el.error('Invalid URL');
 
 		var htmlUrl = el.escapeHtml(url);
 		return el.html(`<a href="${htmlUrl}">${htmlUrl}</a>`);
@@ -149,14 +169,8 @@ classMap.img = new ElementClass({
 		if (!el.innerIsText)
 			return el.error('Non-text input');
 
-		var url = el.innerText;
-
-		if (!/^(http:\/\/|https:\/\/)/.test(url))
-			url = 'http://' + url;
-
-		// see issue #17
-		if (!/^(http:\/\/|https:\/\/)[a-z0-9]+(-+[a-z0-9]+)*(\.[a-z0-9]+(-+[a-z0-9]+)*)+\.?(:[0-9]{1,5})?(\/[^ ]*)?$/.test(url))
-			return el.error('Invalid URL');
+		var url = normalizeUrl(el.innerText);
+		if (!url) return el.error('Invalid URL');
 
 		var htmlUrl = el.escapeHtml(url);
 		return el.html(`<div class="m42kup-img-block"><img src="${htmlUrl}"></div>`);
