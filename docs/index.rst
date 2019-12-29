@@ -18,12 +18,6 @@ m42kup.js의 문서화
 
 .. toctree::
 	:maxdepth: 2
-	:caption: m42kup 명세
-
-	m42kup-spec/introduction
-
-.. toctree::
-	:maxdepth: 2
 	:caption: 불안정한 API
 
 	api/options

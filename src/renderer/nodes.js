@@ -125,14 +125,13 @@ ElementClass.prototype.instantiate = function ({code, children, options}) {
 	});
 }
 
-function Element({name, display, render, code, children,
-		split, options}) {
+function Element({name, display, render, code, children, split, options}) {
 	if (!name) throw TypeError('You give arg0 a bad name');
 	if (!['inline', 'leaf-block', 'container-block'].includes(display))
 		throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
 	if (!(render instanceof Function))
 		throw TypeError('arg0.render should be a function');
-	if (!code) throw TypeError('You give arg0 a bad code');
+	if (typeof code != 'string') throw TypeError('You give arg0 a bad code');
 
 	(() => {
 		var foo = c => c instanceof Element

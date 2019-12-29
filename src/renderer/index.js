@@ -11,100 +11,99 @@ function ast2nt(ast, options) {
 	for (var k in classMap) if (classMap[k] === false) delete classMap[k];
 	
 	var recurse = (tree, root) => {
-		if (root) {
+		if (tree.type == 'root') {
 			return Root.instantiate({
-				code: '[code unavailable]',
+				code: tree.code,
 				children: tree.children.map(c => recurse(c, false)),
 				options
 			});
-		} else {
-			if (tree.type == 'text')
-				return new TextNode(tree.text);
-			
-			if (tree.type == 'error')
-				return new ErrorNode({
-					message: '[error]',
-					code: tree.text
-				});
-			
-			if (tree.type == 'element') {
-				if (tree.name in classMap) {
-					if (classMap[tree.name].split) {
-						var recurseSplit = (list, split) => {
-							if (split.length == 0)
-								return list.map(c => recurse(c, false));
+		}
+		if (tree.type == 'text')
+			return new TextNode(tree.text);
+		
+		if (tree.type == 'error')
+			return new ErrorNode({
+				message: '[error]',
+				code: tree.text
+			});
+		
+		if (tree.type == 'element') {
+			if (tree.name in classMap) {
+				if (classMap[tree.name].split) {
+					var recurseSplit = (list, split) => {
+						if (split.length == 0)
+							return list.map(c => recurse(c, false));
 
-							var s = split[split.length - 1];
+						var s = split[split.length - 1];
 
-							var a = [], b;
+						var a = [], b;
 
-							// find delimiters
-							list = list.map(l => {
-								if (l.type == 'element' && l.name == s
-										&& !l.children.length) {
-									return ({
-										type: 'delimiter'
-									});
-								}
-
-								return l;
-							});
-
-							// trim left
-							if (list.length && list[0].type == 'text'
-									&& !list[0].text.trim()) {
-								list = list.slice(1);
-							}
-
-							// add omitted delimiter
-							if (!(list.length && list[0].type == 'delimiter')) {
-								list.unshift({
+						// find delimiters
+						list = list.map(l => {
+							if (l.type == 'element' && l.name == s
+									&& !l.children.length) {
+								return ({
 									type: 'delimiter'
 								});
 							}
 
-							for (var i = 0; i < list.length; i++) {
-								if (list[i].type == 'delimiter') {
-									if (b) a.push(b);
-									b = [];
-								} else {
-									b.push(list[i]);
-								}
-							}
-
-							a.push(b);
-
-							return a.map(e => recurseSplit(e, split.slice(0, -1)));
-						};
-
-						return classMap[tree.name].instantiate({
-							code: tree.code,
-							children: recurseSplit(
-								tree.children,
-								classMap[tree.name].split
-							),
-							options
+							return l;
 						});
-					}
+
+						// trim left
+						if (list.length && list[0].type == 'text'
+								&& !list[0].text.trim()) {
+							list = list.slice(1);
+						}
+
+						// add omitted delimiter
+						if (!(list.length && list[0].type == 'delimiter')) {
+							list.unshift({
+								type: 'delimiter'
+							});
+						}
+
+						for (var i = 0; i < list.length; i++) {
+							if (list[i].type == 'delimiter') {
+								if (b) a.push(b);
+								b = [];
+							} else {
+								b.push(list[i]);
+							}
+						}
+
+						a.push(b);
+
+						return a.map(e => recurseSplit(e, split.slice(0, -1)));
+					};
 
 					return classMap[tree.name].instantiate({
 						code: tree.code,
-						children: tree.children.map(c => recurse(c, false)),
+						children: recurseSplit(
+							tree.children,
+							classMap[tree.name].split
+						),
 						options
 					});
 				}
 
-				return new ErrorNode({
-					message: tree.name ? 'Undefined tag name' : 'No tag name',
-					code: tree.code
+				return classMap[tree.name].instantiate({
+					code: tree.code,
+					children: tree.children.map(c => recurse(c, false)),
+					options
 				});
 			}
 
-			throw TypeError(tree.type);
+			return new ErrorNode({
+				message: tree.name ? 'Undefined tag name' : 'No tag name',
+				code: tree.code
+			});
 		}
+
+		throw TypeError(tree.type);
 	}
 
-	var root = recurse({type: 'element', children: ast}, true);
+	var root = recurse(ast.root, true);
 	return root;
 }
 
