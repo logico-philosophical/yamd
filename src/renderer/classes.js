@@ -96,11 +96,14 @@ classMap.table = new ElementClass({
 	display: 'container-block',
 	split: ['*', '**'],
 	render: el => {
+		var n = el.innerHtml.map(e => e.length).reduce((l, r) => l < r ? r : l);
+
 		return el.html('<table>'
-			+ el.innerHtml.map(hh => '<tr>'
-				+ hh.map(h => `<td>${h}</td>`).join('')
-				+ '</tr>').join('')
-			+ '</table>')
+			+ el.innerHtml.map(hh => `<tr>${
+				hh.concat(Array(n - hh.length).fill(''))
+					.map(h => `<td>${h}</td>`).join('')
+			}</tr>`).join('')
+			+ '</table>');
 	}
 })
 
