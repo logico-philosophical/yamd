@@ -39,13 +39,13 @@ thing
 	/ text
 
 element
-	= lbm:lbm_push name:tag_name separator:separator children:things rbm:rbm_pop
+	= lbm:lbm_push name:tag_name properties:properties children:things rbm:rbm_pop
 	{
 		return {
 			type: 'element',
 			lbm,
 			name,
-			separator,
+			properties,
 			children,
 			rbm,
 			location: location()
@@ -74,8 +74,59 @@ tag_name
 		{return a + b.join('') + c.join('')}
 	/ ''
 
-separator
-	= '.' / ''
+properties
+	= left:'('
+		d:(
+			b:[a-z0-9-]+
+			c:(
+				'=' '"' a:(!'"' .)* '"'
+				{return [
+					'=',
+					'"',
+					a.map(e => e[1]).join(''),
+					'"'
+				]}
+				/ '=' "'" a:(!"'" .)* "'"
+				{return [
+					'=',
+					"'",
+					a.map(e => e[1]).join(''),
+					"'"
+				]}
+				/ '=' a:(!['") \t\n\r] .)*
+				{return [
+					'=',
+					'',
+					a.map(e => e[1]).join(''),
+					''
+				]}
+				/ ''
+				{return [
+					'', '', '', ''
+				]}
+			)
+			{return {
+				_type: 'property',
+				property: [b.join('')].concat(c)
+			}}
+			/ a:__
+			{return {
+				_type: 'whitespace',
+				whitespace: a
+			}}
+		)*
+	right:')'
+	{return {
+		_type: 'parenthesis',
+		left,
+		content: d,
+		right
+	}}
+	/ a:('.' / '')
+	{return {
+		_type: 'separator',
+		separator: a
+	}}
 
 rbm
 	= a:'>'* b:']'
@@ -99,7 +150,7 @@ text
 	}}
 
 verbatim
-	= lvm:lvm separator:separator child:verbatim_text rvm:rvm
+	= lvm:lvm separator:verbatim_separator child:verbatim_text rvm:rvm
 	{
 		return {
 			type: 'verbatim',
@@ -114,6 +165,9 @@ verbatim
 lvm
 	= a:'`' b:'<'*
 		{vlevel = b.length + 1; return a + b.join('')}
+
+verbatim_separator
+	= '.' / ''
 
 rvm
 	= a:'>'* b:'`'
@@ -131,3 +185,9 @@ verbatim_text
 			location: location()
 		}
 	}
+
+// optional whitespace
+_ = a:[ \t\n\r]* {return a.join('')}
+
+// mandatory whitespace
+__ = a:[ \t\n\r]+ {return a.join('')}

@@ -109,7 +109,7 @@ function ElementClass({name, display, render, split}) {
 	}
 }
 
-ElementClass.prototype.instantiate = function ({code, children, options}) {
+ElementClass.prototype.instantiate = function ({code, properties, children, options}) {
 	if (!(this instanceof ElementClass)) {
 		throw Error('ElementClass.prototype.instantiate should be called as a method of an ElementClass instance');
 	}
@@ -119,19 +119,21 @@ ElementClass.prototype.instantiate = function ({code, children, options}) {
 		display: this.display,
 		render: this.render,
 		code,
+		properties,
 		children,
 		split: this.split,
 		options
 	});
 }
 
-function Element({name, display, render, code, children, split, options}) {
+function Element({name, display, render, code, properties, children, split, options}) {
 	if (!name) throw TypeError('You give arg0 a bad name');
 	if (!['inline', 'leaf-block', 'container-block'].includes(display))
 		throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
 	if (!(render instanceof Function))
 		throw TypeError('arg0.render should be a function');
 	if (typeof code != 'string') throw TypeError('You give arg0 a bad code');
+	if (!(properties instanceof Array)) throw TypeError('Properties should be an array');
 
 	(() => {
 		var foo = c => c instanceof Element
@@ -155,8 +157,8 @@ function Element({name, display, render, code, children, split, options}) {
 		this.split = split;
 	}
 
-	[this.name, this.display, this.code, this.children]
-		= [name, display, code, children];
+	[this.name, this.display, this.code, this.properties, this.children]
+		= [name, display, code, properties, children];
 
 	this.innerIsText = (() => {
 		var len = split ? split.length : 0;
@@ -298,8 +300,9 @@ function Element({name, display, render, code, children, split, options}) {
 	} else if (r instanceof HtmlNode) {
 		this.outerHtml = r.html;
 	} else if (r instanceof ErrorNode) {
-		this.outerHtml = '<code class="m42kup-error">'
-			+ this.escapeHtml(r.code) + '</code>';
+		this.outerHtml = `<code class="m42kup-error" title="[${
+			this.escapeHtml(this.name)}]: Error: ${
+				this.escapeHtml(r.message)}">${this.escapeHtml(r.code)}</code>`;
 	} else {
 		throw TypeError('Render output should be one of TextNode, HtmlNode, or ErrorNode');
 	}
@@ -319,13 +322,22 @@ Element.prototype.error = function (message) {
 	return new ErrorNode({message, code: this.code});
 };
 
+Element.prototype.getProperty = function (name) {
+	for (var i = 0; i < this.properties.length; i++) {
+		if (this.properties[i].name == name)
+			return this.properties[i].value;
+	}
+
+	return null;
+}
+
 Element.prototype.toString = function () {
 	return this.toIndentedString(0);
 };
 
 Element.prototype.toIndentedString = function (level) {
 	var a = [
-		'display', 'code', 'split', 'isError', 'errorMessage',
+		'display', 'code', 'properties', 'split', 'isError', 'errorMessage',
 		'innerIsText', 'innerText', 'innerHtml', 'outerIsText', 'outerText',
 		'outerHtml'
 	].map(k => k + '=' + (typeof this[k] == 'string' || this[k] instanceof Array ? JSON.stringify(this[k]) : this[k] + '')).join('\n' + '\t'.repeat(level + 1));

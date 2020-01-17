@@ -14,6 +14,7 @@ function ast2nt(ast, options) {
 		if (tree.type == 'root') {
 			return Root.instantiate({
 				code: tree.code,
+				properties: [],
 				children: tree.children.map(c => recurse(c, false)),
 				options
 			});
@@ -79,6 +80,7 @@ function ast2nt(ast, options) {
 
 					return classMap[tree.name].instantiate({
 						code: tree.code,
+						properties: tree.properties,
 						children: recurseSplit(
 							tree.children,
 							classMap[tree.name].split
@@ -89,6 +91,7 @@ function ast2nt(ast, options) {
 
 				return classMap[tree.name].instantiate({
 					code: tree.code,
+					properties: tree.properties,
 					children: tree.children.map(c => recurse(c, false)),
 					options
 				});

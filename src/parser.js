@@ -24,9 +24,18 @@ function pt2ast(pt) {
 						text: e.child.text
 					};
 				case 'element':
+					var properties = e.properties._type != 'parenthesis'
+						? []
+						: e.properties.content.filter(({_type}) => 'property')
+							.map(({property}) => ({
+								name: property[0],
+								value: property[3]
+							}));
+
 					return {
 						type: 'element',
 						name: e.name,
+						properties,
 						code: input.substring(e.location.start.offset, e.location.end.offset),
 						children: recurse(e.children)
 					};

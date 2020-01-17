@@ -28,10 +28,59 @@ function pt2hl(pt) {
 						type: 'tn',
 						text: pt[i].name
 					})
-						+ makeHtml({
-						type: 'sp',
-						text: pt[i].separator
-					})
+						+ (p => {
+						switch (p._type) {
+							case 'parenthesis':
+								return makeHtml({
+									type: 'lpm',
+									text: p.left
+								})
+								+ p.content.map(q => {
+									switch (q._type) {
+										case 'property':
+											return makeHtml({
+												type: 'pk',
+												text: q.property[0]
+											})
+											+ makeHtml({
+												type: 'eq',
+												text: q.property[1]
+											})
+											+ makeHtml({
+												type: 'lqm',
+												text: q.property[2]
+											})
+											+ makeHtml({
+												type: 'pv',
+												text: q.property[3]
+											})
+											+ makeHtml({
+												type: 'rqm',
+												text: q.property[4]
+											});
+										case 'whitespace':
+											return makeHtml({
+												type: 'tx',
+												text: q.whitespace
+											})
+											break;
+										default:
+											throw Error('Unknown type');
+									}
+								}).join('')
+								+ makeHtml({
+									type: 'rpm',
+									text: p.right
+								});
+							case 'separator':
+								return makeHtml({
+									type: 'sp',
+									text: p.separator
+								});
+							default:
+								throw Error('Unknown type');
+						}
+					})(pt[i].properties)
 						+ recurse(pt[i].children)
 						+ makeHtml({
 						type: 'rbm',

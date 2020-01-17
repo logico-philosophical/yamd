@@ -154,14 +154,24 @@ classMap.link = new ElementClass({
 	name: 'link',
 	display: 'inline',
 	render: el => {
-		if (!el.innerIsText)
-			return el.error('Non-text input');
+		var href = el.getProperty('href');
 
-		var url = normalizeUrl(el.innerText);
-		if (!url) return el.error('Invalid URL');
+		if (href == null) {
+			if (!el.innerIsText)
+				return el.error('Non-text input');
 
-		var htmlUrl = el.escapeHtml(url);
-		return el.html(`<a href="${htmlUrl}">${htmlUrl}</a>`);
+			var url = normalizeUrl(el.innerText);
+			if (!url) return el.error('Invalid URL');
+
+			var htmlUrl = el.escapeHtml(url);
+			return el.html(`<a href="${htmlUrl}" title="${htmlUrl}">${htmlUrl}</a>`);
+		} else {
+			var url = normalizeUrl(href);
+			if (!url) return el.error('Invalid URL');
+
+			var htmlUrl = el.escapeHtml(url);
+			return el.html(`<a href="${htmlUrl}" title="${htmlUrl}">${el.innerHtml}</a>`);
+		}
 	}
 });
 
