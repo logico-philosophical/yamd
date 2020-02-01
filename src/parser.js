@@ -26,7 +26,7 @@ function pt2ast(pt) {
 				case 'element':
 					var properties = e.properties._type != 'parenthesis'
 						? []
-						: e.properties.content.filter(({_type}) => 'property')
+						: e.properties.content.filter(({_type}) => _type == 'property')
 							.map(({property}) => ({
 								name: property[0],
 								value: property[3]
