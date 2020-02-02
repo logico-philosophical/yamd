@@ -1,4 +1,4 @@
-var {TextNode, HtmlNode, ErrorNode, ElementClass, Element} = require('./nodes');
+var {ElementClass} = require('./nodes');
 
 var Root = new ElementClass({
 	name: '[root]',
@@ -48,15 +48,18 @@ classMap.entity = new ElementClass({
 	}
 }));
 
-[
-	'blockquote'
-].forEach(name => classMap[name] = new ElementClass({
-	name,
+classMap['blockquote'] = new ElementClass({
+	name: 'blockquote',
 	display: 'container-block',
 	render: el => {
-		return el.html(`<${name}>${el.innerHtml}</${name}>`);
+		var type = el.getAttribute('type');
+
+		if (['info', 'warn'].includes(type))
+			return el.html(`<blockquote class="m42kup-bq-${type}">${el.innerHtml}</blockquote>`);
+
+		return el.html(`<blockquote>${el.innerHtml}</blockquote>`);
 	}
-}));
+});
 
 [
 	'br'
@@ -105,7 +108,7 @@ classMap.table = new ElementClass({
 			}</tr>`).join('')
 			+ '</table>');
 	}
-})
+});
 
 classMap.blockcode = new ElementClass({
 	name: 'blockcode',
@@ -128,8 +131,8 @@ function normalizeUrl(url) {
 	url = url.trim();
 
 	// fragment
-	if (/^\#/.test(url)) {
-		if (/^\#[^\s]*$/.test(url)) {
+	if (/^#/.test(url)) {
+		if (/^#[^\s]*$/.test(url)) {
 			return url;
 		} else return false;
 	}
@@ -154,22 +157,22 @@ classMap.link = new ElementClass({
 	name: 'link',
 	display: 'inline',
 	render: el => {
-		var href = el.getProperty('href');
+		var href = el.getAttribute('href');
 
 		if (href == null) {
 			if (!el.innerIsText)
 				return el.error('Non-text input');
 
-			var url = normalizeUrl(el.innerText);
+			let url = normalizeUrl(el.innerText);
 			if (!url) return el.error('Invalid URL');
 
-			var htmlUrl = el.escapeHtml(url);
+			let htmlUrl = el.escapeHtml(url);
 			return el.html(`<a href="${htmlUrl}" title="${htmlUrl}">${htmlUrl}</a>`);
 		} else {
-			var url = normalizeUrl(href);
+			let url = normalizeUrl(href);
 			if (!url) return el.error('Invalid URL');
 
-			var htmlUrl = el.escapeHtml(url);
+			let htmlUrl = el.escapeHtml(url);
 			return el.html(`<a href="${htmlUrl}" title="${htmlUrl}">${el.innerHtml}</a>`);
 		}
 	}
@@ -197,11 +200,23 @@ classMap.img = new ElementClass({
 	display: 'inline',
 	render: el => {
 		var quotes = {
-			'squote': ['\u2018', '\u2019'],
-			'dquote': ['\u201c', '\u201d']
+			squote: {
+				normal: ['\u2018', '\u2019'],
+				angle: ['\u3008', '\u3009'],
+				corner: ['\u300c', '\u300d']
+			},
+			dquote: {
+				normal: ['\u201c', '\u201d'],
+				angle: ['\u300a', '\u300b'],
+				corner: ['\u300e', '\u300f']
+			}
 		};
 
-		return el.html(`${quotes[name][0]}${el.innerHtml}${quotes[name][1]}`);
+		var type = el.getAttribute('type');
+		if (!['angle', 'corner'].includes(type))
+			type = 'normal';
+
+		return el.html(`${quotes[name][type][0]}${el.innerHtml}${quotes[name][type][1]}`);
 	}
 }));
 
@@ -276,7 +291,7 @@ var aliases = {
 	'$$': 'displaymath',
 	'%': 'comment',
 	'&': 'entity',
-	"'": 'squote',
+	'\'': 'squote',
 	'*': 'i',
 	'**': 'b',
 	'***': 'bi',
@@ -299,7 +314,7 @@ var aliases = {
 
 for (var k in aliases) {
 	if (!classMap[aliases[k]]) {
-		throw TypeError(`aliasing failed`);
+		throw TypeError('aliasing failed');
 	}
 	classMap[k] = classMap[aliases[k]];
 }

@@ -1,5 +1,10 @@
 'use strict';
 
+const escapeHtml = s => (s + '').replace(/[&<>"']/g, m => ({
+	'&': '&amp;', '<': '&lt;', '>': '&gt;',
+	'"': '&quot;', '\'': '&#39;'
+})[m]);
+
 function Node() {
 }
 
@@ -29,11 +34,11 @@ extendNode(TextNode);
 
 TextNode.prototype.toString = function () {
 	return this.toIndentedString(0);
-}
+};
 
 TextNode.prototype.toIndentedString = function (level) {
 	return '\t'.repeat(level) + `Text {${JSON.stringify(this.text)}}`;
-}
+};
 
 function HtmlNode({html, display}) {
 	if (typeof html != 'string')
@@ -50,13 +55,13 @@ extendNode(HtmlNode);
 
 HtmlNode.prototype.toString = function () {
 	return this.toIndentedString(0);
-}
+};
 
 HtmlNode.prototype.toIndentedString = function (level) {
 	var a = ['display'].map(k =>
 		k + '=' + JSON.stringify(this[k])).join(' ');
 	return '\t'.repeat(level) + `Html(${a}) {${JSON.stringify(this.html)}}`;
-}
+};
 
 function ErrorNode({message, code}) {
 	if (typeof message != 'string')
@@ -71,15 +76,19 @@ function ErrorNode({message, code}) {
 
 extendNode(ErrorNode);
 
+ErrorNode.prototype.toHtml = function () {
+	return `<code class="m42kup-error" title="Error: ${escapeHtml(this.message)}">${escapeHtml(this.code)}</code>`;
+};
+
 ErrorNode.prototype.toString = function () {
 	return this.toIndentedString(0);
-}
+};
 
 ErrorNode.prototype.toIndentedString = function (level) {
 	var a = ['message', 'code'].map(k =>
 		k + '=' + JSON.stringify(this[k])).join(' ');
 	return '\t'.repeat(level) + `Error(${a})`;
-}
+};
 
 function ElementClass({name, display, render, split}) {
 	if (!name) throw TypeError('You give arg0 a bad name');
@@ -109,7 +118,7 @@ function ElementClass({name, display, render, split}) {
 	}
 }
 
-ElementClass.prototype.instantiate = function ({code, properties, children, options}) {
+ElementClass.prototype.instantiate = function ({code, attributes, children, options}) {
 	if (!(this instanceof ElementClass)) {
 		throw Error('ElementClass.prototype.instantiate should be called as a method of an ElementClass instance');
 	}
@@ -119,21 +128,21 @@ ElementClass.prototype.instantiate = function ({code, properties, children, opti
 		display: this.display,
 		render: this.render,
 		code,
-		properties,
+		attributes,
 		children,
 		split: this.split,
 		options
 	});
-}
+};
 
-function Element({name, display, render, code, properties, children, split, options}) {
+function Element({name, display, render, code, attributes, children, split, options}) {
 	if (!name) throw TypeError('You give arg0 a bad name');
 	if (!['inline', 'leaf-block', 'container-block'].includes(display))
 		throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
 	if (!(render instanceof Function))
 		throw TypeError('arg0.render should be a function');
 	if (typeof code != 'string') throw TypeError('You give arg0 a bad code');
-	if (!(properties instanceof Array)) throw TypeError('Properties should be an array');
+	if (!(attributes instanceof Array)) throw TypeError('attributes should be an array');
 
 	(() => {
 		var foo = c => c instanceof Element
@@ -157,8 +166,8 @@ function Element({name, display, render, code, properties, children, split, opti
 		this.split = split;
 	}
 
-	[this.name, this.display, this.code, this.properties, this.children]
-		= [name, display, code, properties, children];
+	[this.name, this.display, this.code, this.attributes, this.children]
+		= [name, display, code, attributes, children];
 
 	this.innerIsText = (() => {
 		var len = split ? split.length : 0;
@@ -208,20 +217,20 @@ function Element({name, display, render, code, properties, children, split, opti
 						// ?: is important
 						.split(/(?:\r\n[ \t]*){2,}|(?:\r[ \t]*){2,}|(?:\n[ \t]*){2,}/)
 						.filter(text => !!text.trim())
-						.map(this.escapeHtml)
+						.map(escapeHtml)
 						.map(s => `<p>${s}</p>`).join('');
 				}
 
-				return this.escapeHtml(it);
+				return escapeHtml(it);
 			}
 
 			if (this.display != 'container-block') {
 				// join as HTML
 				return li.map(c => {
 					if (c instanceof TextNode)
-						return this.escapeHtml(c.text);
+						return escapeHtml(c.text);
 					if (c instanceof ErrorNode)
-						return '<code class="m42kup-error">' + this.escapeHtml(c.code) + '</code>';
+						return c.toHtml();
 					return c.outerHtml;
 				}).join('');
 			}
@@ -274,10 +283,9 @@ function Element({name, display, render, code, properties, children, split, opti
 				if (p instanceof Array) {
 					return '<p>' + p.map(n => {
 						if (n instanceof TextNode)
-							return this.escapeHtml(n.text);
+							return escapeHtml(n.text);
 						if (n instanceof ErrorNode)
-							return '<code class="m42kup-error">'
-								+ this.escapeHtml(n.code) + '</code>';
+							return n.toHtml();
 						return n.outerHtml;
 					}).join('') + '</p>';
 				}
@@ -296,13 +304,11 @@ function Element({name, display, render, code, properties, children, split, opti
 	this.errorMessage = r instanceof ErrorNode ? r.message : null;
 
 	if (this.outerIsText) {
-		this.outerHtml = this.escapeHtml(this.outerText);
+		this.outerHtml = escapeHtml(this.outerText);
 	} else if (r instanceof HtmlNode) {
 		this.outerHtml = r.html;
 	} else if (r instanceof ErrorNode) {
-		this.outerHtml = `<code class="m42kup-error" title="[${
-			this.escapeHtml(this.name)}]: Error: ${
-				this.escapeHtml(r.message)}">${this.escapeHtml(r.code)}</code>`;
+		this.outerHtml = r.toHtml();
 	} else {
 		throw TypeError('Render output should be one of TextNode, HtmlNode, or ErrorNode');
 	}
@@ -319,17 +325,20 @@ Element.prototype.html = function (html) {
 };
 
 Element.prototype.error = function (message) {
-	return new ErrorNode({message, code: this.code});
+	return new ErrorNode({
+		message: `[${this.name}]: ${message}`,
+		code: this.code
+	});
 };
 
-Element.prototype.getProperty = function (name) {
-	for (var i = 0; i < this.properties.length; i++) {
-		if (this.properties[i].name == name)
-			return this.properties[i].value;
+Element.prototype.getAttribute = function (name) {
+	for (var i = 0; i < this.attributes.length; i++) {
+		if (this.attributes[i].name == name)
+			return this.attributes[i].value;
 	}
 
 	return null;
-}
+};
 
 Element.prototype.toString = function () {
 	return this.toIndentedString(0);
@@ -337,7 +346,7 @@ Element.prototype.toString = function () {
 
 Element.prototype.toIndentedString = function (level) {
 	var a = [
-		'display', 'code', 'properties', 'split', 'isError', 'errorMessage',
+		'display', 'code', 'attributes', 'split', 'isError', 'errorMessage',
 		'innerIsText', 'innerText', 'innerHtml', 'outerIsText', 'outerText',
 		'outerHtml'
 	].map(k => k + '=' + (typeof this[k] == 'string' || this[k] instanceof Array ? JSON.stringify(this[k]) : this[k] + '')).join('\n' + '\t'.repeat(level + 1));
@@ -348,8 +357,8 @@ Element.prototype.toIndentedString = function (level) {
 			if (c instanceof Array)
 				return c.map(foo).join(',\n');
 			else
-				return c.toIndentedString(level + 1)
-		}
+				return c.toIndentedString(level + 1);
+		};
 
 		b = this.children.map(foo).join(',\n');
 	})();
@@ -357,10 +366,7 @@ Element.prototype.toIndentedString = function (level) {
 	return '\t'.repeat(level) + `Element[${JSON.stringify(this.name)}](\n${'\t'.repeat(level + 1)}${a}\n${'\t'.repeat(level)}) {\n${b}\n${'\t'.repeat(level)}}`;
 };
 
-Element.prototype.escapeHtml = s => (s + '').replace(/[&<>"']/g, m => ({
-	'&': '&amp;', '<': '&lt;', '>': '&gt;',
-	'"': '&quot;', "'": '&#39;'
-})[m]);
+Element.prototype.escapeHtml = escapeHtml;
 
 module.exports = {
 	Node,

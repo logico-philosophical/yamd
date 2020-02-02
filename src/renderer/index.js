@@ -14,7 +14,7 @@ function ast2nt(ast, options) {
 		if (tree.type == 'root') {
 			return Root.instantiate({
 				code: tree.code,
-				properties: [],
+				attributes: [],
 				children: tree.children.map(c => recurse(c, false)),
 				options
 			});
@@ -24,7 +24,7 @@ function ast2nt(ast, options) {
 		
 		if (tree.type == 'error')
 			return new ErrorNode({
-				message: '[error]',
+				message: '<no message>',
 				code: tree.text
 			});
 		
@@ -80,7 +80,7 @@ function ast2nt(ast, options) {
 
 					return classMap[tree.name].instantiate({
 						code: tree.code,
-						properties: tree.properties,
+						attributes: tree.attributes,
 						children: recurseSplit(
 							tree.children,
 							classMap[tree.name].split
@@ -91,20 +91,20 @@ function ast2nt(ast, options) {
 
 				return classMap[tree.name].instantiate({
 					code: tree.code,
-					properties: tree.properties,
+					attributes: tree.attributes,
 					children: tree.children.map(c => recurse(c, false)),
 					options
 				});
 			}
 
 			return new ErrorNode({
-				message: tree.name ? 'Undefined tag name' : 'No tag name',
+				message: tree.name ? `Undefined tag name [${tree.name}]` : 'No tag name',
 				code: tree.code
 			});
 		}
 
 		throw TypeError(tree.type);
-	}
+	};
 
 	var root = recurse(ast.root, true);
 	return root;

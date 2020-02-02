@@ -24,18 +24,18 @@ function pt2ast(pt) {
 						text: e.child.text
 					};
 				case 'element':
-					var properties = e.properties._type != 'parenthesis'
+					var attributes = e.attributes._type != 'parenthesis'
 						? []
-						: e.properties.content.filter(({_type}) => _type == 'property')
-							.map(({property}) => ({
-								name: property[0],
-								value: property[3]
+						: e.attributes.content.filter(({_type}) => _type == 'attribute')
+							.map(({attribute}) => ({
+								name: attribute[0],
+								value: attribute[3]
 							}));
 
 					return {
 						type: 'element',
 						name: e.name,
-						properties,
+						attributes,
 						code: input.substring(e.location.start.offset, e.location.end.offset),
 						children: recurse(e.children)
 					};
@@ -66,7 +66,7 @@ function pt2ast(pt) {
 			code: input.substring(pt.root.location.start.offset, pt.root.location.end.offset),
 			location: pt.root.location
 		}
-	}
+	};
 }
 
 module.exports = {

@@ -150,12 +150,12 @@ function peg$parse(input, options) {
       			}
       		}
       	},
-      peg$c1 = function(lbm, name, properties, children, rbm) {
+      peg$c1 = function(lbm, name, attributes, children, rbm) {
       		return {
       			type: 'element',
       			lbm,
       			name,
-      			properties,
+      			attributes,
       			children,
       			rbm,
       			location: location()
@@ -257,8 +257,8 @@ function peg$parse(input, options) {
       					'', '', '', ''
       				]},
       peg$c80 = function(left, b, c) {return {
-      				_type: 'property',
-      				property: [b.join('')].concat(c)
+      				_type: 'attribute',
+      				attribute: [b.join('')].concat(c)
       			}},
       peg$c81 = function(left, a) {return {
       				_type: 'whitespace',
@@ -498,7 +498,7 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = peg$parsetag_name();
       if (s2 !== peg$FAILED) {
-        s3 = peg$parseproperties();
+        s3 = peg$parseattributes();
         if (s3 !== peg$FAILED) {
           s4 = peg$parsethings();
           if (s4 !== peg$FAILED) {
@@ -1369,7 +1369,7 @@ function peg$parse(input, options) {
     return s0;
   }
 
-  function peg$parseproperties() {
+  function peg$parseattributes() {
     var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11;
 
     s0 = peg$currPos;

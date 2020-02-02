@@ -39,13 +39,13 @@ thing
 	/ text
 
 element
-	= lbm:lbm_push name:tag_name properties:properties children:things rbm:rbm_pop
+	= lbm:lbm_push name:tag_name attributes:attributes children:things rbm:rbm_pop
 	{
 		return {
 			type: 'element',
 			lbm,
 			name,
-			properties,
+			attributes,
 			children,
 			rbm,
 			location: location()
@@ -74,7 +74,7 @@ tag_name
 		{return a + b.join('') + c.join('')}
 	/ ''
 
-properties
+attributes
 	= left:'('
 		d:(
 			b:[a-z0-9-]+
@@ -106,8 +106,8 @@ properties
 				]}
 			)
 			{return {
-				_type: 'property',
-				property: [b.join('')].concat(c)
+				_type: 'attribute',
+				attribute: [b.join('')].concat(c)
 			}}
 			/ a:__
 			{return {

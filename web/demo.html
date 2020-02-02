@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no">
-		<title>m42kup.js client-side test page</title>
+		<title>M42/markup client-side renderer test page</title>
 		<script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/addon/display/placeholder.min.js"></script>
 		<script src="codemirror-m42kup.js"></script>
@@ -14,6 +14,8 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/default.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+		<link rel="stylesheet" href="m42kup.default.css">
+		<link rel="stylesheet" href="m42kup-highlight.default.css">
 		<style>
 			* {
 				box-sizing: border-box;
@@ -102,17 +104,6 @@
 				padding: 10px;
 			}
 
-			.m42kup-error {
-				color: red;
-				border: 1px red solid;
-				padding: 0 .2em;
-			}
-
-			.m42kup-img-block {
-				margin: 1em 0;
-				text-align: center;
-			}
-
 			.katex {
 				color: #202124;
 			}
@@ -155,88 +146,9 @@
 				color: #2e7d32;
 			}
 		</style>
-		<style>
-			.m42kup-hl {
-				color: #222;
-			}
-
-			.m42kup-hl-tx {
-			}
-
-			.m42kup-hl-elem {
-				background-color: rgba(215, 58, 73, .1);
-			}
-
-			.m42kup-hl-lbm {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-tn {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-sp {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-lpm {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-pk {
-				color: #FFA000;
-			}
-
-			.m42kup-hl-eq {
-				color: #666;
-			}
-
-			.m42kup-hl-lqm {
-				color: #666;
-			}
-
-			.m42kup-hl-pv {
-				color: #03A9F4;
-			}
-
-			.m42kup-hl-rqm {
-				color: #666;
-			}
-
-			.m42kup-hl-rpm {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-rbm {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-verb {
-				background-color: rgba(200, 230, 201, .8);
-				color: #2e7d32;
-				font-style: italic;
-			}
-
-			.m42kup-hl-lvm, .m42kup-hl-rvm {
-				color: #2e7d32;
-				font-weight: bold;
-			}
-
-			.m42kup-hl-mrbm {
-				font-weight: bold;
-				color: red;
-				background-color: rgba(255, 0, 0, .2);
-			}
-		</style>
 	</head>
 	<body>
-		<h1><code>m42kup.js</code> client-side test page</h1>
+		<h1>M42/markup client-side renderer test page</h1>
 		<a href="https://github.com/logico-philosophical/m42kup">GitHub repo</a>
 		<h2>Input</h2>
 		<p>Now with <a href="https://codemirror.net/">CodeMirror</a>.</p>
