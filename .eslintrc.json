@@ -23,8 +23,5 @@
         ],
         "no-console": ["error"],
         "no-unused-vars": ["error", {"args": "none"}]
-    },
-    "globals": {
-        "__libdir": "readonly"
     }
 }

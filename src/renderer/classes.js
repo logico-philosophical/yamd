@@ -189,7 +189,7 @@ classMap.img = new ElementClass({
 		if (!url) return el.error('Invalid URL');
 
 		var htmlUrl = el.escapeHtml(url);
-		return el.html(`<div class="m42kup-img-block"><img src="${htmlUrl}"></div>`);
+		return el.html(`<img src="${htmlUrl}">`);
 	}
 });
 
