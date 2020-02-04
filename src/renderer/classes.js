@@ -238,8 +238,17 @@ classMap.highlight = new ElementClass({
 			'ruby', 'sql'
 		];
 
-		var trimmed = el.innerText.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, ''),
+		var trimmed = el.innerText.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
+
+		var highlighted;
+
+		if (commonLangs.includes(el.getAttribute('lang'))) {
+			var lang = el.getAttribute('lang');
+			highlighted = options.hljs.highlight(lang, trimmed).value;
+		} else {
 			highlighted = options.hljs.highlightAuto(trimmed, commonLangs).value;
+		}
+
 		return el.html(`<pre class="hljs"><code>${highlighted}\n</code></pre>`);
 	}
 });
