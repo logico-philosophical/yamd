@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>m42kup API</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/default.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				padding: 0; 
+				margin: 0;
+				font: 16px Roboto, sans-serif;
+				font-weight: 400;
+				-webkit-font-smoothing: antialiased;
+				color: #5f6368;
+				line-height: 1.5;
+				word-break: normal;
+				overflow-wrap: break-word;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				font-weight: 400;
+				line-height: 1.2;
+			}
+
+			h1, h2, h3, h4, h5, h6, a, b, strong, input, textarea, th, .katex {
+				color: #202124;
+			}
+
+			img {
+				max-width: 100%;
+			}
+
+			pre, code {
+				font-family: 'Roboto Mono', monospace;
+				background-color: rgba(0,0,0,.05);
+				white-space: pre-wrap;
+				word-break: break-all;
+				tab-size: 4;
+			}
+
+			pre {
+				padding: 6px;
+			}
+
+			code {
+				font-size: .85em;
+			}
+
+			pre code {
+				background-color: unset;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			p + p {
+				margin-top: 1em;
+			}
+
+			ul, ol {
+				margin: .5em 0;
+			}
+
+			table {
+				margin: 1em 0;
+				border-collapse: collapse;
+			}
+
+			table tr td {
+				border: 1px #ccc solid;
+				padding: .3em;
+			}
+
+			kbd {
+				font: .85em 'Roboto Mono', monospace;
+				color: #202124;
+				border: 1px #ccc solid;
+				padding: .1em;
+				border-radius: .2em;
+			}
+
+			blockquote {
+				margin: 1em 0;
+				padding: .5em 20px;
+				border-left: 5px #202124 solid;
+				background-color: #f7f7f7;
+			}
+
+			#toc {
+				position: fixed;
+				z-index: 1;
+				overflow-y: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				width: 280px;
+				height: 100%;
+				background-color: #f1f1f1;
+				padding-bottom:100px;
+			}
+
+			#toc > div {
+				display: block;
+				text-align: center;
+				background-color: #263238;
+				padding: 1.5em;
+			}
+
+			#toc > div button {
+				background: none;
+				border: none;
+				vertical-align: middle;
+				display: none;
+			}
+
+			#toc > div a {
+				color: white;
+				text-decoration: none;
+			}
+
+			#toc ol {
+				padding: 0;
+				margin: 0;
+			}
+
+			#toc > ol {
+				background-color: #f1f1f1;
+			}
+
+			#toc ol li {
+				list-style: none;
+			}
+
+			#toc ol li a {
+				display: block;
+				padding: .5em;
+				text-decoration: none;
+			}
+
+			#toc ol li a:hover {
+				background-color: rgba(0, 0, 0, .12);
+			}
+
+			#toc ol li ol {
+				padding: 0;
+				margin: 0;
+				background-color: rgba(0, 0, 0, .08);
+				font-size: .85em;
+			}
+
+			#toc ol li ol li {
+				list-style: none;
+			}
+
+			#content {
+				margin-left: 280px;
+				padding: 1em;
+				padding-top: 30px;
+				padding-bottom: 150px;
+			}
+
+			@media screen and (max-width: 800px) {
+				#toc {
+					position: fixed;
+					width: 100%;
+					top: 0;
+					border-bottom: 1px #ccc solid;
+				}
+
+				#toc:not(.toc-expanded) {
+					bottom: unset;
+					height: unset;
+					padding-bottom: 0;
+					box-shadow: 0 0 2px 0 rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
+				}
+
+				#toc.toc-expanded .toc-on-folded {
+					display: none;
+				}
+
+				#toc:not(.toc-expanded) .toc-on-expanded {
+					display: none;
+				}
+
+				#toc > div {
+					padding: 1em;
+					text-align: left;
+					height: 60px;
+				}
+
+				#toc > div button {
+					display: inline-block;
+					margin-right: 1em;
+				}
+
+				#content {
+					margin-left: 0;
+					margin-top: 60px;
+				}
+			}
+		</style>
+		<style>
+			.m42kup-error {
+				color: red;
+				border: 1px red solid;
+				padding: 0 .2em;
+			}
+
+			blockquote.m42kup-bq-info {
+				border-left-color: #1976d2;
+			    background-color: #e3f2fd;
+			    color: #1976d2;
+			}
+
+			blockquote.m42kup-bq-info a {
+			    color: #1976d2;
+			    font-weight: bold;
+			}
+
+			blockquote.m42kup-bq-info::before {
+				content: url('data:image/svg+xml,%0A%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%231976d2"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/%3E%3C/svg%3E');
+				display: inline-block;
+			    width: 24px;
+			    height: 24px;
+			    float: left;
+			    margin-right: .5em;
+			}
+
+			blockquote.m42kup-bq-warn {
+				border-left-color: #d32f2f;
+				background-color: #ffebee;
+				color: #d32f2f;
+			}
+
+			blockquote.m42kup-bq-warn a {
+			    color: #d32f2f;
+			    font-weight: bold;
+			}
+
+			blockquote.m42kup-bq-warn::before {
+				content: url('data:image/svg+xml,%0A%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23d32f2f"%3E%3Cpath d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/%3E%3C/svg%3E');
+			    display: inline-block;
+			    width: 24px;
+			    height: 24px;
+			    float: left;
+			    margin-right: .5em;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="toc">
+			<div>
+						<button id="toc-fold-toggle">
+							<svg class="toc-on-folded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+							<svg class="toc-on-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+						</button>
+						<a href="../index.html">M42/markup의 문서화</a>
+					</div>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">M42/markup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">기본적인 사용법</a></div></li></ol></li><li><div><a href="./index.html">API 명세</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup API</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser API</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer API</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter API</a></div></li></ol></li></ol>
+		</div>
+		<div id="content">
+			
+				<h1><code>m42kup</code> API</h1><pre class="hljs"><code>m42kup: {
+    <span class="hljs-attr">parser</span>: { ... },
+    <span class="hljs-attr">renderer</span>: { ... },
+    <span class="hljs-attr">highlighter</span>: { ... },
+    <span class="hljs-attr">ast2nt</span>: &lt;Function&gt;,
+    render: &lt;Function&gt;,
+    highlight: &lt;Function&gt;,
+    cascade: &lt;Function&gt;,
+    set: &lt;Function&gt;
+}
+</code></pre><h2><code>parser</code></h2><p>파서. 개별 문서 참조.</p><h2><code>renderer</code></h2><p>렌더러. 개별 문서 참조.</p><h2><code>highlighter</code></h2><p>구문 강조를 합니다. 개별 문서 참조.</p><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만듭니다. <code>m42kup.renderer.ast2nt(ast, options)</code>와 같은데 <code>m42kup</code>의 글로벌 옵션이 적용되며 <code>options</code>는 글로벌 옵션을 cascade 합니다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast &lt;Object&gt;</code>: AST. 형식은 <a href="./formats.html" title="./formats.html">입출력 형식</a> 참조.
+    </p></li><li><p> <code>options &lt;Object&gt;</code>: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</p></li></ul><p><b>Returns</b></p><p><code>&lt;Element&gt;</code> 노드 트리. 형식은 <code>Element</code> 참조.</p><h2><code>render(input, options)</code></h2><p>입력으로부터 HTML을 렌더링 합니다.</p><p><b>Parameters</b></p><ul><li><p> <code>input &lt;string&gt;</code>: 입력 문자열.
+    </p></li><li><p> <code>options &lt;Object&gt;</code>: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</p></li></ul><p><b>Returns</b></p><p><code>&lt;string&gt;</code> 렌더링 된 HTML.</p><p><b>Examples</b></p><pre class="hljs"><code>m42kup.render(<span class="hljs-string">'[*hello]'</span>);
+</code></pre><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>hello<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</code></pre><h2><code>highlight(input)</code></h2><p>입력 문자열로부터 구문 강조된 HTML을 생성합니다. 자세한 생성 방식은 <code>m42kup.highlighter.pt2hl</code> 참조.</p><p><b>Parameters</b></p><ul><li><p> <code>input &lt;string&gt;</code>: 입력 문자열.
+</p></li></ul><p><b>Returns</b></p><p><code>&lt;string&gt;</code> 구문 강조된 HTML.</p><p><b>Examples</b></p><pre class="hljs"><code>m42kup.highlight(<span class="hljs-string">'[*hello]'</span>);
+</code></pre><pre class="hljs"><code>&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-elem"</span>&gt;&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-lbm"</span>&gt;[&lt;/span&gt;&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-tn"</span>&gt;*&lt;/span&gt;&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-sp"</span>&gt;&lt;/span&gt;&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-tx"</span>&gt;hello&lt;/span&gt;&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-rbm"</span>&gt;]&lt;/span&gt;&lt;/span&gt;
+</code></pre><h2><code>cascade(options)</code></h2><p>현재의 글로벌 옵션을 보존하면서 <code>options</code>로 적당히 덮어 씁니다. <code>m42kup.cascade</code>나 <code>m42kup.set</code>을 한 번도 호출하지 않은 경우 <code>m42kup.set</code>과 효과가 같습니다.</p><p><b>Parameters</b></p><ul><li><p> <code>options &lt;Object&gt;</code>: 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// global options: {}</span>
+
+m42kup.cascade({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// deletes default element [=]</span>
+        <span class="hljs-string">'='</span>: <span class="hljs-literal">false</span>
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {'=': false}}</span>
+
+m42kup.cascade({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// overwrites default element behavior of [*].</span>
+        <span class="hljs-comment">// wraps content with '*'.</span>
+        <span class="hljs-string">'*'</span>: <span class="hljs-keyword">new</span> m42kup.renderer.ElementClass({
+            <span class="hljs-attr">name</span>: <span class="hljs-string">'*'</span>,
+            <span class="hljs-attr">display</span>: <span class="hljs-string">'inline'</span>,
+            <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+                <span class="hljs-keyword">if</span> (el.innerIsText)
+                    <span class="hljs-keyword">return</span> el.text(<span class="hljs-string">`*<span class="hljs-subst">${el.innerText}</span>*`</span>);
+                <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`*<span class="hljs-subst">${el.innerHtml}</span>*`</span>);
+            }
+        })
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {'=': false, '*': &lt;Function&gt;}}</span>
+</code></pre><h2><code>set(options)</code></h2><p>현재의 글로벌 옵션을 버리고 <code>options</code>로 설정합니다. <code>m42kup.cascade</code>나 <code>m42kup.set</code>을 한 번도 호출하지 않은 경우 <code>m42kup.cascade</code>와 효과가 같습니다.</p><p><code>m42kup.set({})</code>으로 글로벌 옵션을 없애버릴 수 있습니다.</p><p><b>Parameters</b></p><ul><li><p> <code>options &lt;Object&gt;</code>: 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// global options: {}</span>
+
+m42kup.set({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// deletes default element [=]</span>
+        <span class="hljs-string">'='</span>: <span class="hljs-literal">false</span>
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {'=': false}}</span>
+
+m42kup.set({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// overwrites default element behavior of [*].</span>
+        <span class="hljs-comment">// wraps content with '*'.</span>
+        <span class="hljs-string">'*'</span>: <span class="hljs-keyword">new</span> m42kup.renderer.ElementClass({
+            <span class="hljs-attr">name</span>: <span class="hljs-string">'*'</span>,
+            <span class="hljs-attr">display</span>: <span class="hljs-string">'inline'</span>,
+            <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+                <span class="hljs-keyword">if</span> (el.innerIsText)
+                    <span class="hljs-keyword">return</span> el.text(<span class="hljs-string">`*<span class="hljs-subst">${el.innerText}</span>*`</span>);
+                <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`*<span class="hljs-subst">${el.innerHtml}</span>*`</span>);
+            }
+        })
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {'*': &lt;Function&gt;}}</span>
+</code></pre>
+			
+		</div>
+		<script>
+			$ = (q, n) => (n || document).querySelector(q);
+
+			var expanded = false;
+
+			function applyExpandedState(expanded) {
+				if (expanded) {
+					$('#toc').classList.add('toc-expanded');
+					$('#content').classList.add('toc-expanded');
+				} else {
+					$('#toc').classList.remove('toc-expanded');
+					$('#content').classList.remove('toc-expanded');
+				}
+			}
+
+			applyExpandedState(expanded);
+
+			$('#toc-fold-toggle').addEventListener('click', _ => {
+				expanded = !expanded;
+
+				applyExpandedState(expanded);
+			});
+		</script>
+	</body>
+</html>
