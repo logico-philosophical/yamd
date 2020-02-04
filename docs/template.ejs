@@ -124,6 +124,7 @@
 				border: none;
 				vertical-align: middle;
 				display: none;
+				outline: none;
 			}
 
 			#toc > div a {
@@ -311,10 +312,10 @@
 		<script>
 			$ = (q, n) => (n || document).querySelector(q);
 
-			var expanded = false;
+			window.addEventListener('hashchange', handleHashChange);
 
-			function applyExpandedState(expanded) {
-				if (expanded) {
+			function handleHashChange() {
+				if (location.hash == '#toc') {
 					$('#toc').classList.add('toc-expanded');
 					$('#content').classList.add('toc-expanded');
 				} else {
@@ -323,12 +324,16 @@
 				}
 			}
 
-			applyExpandedState(expanded);
+			if (location.hash == '#toc') {
+				location.replace('#');
+			}
 
 			$('#toc-fold-toggle').addEventListener('click', _ => {
-				expanded = !expanded;
-
-				applyExpandedState(expanded);
+				if (location.hash == '#toc') {
+					location.replace('#');
+				} else {
+					location.replace('#toc');
+				}
 			});
 		</script>
 	</body>
