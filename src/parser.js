@@ -42,14 +42,16 @@ function pt2ast(pt) {
 				default:
 					throw new TypeError(`Unknown type: ${e.type}`);
 			}
-		})
+		});
 
 		// join text nodes & remove empty
-		.reduce((l, r, i) => {
+		ast = ast.reduce((l, r) => {
 			if (r.type == 'text') {
 				if (!r.text) return l;
-				if (i > 0 && l[l.length - 1].type == 'text')
-					return l[l.length - 1].text += r.text, l;
+				if (l.length && l[l.length - 1].type == 'text') {
+					l[l.length - 1].text += r.text;
+					return l;
+				}
 			}
 
 			return l.push(r), l;
