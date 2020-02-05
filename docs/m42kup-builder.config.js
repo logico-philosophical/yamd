@@ -1,4 +1,4 @@
-var m42kup = require('m42kup');
+var m42kup = require('../');
 var hljs = require('highlight.js');
 var katex = require('katex');
 
@@ -12,7 +12,6 @@ module.exports = {
 	name: 'M42/markup의 문서화',
 	src: 'src',
 	dst: 'build',
-	template: './template.ejs',
 	render,
 	list: [
 		{
