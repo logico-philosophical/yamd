@@ -97,7 +97,7 @@ function pt2hl(pt) {
 						text: pt[i].lvm + pt[i].separator
 					})
 						+ makeHtml({
-						type: 'text',
+						type: 'tx',
 						text: pt[i].child.text
 					})
 						+ makeHtml({

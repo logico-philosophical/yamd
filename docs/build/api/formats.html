@@ -273,7 +273,93 @@
 		</div>
 		<div id="content">
 			
-				<h1>입출력 형식</h1><p>의욕이 떨어져 문서화를 포기했습니다.</p><h2>파스 트리</h2><p>PEG.js가 만든 파서의 출력. PEG.js 문법 파일은 <code>/src/parser.pegjs</code>에 있습니다.</p><h2>AST</h2><h2>노드 트리</h2><p><code>Element</code> 타입입니다.</p><h2><code>m42kup.highlight(...)</code>의 출력</h2><p>문자열. <a href="./m42kup.highlighter.html" title="./m42kup.highlighter.html"><code>m42kup.highlighter</code> API</a> 페이지에서 자세히 다룹니다.</p>
+				<h1>입출력 형식</h1><h2>파스 트리</h2><p>PEG.js가 만든 파서의 출력.</p><h3>최상단</h3><pre><code>{
+	input: <i>input</i>,
+	root: {
+		type: &#39;root&#39;,
+		children: <i>children</i>,
+		location: <i>location</i>
+	}
+}
+</code></pre><ul><li><p> <code>input &lt;string&gt;</code>: 파스 트리에 입력이 저장됩니다.
+	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code>, <code>verbatim</code>, 또는 <code>text</code>의 0개 이상의 배열입니다.
+</p></li></ul><h3><code>element</code></h3><pre><code>{
+	type: &#39;element&#39;,
+	lbm: <i>lbm</i>,
+	name: <i>name</i>,
+	attributes: <i>attributes</i>,
+	children: <i>children</i>
+	rbm: <i>rbm</i>,
+	location: <i>location</i>
+}
+</code></pre><ul><li><p> <code>lbm &lt;string&gt;</code>: 왼쪽 경계.
+	</p></li><li><p> <code>name &lt;string&gt;</code>: 태그 이름.
+	</p></li><li><p> <code>attributes &lt;Array&gt;</code>: <code>attribute</code>의 0개 이상의 배열.
+	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code>, <code>verbatim</code>, 또는 <code>text</code>의 0개 이상의 배열입니다.
+	</p></li><li><p> <code>rbm &lt;string&gt;</code>: 오른쪽 경계.
+</p></li></ul><h4><code>attribute</code></h4><pre><code>{
+	_type: &#39;attribute&#39;,
+	attribute: [<i>a</i>, <i>b</i>, <i>c</i>, <i>d</i>, <i>e</i>]
+}
+</code></pre><p>또는</p><pre><code>{
+	_type: &#39;whitespace&#39;,
+	whitespace: <i>whitespace</i>
+}
+</code></pre><p><code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>, <code>e</code>는 <code>foo=&quot;bar&quot;</code>의 경우 다음과 같이 됩니다.</p><table><tr><td><p><code>foo</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code>bar</code> </p></td><td><p> <code>&quot;</code> </p></td></tr><tr><td><p><code>a</code> </p></td><td><p> <code>b</code> </p></td><td><p> <code>c</code> </p></td><td><p> <code>d</code> </p></td><td><p> <code>e</code>
+</p></td></tr></table><p><code>foo=bar</code>의 경우 다음과 같이 됩니다.</p><table><tr><td><p><code>foo</code> </p></td><td><p> <code>=</code> </p></td><td> </td><td><p> <code>bar</code> </p></td><td> </td></tr><tr><td><p><code>a</code> </p></td><td><p> <code>b</code> </p></td><td><p> <code>c</code> </p></td><td><p> <code>d</code> </p></td><td><p> <code>e</code>
+</p></td></tr></table><p><code>whitespace</code>는 공백 문자열입니다.</p><h3><code>verbatim</code></h3><pre><code>{
+	type: &#39;verbatim&#39;,
+	lvm: <i>lvm</i>,
+	separator: <i>separator</i>,
+	child: <i>text</i>,
+	rvm: <i>rvm</i>,
+	location: <i>location</i>
+}
+</code></pre><p><code>`&lt;.&lt;script&gt;&gt;`</code>의 경우 <code>lvm</code>, <code>separator</code>, <code>rvm</code>은 다음과 같이 됩니다.</p><table><tr><td><p><code>`&lt;</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>&lt;script&gt;</code> </p></td><td><p> <code>&gt;`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p><code>`asdf`</code>의 경우 다음과 같이 됩니다.</p><table><tr><td><p><code>`</code> </p></td><td> </td><td><p> <code>asdf</code> </p></td><td><p> <code>`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p><code>text</code>는 문자열이 아니며 밑에 있는 겁니다.</p><h3><code>text</code></h3><pre><code>{
+	type: &#39;text&#39;,
+	text: <i>text</i>,
+	location: <i>location</i>
+}
+</code></pre><ul><li><p> <code>text &lt;string&gt;</code>: 텍스트.
+</p></li></ul><h3><code>location</code></h3><pre><code>{
+	start: { offset: <i>start-offset</i>, line: <i>start-line</i>, column: <i>start-column</i> },
+	end: { offset: <i>end-offset</i>, line: <i>end-line</i>, column: <i>end-column</i> }
+}
+</code></pre><p>어떤 문법적 요소의 시작 및 끝 지점의 오프셋, 줄 번호, 컬럼을 나타냅니다. PEG.js의 <code>location()</code>을 호출한 것입니다.</p><h2>AST</h2><p>파스 트리에서 <code>verbatim</code>이 <code>text</code>로 통합되고 몇 가지 토큰이 사라집니다.</p><h3>최상단</h3><pre><code>{
+	input: <i>input</i>,
+	root: {
+		type: &#39;root&#39;,
+		children: <i>children</i>,
+		code: <i>code</i>
+	}
+}
+</code></pre><ul><li><p> <code>input &lt;string&gt;</code>: AST에 입력이 저장됩니다.
+	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code> 또는 <code>text</code>의 0개 이상의 배열입니다.
+	</p></li><li><p> <code>code &lt;string&gt;</code>: 전체 코드. <code>input</code>과 같음.
+</p></li></ul><h3><code>element</code></h3><pre><code>{
+	type: &#39;element&#39;,
+	name: <i>name</i>,
+	attributes: <i>attributes</i>,
+	code: <i>code</i>,
+	children: <i>children</i>
+}
+</code></pre><ul><li><p> <code>name &lt;string&gt;</code> 태그 이름.
+	</p></li><li><p> <code>attributes &lt;Array&gt;</code>
+</p><pre><code>{
+	name: <i>attribute-name</i>,
+	value: <i>attribute-value</i>
+}
+</code></pre><p>
+	의 0개 이상의 배열.
+	</p></li><li><p> <code>code &lt;string&gt;</code>: 왼쪽 및 오른쪽 경계까지를 포함하는 요소의 코드.
+	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code> 또는 <code>text</code>의 0개 이상의 배열입니다.
+</p></li></ul><h3><code>text</code></h3><pre><code>{
+	type: &#39;text&#39;,
+	text: <i>text</i>
+}
+</code></pre><h2>노드 트리</h2><p><code>Element</code> 타입입니다.</p><h2><code>m42kup.highlight(...)</code>의 출력</h2><p>문자열. <a href="./m42kup.highlighter.html" title="./m42kup.highlighter.html"><code>m42kup.highlighter</code> API</a> 페이지에서 자세히 다룹니다.</p>
 			
 		</div>
 		<script>

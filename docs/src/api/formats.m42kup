@@ -1,12 +1,185 @@
 [=입출력 형식]
 
-의욕이 떨어져 문서화를 포기했습니다.
-
 [==파스 트리]
 
-PEG.js가 만든 파서의 출력. PEG.js 문법 파일은 [;/src/parser.pegjs]에 있습니다.
+PEG.js가 만든 파서의 출력.
+
+[===최상단]
+
+[;;
+{
+	input: [*input],
+	root: {
+		type: 'root',
+		children: [*children],
+		location: [*location]
+	}
+}
+]
+
+[ul
+	[*] [;input <string>]: 파스 트리에 입력이 저장됩니다.
+	[*] [;children <Array>]: [;element], [;verbatim], 또는 [;text]의 0개 이상의 배열입니다.
+]
+
+[===[;element]]
+
+[;;
+{
+	type: 'element',
+	lbm: [*lbm],
+	name: [*name],
+	attributes: [*attributes],
+	children: [*children]
+	rbm: [*rbm],
+	location: [*location]
+}
+]
+
+[ul
+	[*] [;lbm <string>]: 왼쪽 경계.
+	[*] [;name <string>]: 태그 이름.
+	[*] [;attributes <Array>]: [;attribute]의 0개 이상의 배열.
+	[*] [;children <Array>]: [;element], [;verbatim], 또는 [;text]의 0개 이상의 배열입니다.
+	[*] [;rbm <string>]: 오른쪽 경계.
+]
+
+[====[;attribute]]
+
+[<;;
+{
+	_type: 'attribute',
+	attribute: [[<*a>], [<*b>], [<*c>], [<*d>], [<*e>]]
+}>]
+
+또는
+
+[;;{
+	_type: 'whitespace',
+	whitespace: [*whitespace]
+}]
+
+[;a], [;b], [;c], [;d], [;e]는 [;foo="bar"]의 경우 다음과 같이 됩니다.
+
+[table
+	[;foo] [*] [;=] [*] [;"] [*] [;bar] [*] [;"] [**]
+	[;a] [*] [;b] [*] [;c] [*] [;d] [*] [;e]
+]
+
+[;foo=bar]의 경우 다음과 같이 됩니다.
+
+[table
+	[;foo] [*] [;=] [*] [*] [;bar] [*] [**]
+	[;a] [*] [;b] [*] [;c] [*] [;d] [*] [;e]
+]
+
+[;whitespace]는 공백 문자열입니다.
+
+[===[;verbatim]]
+
+[;;
+{
+	type: 'verbatim',
+	lvm: [*lvm],
+	separator: [*separator],
+	child: [*text],
+	rvm: [*rvm],
+	location: [*location]
+}
+]
+
+[;`<<<`<.<script>>`>>>`]의 경우 [;lvm], [;separator], [;rvm]은 다음과 같이 됩니다.
+
+[table
+	[;`<<`<>>`] [*] [;..] [*] [;<script>] [*] [;`<<>`>>`] [**]
+	[;lvm] [*] [;separator] [*] [;text] [*] [;rvm]
+]
+
+[;`<`asdf`>`]의 경우 다음과 같이 됩니다.
+
+[table
+	[;`<`>`] [*] [*] [;asdf] [*] [;`<`>`] [**]
+	[;lvm] [*] [;separator] [*] [;text] [*] [;rvm]
+]
+
+[;text]는 문자열이 아니며 밑에 있는 겁니다.
+
+[===[;text]]
+
+[;;
+{
+	type: 'text',
+	text: [*text],
+	location: [*location]
+}
+]
+
+[ul
+	[*] [;text <string>]: 텍스트.
+]
+
+[===[;location]]
+
+[;;
+{
+	start: { offset: [*start-offset], line: [*start-line], column: [*start-column] },
+	end: { offset: [*end-offset], line: [*end-line], column: [*end-column] }
+}
+]
+
+어떤 문법적 요소의 시작 및 끝 지점의 오프셋, 줄 번호, 컬럼을 나타냅니다. PEG.js의 [;location()]을 호출한 것입니다.
 
 [==AST]
+
+파스 트리에서 [;verbatim]이 [;text]로 통합되고 몇 가지 토큰이 사라집니다.
+
+[===최상단]
+
+[;;
+{
+	input: [*input],
+	root: {
+		type: 'root',
+		children: [*children],
+		code: [*code]
+	}
+}
+]
+
+[ul
+	[*] [;input <string>]: AST에 입력이 저장됩니다.
+	[*] [;children <Array>]: [;element] 또는 [;text]의 0개 이상의 배열입니다.
+	[*] [;code <string>]: 전체 코드. [;input]과 같음.
+]
+
+[===[;element]]
+
+[;;{
+	type: 'element',
+	name: [*name],
+	attributes: [*attributes],
+	code: [*code],
+	children: [*children]
+}]
+
+[ul
+	[*] [;name <string>] 태그 이름.
+	[*] [;attributes <Array>]
+[;;{
+	name: [*attribute-name],
+	value: [*attribute-value]
+}]
+	의 0개 이상의 배열.
+	[*] [;code <string>]: 왼쪽 및 오른쪽 경계까지를 포함하는 요소의 코드.
+	[*] [;children <Array>]: [;element] 또는 [;text]의 0개 이상의 배열입니다.
+]
+
+[===[;text]]
+
+[;;{
+	type: 'text',
+	text: [*text]
+}]
 
 [==노드 트리]
 

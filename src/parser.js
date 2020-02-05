@@ -65,8 +65,7 @@ function pt2ast(pt) {
 		root: {
 			type: 'root',
 			children: r,
-			code: input.substring(pt.root.location.start.offset, pt.root.location.end.offset),
-			location: pt.root.location
+			code: input
 		}
 	};
 }

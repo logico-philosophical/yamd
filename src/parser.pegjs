@@ -15,23 +15,6 @@ start
 
 things
 	= a:thing*
-	/* don't {
-		// join text nodes
-		return a.reduce((l, r) => {
-			if (r.type == 'text') {
-				if (!r.text) return l;
-
-				if (l[l.length - 1] && l[l.length - 1].type == 'text') {
-					console.log('join')
-					l[l.length - 1].text += r.text;
-					return l;
-				}
-			}
-
-			l.push(r);
-			return l;
-		}, []);
-	} */
 
 thing
 	= element

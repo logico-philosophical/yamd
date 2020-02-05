@@ -44,7 +44,7 @@ highlighter: {
 
 [table
 	[;`<<`<.>>`] [*] [;<script>] [*] [;`<<>`>>`] [**]
-	[;lvm] [*] [;text] [*] [;rvm]
+	[;lvm] [*] [;tx] [*] [;rvm]
 ]
 
 전체가 [;verb]로 감싸집니다.
