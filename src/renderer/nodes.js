@@ -349,21 +349,21 @@ Element.prototype.toIndentedString = function (level) {
 		'display', 'code', 'attributes', 'split', 'isError', 'errorMessage',
 		'innerIsText', 'innerText', 'innerHtml', 'outerIsText', 'outerText',
 		'outerHtml'
-	].map(k => k + '=' + (typeof this[k] == 'string' || this[k] instanceof Array ? JSON.stringify(this[k]) : this[k] + '')).join('\n' + '\t'.repeat(level + 1));
+	].map(k => k + '='
+		+ (typeof this[k] == 'string' || this[k] instanceof Array
+			? JSON.stringify(this[k])
+			: this[k] + '')
+	).join('\n' + '\t'.repeat(level + 1));
 
-	var b;
-	(() => {
-		var foo = (c, lev) => {
-			if (c instanceof Array)
-				return c.map(foo).join(',\n');
-			else
-				return c.toIndentedString(level + 1);
-		};
+	var b = (function r(children) {
+		return children.map(c => c.toIndentedString(level + 1)).join(',\n');
+	})(this.children);
 
-		b = this.children.map(foo).join(',\n');
-	})();
-
-	return '\t'.repeat(level) + `Element[${JSON.stringify(this.name)}](\n${'\t'.repeat(level + 1)}${a}\n${'\t'.repeat(level)}) {\n${b}\n${'\t'.repeat(level)}}`;
+	return '\t'.repeat(level) + `Element[${JSON.stringify(this.name)}](\n`
+			+ `${'\t'.repeat(level + 1)}${a}\n`
+		+ `${'\t'.repeat(level)}) {\n`
+		+ `${b}\n`
+		+ `${'\t'.repeat(level)}}`;
 };
 
 Element.prototype.escapeHtml = escapeHtml;

@@ -1,20 +1,14 @@
-var {ElementClass} = require('./nodes');
+var {ElementClass} = require('../nodes');
 
-var Root = new ElementClass({
-	name: '[root]',
-	display: 'container-block',
-	render: el => el.html(el.innerHtml)
-});
+var tagNameMap = {};
 
-var classMap = {};
-
-classMap.comment = new ElementClass({
+tagNameMap.comment = new ElementClass({
 	name: 'comment',
 	display: 'inline',
 	render: el => el.text('')
 });
 
-classMap.entity = new ElementClass({
+tagNameMap.entity = new ElementClass({
 	name: 'entity',
 	display: 'inline',
 	render: el => {
@@ -30,7 +24,7 @@ classMap.entity = new ElementClass({
 
 [
 	'b', 'code', 'i', 'u', 'sup', 'sub'
-].forEach(name => classMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new ElementClass({
 	name: name,
 	display: 'inline',
 	render: el => {
@@ -40,7 +34,7 @@ classMap.entity = new ElementClass({
 
 [
 	'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'
-].forEach(name => classMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new ElementClass({
 	name: name,
 	display: 'leaf-block',
 	render: el => {
@@ -48,7 +42,7 @@ classMap.entity = new ElementClass({
 	}
 }));
 
-classMap['blockquote'] = new ElementClass({
+tagNameMap['blockquote'] = new ElementClass({
 	name: 'blockquote',
 	display: 'container-block',
 	render: el => {
@@ -63,7 +57,7 @@ classMap['blockquote'] = new ElementClass({
 
 [
 	'br'
-].forEach(name => classMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new ElementClass({
 	name,
 	display: 'inline',
 	render: el => {
@@ -73,7 +67,7 @@ classMap['blockquote'] = new ElementClass({
 
 [
 	'hr'
-].forEach(name => classMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new ElementClass({
 	name,
 	display: 'leaf-block',
 	render: el => {
@@ -82,7 +76,7 @@ classMap['blockquote'] = new ElementClass({
 }));
 
 ['ul', 'ol'].forEach(name => {
-	classMap[name] = new ElementClass({
+	tagNameMap[name] = new ElementClass({
 		name,
 		display: 'container-block',
 		split: '*',
@@ -94,7 +88,7 @@ classMap['blockquote'] = new ElementClass({
 	});
 });
 
-classMap.table = new ElementClass({
+tagNameMap.table = new ElementClass({
 	name: 'table',
 	display: 'container-block',
 	split: ['*', '**'],
@@ -110,7 +104,7 @@ classMap.table = new ElementClass({
 	}
 });
 
-classMap.blockcode = new ElementClass({
+tagNameMap.blockcode = new ElementClass({
 	name: 'blockcode',
 	display: 'leaf-block',
 	render: el => {
@@ -119,7 +113,7 @@ classMap.blockcode = new ElementClass({
 	}
 });
 
-classMap.bi = new ElementClass({
+tagNameMap.bi = new ElementClass({
 	name: 'bi',
 	display: 'inline',
 	render: el => {
@@ -153,7 +147,7 @@ function normalizeUrl(url) {
 	} else return false;
 }
 
-classMap.link = new ElementClass({
+tagNameMap.link = new ElementClass({
 	name: 'link',
 	display: 'inline',
 	render: el => {
@@ -178,7 +172,7 @@ classMap.link = new ElementClass({
 	}
 });
 
-classMap.img = new ElementClass({
+tagNameMap.img = new ElementClass({
 	name: 'img',
 	display: 'leaf-block',
 	render: el => {
@@ -195,7 +189,7 @@ classMap.img = new ElementClass({
 
 [
 	'squote', 'dquote'
-].forEach(name => classMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new ElementClass({
 	name,
 	display: 'inline',
 	render: el => {
@@ -220,7 +214,7 @@ classMap.img = new ElementClass({
 	}
 }));
 
-classMap.highlight = new ElementClass({
+tagNameMap.highlight = new ElementClass({
 	name: 'highlight',
 	display: 'leaf-block',
 	render: (el, options) => {
@@ -253,7 +247,7 @@ classMap.highlight = new ElementClass({
 	}
 });
  
-classMap.math = new ElementClass({
+tagNameMap.math = new ElementClass({
 	name: 'math',
 	display: 'inline',
 	render: (el, options) => {
@@ -273,7 +267,7 @@ classMap.math = new ElementClass({
 	}
 });
 
-classMap.displaymath = new ElementClass({
+tagNameMap.displaymath = new ElementClass({
 	name: 'displaymath',
 	display: 'leaf-block',
 	render: (el, options) => {
@@ -322,13 +316,10 @@ var aliases = {
 };
 
 for (var k in aliases) {
-	if (!classMap[aliases[k]]) {
+	if (!tagNameMap[aliases[k]]) {
 		throw TypeError('aliasing failed');
 	}
-	classMap[k] = classMap[aliases[k]];
+	tagNameMap[k] = tagNameMap[aliases[k]];
 }
 
-module.exports = {
-	Root,
-	classMap
-};
+module.exports = tagNameMap;

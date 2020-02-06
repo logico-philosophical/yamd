@@ -1,39 +1,45 @@
 var {Node, TextNode, HtmlNode, ErrorNode, ElementClass, Element} = require('./nodes');
-var {Root, classMap: defClassMap} = require('./classes');
+var defaultTagNameMap = require('./elements/default');
 var cascade = require('../cascade');
+
+var rootClass = new ElementClass({
+	name: '[root]',
+	display: 'container-block',
+	render: el => el.html(el.innerHtml)
+});
 
 function ast2nt(ast, options) {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 
-	var classMap = cascade.tags(defClassMap, options.tags);
+	var tagNameMap = cascade.tags(defaultTagNameMap, options.tags);
 	
-	for (var k in classMap) if (classMap[k] === false) delete classMap[k];
-	
-	var recurse = (tree, root) => {
+	return (function recurse(tree) {
 		if (tree.type == 'root') {
-			return Root.instantiate({
+			return rootClass.instantiate({
 				code: tree.code,
 				attributes: [],
-				children: tree.children.map(c => recurse(c, false)),
+				children: tree.children.map(recurse),
 				options
 			});
 		}
-		if (tree.type == 'text')
+		if (tree.type == 'text') {
 			return new TextNode(tree.text);
+		}
 		
-		if (tree.type == 'error')
+		if (tree.type == 'error') {
 			return new ErrorNode({
-				message: '<no message>',
+				message: 'Parser error',
 				code: tree.text
 			});
+		}
 		
 		if (tree.type == 'element') {
-			if (tree.name in classMap) {
-				if (classMap[tree.name].split) {
+			if (tree.name in tagNameMap && tagNameMap[tree.name]) {
+				if (tagNameMap[tree.name].split) {
 					var recurseSplit = (list, split) => {
 						if (split.length == 0)
-							return list.map(c => recurse(c, false));
+							return list.map(recurse);
 
 						var s = split[split.length - 1];
 
@@ -78,21 +84,21 @@ function ast2nt(ast, options) {
 						return a.map(e => recurseSplit(e, split.slice(0, -1)));
 					};
 
-					return classMap[tree.name].instantiate({
+					return tagNameMap[tree.name].instantiate({
 						code: tree.code,
 						attributes: tree.attributes,
 						children: recurseSplit(
 							tree.children,
-							classMap[tree.name].split
+							tagNameMap[tree.name].split
 						),
 						options
 					});
 				}
 
-				return classMap[tree.name].instantiate({
+				return tagNameMap[tree.name].instantiate({
 					code: tree.code,
 					attributes: tree.attributes,
-					children: tree.children.map(c => recurse(c, false)),
+					children: tree.children.map(recurse),
 					options
 				});
 			}
@@ -104,10 +110,7 @@ function ast2nt(ast, options) {
 		}
 
 		throw TypeError(tree.type);
-	};
-
-	var root = recurse(ast.root, true);
-	return root;
+	})(ast.root);
 }
 
 module.exports = {
