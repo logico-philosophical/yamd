@@ -9,7 +9,7 @@ function render(text) {
 }
 
 module.exports = {
-	name: 'M42/markup의 문서화',
+	name: 'm42kup의 문서화',
 	src: 'src',
 	dst: 'build',
 	render,
@@ -19,7 +19,7 @@ module.exports = {
 			dir: 'getting-started',
 			list: [
 				{
-					name: 'M42/markup 소개',
+					name: 'm42kup 소개',
 					file: 'introduction'
 				},
 				{

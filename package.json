@@ -1,7 +1,7 @@
 {
 	"name": "m42kup",
 	"version": "0.2.1",
-	"description": "M42/markup renderer in JavaScript",
+	"description": "m42kup renderer in JavaScript",
 	"keywords": [
 		"markup"
 	],

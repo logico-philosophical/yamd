@@ -98,7 +98,7 @@ AST로부터 노드의 트리를 만듭니다.
 
 [==[;ElementClass({name, display, render, ?split})]]
 
-새로운 M42/markup 요소 종류를 만듭니다. [;new] 키워드와 함께 사용하세요.
+새로운 m42kup 요소 종류를 만듭니다. [;new] 키워드와 함께 사용하세요.
 
 어떤 [;ElementClass] 인스턴스와 [;Element] 인스턴스의 관계는 HTML DOM에서의 [;HTMLParagraphElement] 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있겠습니다. 새로운 클래스를 만드는 대신 [;ElementClass] 인스턴스를 만든다고 할 수 있겠습니다.
 
@@ -262,7 +262,7 @@ var reverse = new ElementClass({
 
 	[*] [;display <string>]: 요소의 디스플레이 타입. [;"inline"], [;"leaf-block"], [;"container-block"]  중 하나.
 
-	[*] [;code <string>]: 요소의 M42/markup 코드.
+	[*] [;code <string>]: 요소의 m42kup 코드.
 
 	[*] [;attributes<Array>]: [;{name, value}]의 0개 이상의 배열.
 

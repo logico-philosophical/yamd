@@ -8,4 +8,4 @@
   <a href="https://logico-philosophical.github.io/m42kup/web/demo.html">demo</a>
 </p>
 
-JavaScript로 가벼운 마크업 언어 [M42/markup](https://logico-philosophical.github.io/m42kup/docs/build/getting-started/introduction.html)의 HTML 렌더러를 구현한 것입니다. 자세한 것은 [문서](https://logico-philosophical.github.io/m42kup/docs/build/index.html)를 참조하세요. [데모](https://logico-philosophical.github.io/m42kup/web/demo.html)도 확인해 보세요.
+JavaScript로 가벼운 마크업 언어 [m42kup](https://logico-philosophical.github.io/m42kup/docs/build/getting-started/introduction.html)의 HTML 렌더러를 구현한 것입니다. 자세한 것은 [문서](https://logico-philosophical.github.io/m42kup/docs/build/index.html)를 참조하세요. [데모](https://logico-philosophical.github.io/m42kup/web/demo.html)도 확인해 보세요.

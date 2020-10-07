@@ -1,23 +1,23 @@
-[=M42/markup 소개]
+[=m42kup 소개]
 
 [~(href=https://www.npmjs.com/package/m42kup)[~~https://img.shields.io/npm/v/m42kup]]
 [~(href=https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)[~~https://img.shields.io/github/license/logico-philosophical/m42kup]]
 
-M42/markup은 간결하고 일관적인 문법을 갖는 가벼운 마크업 언어(lightweight markup language)입니다. M42/markup 언어 명세와 HTML 렌더러 등을 만드는 프로젝트는 [~(href='https://github.com/logico-philosophical/m42kup')GitHub]에서 호스트됩니다.
+m42kup은 간결하고 일관적인 문법을 갖는 가벼운 마크업 언어(lightweight markup language)입니다. m42kup 언어 명세와 HTML 렌더러 등을 만드는 프로젝트는 [~(href='https://github.com/logico-philosophical/m42kup')GitHub]에서 호스트됩니다.
 
-이 문서는 M42/markup 언어 명세 및 HTML 렌더러의 사용법 및 API를 기록하는 것을 목적으로 합니다. 또 이 문서는 M42/markup으로 쓰였으며 [~(href=https://github.com/logico-philosophical/m42kup-builder)m42kup-builder]로 빌드되었습니다.
+이 문서는 m42kup 언어 명세 및 HTML 렌더러의 사용법 및 API를 기록하는 것을 목적으로 합니다. 또 이 문서는 m42kup으로 쓰였으며 [~(href=https://github.com/logico-philosophical/m42kup-builder)m42kup-builder]로 빌드되었습니다.
 
-[==M42/markup의 특징]
+[==m42kup의 특징]
 
 [ul
 	[*] [~(href=https://github.com/highlightjs/highlight.js)highlight.js]를 써서 구문 강조를 위한 요소를 만들 수 있습니다.
 	[*] [~(href=https://github.com/KaTeX/KaTeX)KaTeX]를 써서 수식 렌더링을 위한 요소를 만들 수 있습니다.
 	[*] 간결한 문법으로 인해 새로운 태그를 도입하기 쉽습니다.
 	[*] [~(href=https://github.com/logico-philosophical/m42kup-builder)m42kup-builder]를 써서 현재 페이지와 같은 documentation을 만들 수 있습니다.
-	[*] m42kup 패키지가 M42/markup을 위한 syntax highlighter 및 [~(href=https://github.com/codemirror/CodeMirror)CodeMirror]에서 사용할 수 있는 M42/markup의 mode를 제공합니다.
+	[*] m42kup 패키지가 m42kup을 위한 syntax highlighter 및 [~(href=https://github.com/codemirror/CodeMirror)CodeMirror]에서 사용할 수 있는 m42kup의 mode를 제공합니다.
 ]
 
-[==M42/markup 찍먹 해보기]
+[==m42kup 찍먹 해보기]
 
 [===그냥 텍스트]
 
