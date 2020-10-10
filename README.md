@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/m42kup)](https://www.npmjs.com/package/m42kup)
 [![GitHub](https://img.shields.io/github/license/logico-philosophical/m42kup)](https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/m42kup/badge?style=rounded)](https://www.jsdelivr.com/package/npm/m42kup)
 
 <p align="center">
   <a href="https://logico-philosophical.github.io/m42kup/docs/build/index.html">docs</a> ·
