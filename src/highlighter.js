@@ -63,6 +63,11 @@ function pt2hl(pt) {
 												type: 'tx',
 												text: q.whitespace
 											});
+										case 'error':
+											return makeHtml({
+												type: 'err',
+												text: q.error
+											})
 										default:
 											throw Error('Unknown type');
 									}

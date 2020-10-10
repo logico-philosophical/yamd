@@ -2,8 +2,9 @@
 	var bstack = [], vlevel;
 }
 
-start
-	= children:things {
+start =
+	children:things
+	{
 		return {
 			root: {
 				type: 'root',
@@ -13,16 +14,16 @@ start
 		}
 	}
 
-things
-	= a:thing*
+things =
+	a:thing*
 
-thing
-	= element
+thing =
+	element
 	/ verbatim
 	/ text
 
-element
-	= lbm:lbm_push name:tag_name attributes:attributes children:things rbm:rbm_pop
+element =
+	lbm:lbm_push name:tag_name attributes:attributes children:things rbm:rbm_pop
 	{
 		return {
 			type: 'element',
@@ -35,105 +36,124 @@ element
 		}
 	}
 
-lbm
-	= a:'[' b:'<'*
+lbm =
+	a:'[' b:$('<'*)
 	&{return (bstack[bstack.length - 1] || 0) <= b.length + 1}
-	{return a + b.join('')}
+	{
+		return a + b;
+	}
 
-lbm_push
-	= a:lbm
-	{bstack.push(a.length); return a}
+lbm_push =
+	a:lbm
+	{
+		bstack.push(a.length);
+		return a;
+	}
 
-tag_name
-	= t:(
+tag_name =
+	$(
 		// excludes: '(', '.', ':', '[', ']', '<', '`'
 		'!'+ / '"'+ / '#'+ / '$'+ / '%'+
 		/ '&'+ / "'"+ / ')'+ / '*'+ / '+'+
 		/ ','+ / '-'+ / '/'+ / ';'+ / '='+
 		/ '>'+ / '?'+ / '@'+ / '\\'+ / '^'+
 		/ '_'+ / '{'+ / '|'+ / '}'+ / '~'+
-	) {return t.join('')}
-	/ a:[a-z] b:[a-z0-9]* c:(':' d:[a-z] e:[a-z0-9]* {return ':' + d + e.join('')})*
-		{return a + b.join('') + c.join('')}
+	)
+	/ a:[a-z] b:$[a-z0-9]* c:$(':' d:[a-z] e:[a-z0-9]* {return ':' + d + e.join('')})*
+	{
+		return a + b + c;
+	}
 	/ ''
 
-attributes
-	= left:'('
-		d:(
-			b:[a-z0-9-]+
-			c:(
-				'=' '"' a:(!'"' .)* '"'
-				{return [
-					'=',
-					'"',
-					a.map(e => e[1]).join(''),
-					'"'
-				]}
-				/ '=' "'" a:(!"'" .)* "'"
-				{return [
-					'=',
-					"'",
-					a.map(e => e[1]).join(''),
-					"'"
-				]}
-				/ '=' a:(!['") \t\n\r] .)*
-				{return [
-					'=',
-					'',
-					a.map(e => e[1]).join(''),
-					''
-				]}
+attributes =
+	left:'('
+		content:(
+			name:$[a-z0-9-]+
+			value:(
+				a:'=' b:'"' c:$(!'"' .)* d:('"' / EOF {return ''})
+				{
+					return [a, b, c, d];
+				}
+				/ a:'=' b:"'" c:$(!"'" .)* d:("'" / EOF {return ''})
+				{
+					return [a, b, c, d];
+				}
+				/ a:'=' c:$(!['"()\[\] \t\n\r] .)*
+				{
+					return [a, '', c, ''];
+				}
 				/ ''
-				{return [
-					'', '', '', ''
-				]}
+				{
+					return ['', '', '', ''];
+				}
 			)
-			{return {
-				_type: 'attribute',
-				attribute: [b.join('')].concat(c)
-			}}
+			{
+				return {
+					_type: 'attribute',
+					attribute: [name].concat(value)
+				};
+			}
 			/ a:__
-			{return {
-				_type: 'whitespace',
-				whitespace: a
-			}}
+			{
+				return {
+					_type: 'whitespace',
+					whitespace: a
+				}
+			}
+			/ a:$(!')' !rbm .)
+			{
+				return {
+					_type: 'error',
+					error: a
+				}
+			}
 		)*
-	right:')'
-	{return {
-		_type: 'parenthesis',
-		left,
-		content: d,
-		right
-	}}
+	right:(')' / &rbm {return ''})
+	{
+		return {
+			_type: 'parenthesis',
+			left,
+			content,
+			right
+		}
+	}
 	/ a:('.' / '')
-	{return {
-		_type: 'separator',
-		separator: a
-	}}
+	{
+		return {
+			_type: 'separator',
+			separator: a
+		}
+	}
 
-rbm
-	= a:'>'* b:']'
-		&{return (bstack[bstack.length - 1] || 0) == a.length + 1}
-		{return a.join('') + b}
+rbm =
+	a:$('>'*) b:']'
+	&{return (bstack[bstack.length - 1] || 0) == a.length + 1}
+	{return a + b}
 	/ EOF
-		{return ''}
+	{return ''}
 
-rbm_pop
-	= a:rbm
-		{bstack.pop(); return a}
+rbm_pop =
+	a:rbm
+	{
+		bstack.pop();
+		return a;
+	}
 
-EOF
-	= !.
+EOF =
+	!.
 
-text
-	= a:(!lbm !rbm !'`' b:. {return b})+ {return {
-		type: 'text',
-		text: a.join(''),
-		location: location()
-	}}
+text =
+	a:(!lbm !rbm !'`' b:. {return b})+
+	{
+		return {
+			type: 'text',
+			text: a.join(''),
+			location: location()
+		}
+	}
 
-verbatim
-	= lvm:lvm separator:verbatim_separator child:verbatim_text rvm:rvm
+verbatim =
+	lvm:lvm separator:verbatim_separator child:verbatim_text rvm:rvm
 	{
 		return {
 			type: 'verbatim',
@@ -145,22 +165,25 @@ verbatim
 		}
 	}
 
-lvm
-	= a:'`' b:'<'*
-		{vlevel = b.length + 1; return a + b.join('')}
+lvm =
+	a:'`' b:'<'*
+	{
+		vlevel = b.length + 1;
+		return a + b.join('');
+	}
 
-verbatim_separator
-	= '.' / ''
+verbatim_separator =
+	'.' / ''
 
-rvm
-	= a:'>'* b:'`'
+rvm =
+	a:'>'* b:'`'
 		&{return vlevel == a.length + 1}
 		{return a.join('') + b}
 	/ EOF
-		{return ''}
+	{return ''}
 
-verbatim_text
-	= a:(!rvm b:. {return b})*
+verbatim_text =
+	a:(!rvm b:. {return b})*
 	{
 		return {
 			type: 'text',
@@ -170,7 +193,7 @@ verbatim_text
 	}
 
 // optional whitespace
-_ = a:[ \t\n\r]* {return a.join('')}
+_ = $[ \t\n\r]*
 
 // mandatory whitespace
-__ = a:[ \t\n\r]+ {return a.join('')}
+__ = $[ \t\n\r]+

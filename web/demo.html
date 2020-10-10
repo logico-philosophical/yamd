@@ -6,7 +6,6 @@
 		<title>m42kup client-side renderer test page</title>
 		<script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/addon/display/placeholder.min.js"></script>
-		<script src="codemirror-m42kup.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
 		<script src="../dist/m42kup.js"></script>
@@ -137,13 +136,9 @@
 				border-bottom: 1px solid;
 			}
 
-			.cm-s-default .cm-tag {
-				color: #d73a49;
-				font-weight: bold;
-			}
-
-			.cm-s-default .cm-comment {
-				color: #2e7d32;
+			.cm-s-default .cm-error {
+				background-color: #E57373;
+				color: white;
 			}
 		</style>
 	</head>
@@ -182,6 +177,7 @@
 			};
 
 			m42kup.set(options);
+			m42kup.addCodeMirrorMode(CodeMirror);
 			
 			var editor = CodeMirror.fromTextArea($('#input'), {
 				mode: 'm42kup',

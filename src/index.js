@@ -2,6 +2,7 @@ var parser = require('./parser');
 var renderer = require('./renderer');
 var highlighter = require('./highlighter');
 var cascade = require('./cascade');
+var addCodeMirrorMode = require('./codemirror');
 
 var globalOptions = {};
 
@@ -59,7 +60,8 @@ var m42kup = {
 	render,
 	highlight,
 	cascade: cascadeOptions,
-	set: setOptions
+	set: setOptions,
+	addCodeMirrorMode
 };
 
 module.exports = m42kup;
