@@ -14,6 +14,7 @@ install:
   - cd docs && npm ci && cd ..
 
 script:
+  - mkdir -p dist
   - sed -i 's/^dist\/$//g' .gitignore
   - sed -i 's/^docs\/build\/$//g' .gitignore
   - npm run build

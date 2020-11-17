@@ -249,6 +249,6 @@ export default class Element extends Node {
 	};
 
 	public escapeHtml(s: string) {
-		return this.escapeHtml(s);
+		return escapeHtml(s);
 	}
 }
