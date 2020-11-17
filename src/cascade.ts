@@ -7,7 +7,7 @@ function shallow(o) {
 }
 
 function copyOptions(o) {
-	var o2 = {};
+	var o2: any = {};
 	if (o.tags) o2.tags = shallow(o.tags);
 	if (o.hljs) o2.hljs = o.hljs;
 	if (o.katex) o2.katex = o.katex;
@@ -46,7 +46,7 @@ function options(o1, o2) {
 	return o1;
 }
 
-module.exports = {
+export default {
 	copyOptions,
 	tags,
 	options

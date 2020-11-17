@@ -1,7 +1,7 @@
 {
 	"name": "m42kup",
 	"version": "0.3.0",
-	"description": "m42kup renderer in JavaScript",
+	"description": "m42kup renderer for the web",
 	"keywords": [
 		"markup"
 	],
@@ -17,7 +17,7 @@
 	"bugs": {
 		"url": "http://github.com/logico-philosophical/m42kup/issues"
 	},
-	"main": "src/index.js",
+	"main": "dist/m42kup.min.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "pegjs -o dist/peg.js src/parser.pegjs && webpack",
@@ -28,9 +28,12 @@
 	"dependencies": {},
 	"devDependencies": {
 		"eslint": "^6.8.0",
-		"nodemon": "^2.0.4",
+		"nodemon": "^2.0.6",
 		"pegjs": "^0.10.0",
-		"webpack": "^4.44.1",
+		"terser-webpack-plugin": "^4.2.3",
+		"ts-loader": "^8.0.11",
+		"typescript": "^4.0.5",
+		"webpack": "^4.44.2",
 		"webpack-cli": "^3.3.12"
 	}
 }

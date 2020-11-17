@@ -1,8 +1,8 @@
-var parser = require('./parser');
-var renderer = require('./renderer');
-var highlighter = require('./highlighter');
-var cascade = require('./cascade');
-var addCodeMirrorMode = require('./codemirror');
+import parser from './parser';
+import renderer from './renderer';
+import highlighter from './highlighter';
+import cascade from './cascade';
+import addCodeMirrorMode from './codemirror';
 
 var globalOptions = {};
 
