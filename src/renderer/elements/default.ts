@@ -1,6 +1,6 @@
-var {ElementClass} = require('../nodes');
+import ElementClass from "../nodes/ElementClass";
 
-var tagNameMap = {};
+var tagNameMap: any = {};
 
 tagNameMap.comment = new ElementClass({
 	name: 'comment',
@@ -322,4 +322,4 @@ for (var k in aliases) {
 	tagNameMap[k] = tagNameMap[aliases[k]];
 }
 
-module.exports = tagNameMap;
+export default tagNameMap;

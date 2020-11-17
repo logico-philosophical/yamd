@@ -1,6 +1,11 @@
-var {Node, TextNode, HtmlNode, ErrorNode, ElementClass, Element} = require('./nodes');
-var defaultTagNameMap = require('./elements/default');
-var cascade = require('../cascade');
+import defaultTagNameMap from './elements/default';
+import cascade from '../cascade';
+import Element from './nodes/Element';
+import ElementClass from './nodes/ElementClass';
+import Node from './nodes/Node';
+import ErrorNode from './nodes/ErrorNode';
+import TextNode from './nodes/TextNode';
+import HtmlNode from './nodes/HtmlNode';
 
 var rootClass = new ElementClass({
 	name: '[root]',
@@ -113,7 +118,7 @@ function ast2nt(ast, options) {
 	})(ast.root);
 }
 
-module.exports = {
+export default {
 	ast2nt,
 	Node,
 	TextNode,

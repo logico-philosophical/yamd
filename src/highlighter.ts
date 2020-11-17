@@ -124,6 +124,6 @@ function pt2hl(pt) {
 	})(pt.root.children);
 }
 
-module.exports = {
+export default {
 	pt2hl
 };

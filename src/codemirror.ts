@@ -1,11 +1,11 @@
 var STATE_NORMAL = 0,
 	STATE_ATTRIBUTE_NAME = 1,
 	STATE_ATTRIBUTE_EQ = 2,
-	STATE_ATTRIBUTE_VALUE = 3
+	STATE_ATTRIBUTE_VALUE = 3,
 	STATE_ATTRIBUTE_DQUOTE = 4,
 	STATE_ATTRIBUTE_SQUOTE = 5;
 
-module.exports = function addCodeMirrorMode(CodeMirror) {
+export default function addCodeMirrorMode(CodeMirror) {
 	function token(stream, state) {
 		if ((state.levels[state.levels.length - 1] || 0) < 0) {
 			var lvmLevel = -state.levels[state.levels.length - 1];

@@ -1,4 +1,4 @@
-var peg = require('../dist/peg');
+import peg from '../dist/peg';
 
 function input2pt(input) {
 	var pt = peg.parse(input);
@@ -70,7 +70,7 @@ function pt2ast(pt) {
 	};
 }
 
-module.exports = {
+export default {
 	input2pt,
 	pt2ast
 };
