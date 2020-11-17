@@ -46,8 +46,8 @@
 			}
 
 			pre, code {
-				font-family: 'Roboto Mono', monospace;
-				background-color: #eee;
+				font-family: Consolas, 'Roboto Mono', monospace;
+				background-color: rgba(0,0,0,.05);
 				white-space: pre-wrap;
 				word-break: break-all;
 				tab-size: 4;
@@ -59,10 +59,13 @@
 
 			code {
 				font-size: .85em;
+				padding: .15em .3em;
+				border-radius: .3em;
 			}
 
 			pre code {
 				background-color: unset;
+				padding: 0;
 			}
 
 			blockquote {
@@ -92,7 +95,7 @@
 			#input {
 				width: 100%;
 				height: 200px;
-				font-family: 'Roboto Mono', monospace;
+				font-family: Consolas, 'Roboto Mono', monospace;
 				padding: 1em;
 				border: 1px #5f6368 solid;
 				resize: vertical;
@@ -111,7 +114,7 @@
 			.CodeMirror {
 				border: 1px #666 solid;
 				font-size: .85em;
-				font-family: 'Roboto Mono';
+				font-family: Consolas, 'Roboto Mono';
 				height: auto;
 				padding: 1em;
 			}
@@ -136,6 +139,15 @@
 				border-bottom: 1px solid;
 			}
 
+			.cm-s-default .cm-tag {
+				color: #d73a49!important;
+				font-weight: bold;
+			}
+
+			.cm-s-default .cm-comment {
+				color: #2e7d32!important;
+			}
+
 			.cm-s-default .cm-error {
 				background-color: #E57373;
 				color: white;
@@ -146,7 +158,6 @@
 		<h1>m42kup client-side renderer test page</h1>
 		<a href="https://github.com/logico-philosophical/m42kup">GitHub repo</a>
 		<h2>Input</h2>
-		<p>Now with <a href="https://codemirror.net/">CodeMirror</a>.</p>
 		<textarea id="input" placeholder="input"></textarea>
 		<h2>Highlighted input</h2>
 		<pre id="input-highlighted" class="m42kup-hl"></pre>
