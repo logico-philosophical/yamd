@@ -1,8 +1,13 @@
+import { ElementClassArgumentType, ElementClassInstantiateArgumentType } from "./ElementClass";
 import ErrorNode from "./ErrorNode";
 import escapeHtml from "./escapeHtml";
 import HtmlNode from "./HtmlNode";
 import Node from "./Node";
 import TextNode from "./TextNode";
+
+interface ElementArgumentType
+	extends ElementClassArgumentType, ElementClassInstantiateArgumentType {
+}
 
 export default class Element extends Node {
 
@@ -10,7 +15,7 @@ export default class Element extends Node {
 	public readonly display: 'inline' | 'leaf-block' | 'container-block';
 	public readonly code: string;
 	public readonly attributes: any[];
-	public readonly children: any[];
+	public readonly children: Node[];
 	public readonly split: string | any[];
 	public readonly innerIsText: boolean;
 	public readonly innerText: string;
@@ -21,7 +26,7 @@ export default class Element extends Node {
 	public readonly errorMessage: string;
 	public readonly outerHtml: string;
 
-	constructor ({name, display, render, code, attributes, children, split, options}) {
+	constructor ({name, display, render, code, attributes, children, split, options}: ElementArgumentType) {
 		super();
 
 		if (!name) throw TypeError('You give arg0 a bad name');
@@ -237,14 +242,24 @@ export default class Element extends Node {
 				: this[k] + '')
 		).join('\n' + '\t'.repeat(level + 1));
 	
-		var b = (function r(children) {
-			return children.map(c => c.toIndentedString(level + 1)).join(',\n');
-		})(this.children);
+		var b = (function recurse(children, level) {
+			return children.map(c => {
+				if (c instanceof Array) {
+					return [
+						'[',
+						'\t' + recurse(c, level + 1),
+						']'
+					].join('\n' + '\t'.repeat(level));
+				}
+
+				return c.toIndentedString(level);
+			}).join(',\n' + '\t'.repeat(level));
+		})(this.children, level + 1);
 	
-		return '\t'.repeat(level) + `Element[${JSON.stringify(this.name)}](\n`
+		return `Element[${JSON.stringify(this.name)}](\n`
 				+ `${'\t'.repeat(level + 1)}${a}\n`
 			+ `${'\t'.repeat(level)}) {\n`
-			+ `${b}\n`
+			+ '\t'.repeat(level + 1) + `${b}\n`
 			+ `${'\t'.repeat(level)}}`;
 	};
 

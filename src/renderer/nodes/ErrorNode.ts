@@ -26,6 +26,6 @@ export default class ErrorNode extends Node {
 	public toIndentedString(level: number) {
 		var a = ['message', 'code'].map(k =>
 			k + '=' + JSON.stringify(this[k])).join(' ');
-		return '\t'.repeat(level) + `Error(${a})`;
+		return `Error(${a})`;
 	};
 }

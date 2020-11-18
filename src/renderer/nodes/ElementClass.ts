@@ -1,10 +1,18 @@
 import Element from "./Element";
+import Node from "./Node";
 
-interface ElementClassArgumentType {
+export interface ElementClassArgumentType {
 	name: NonNullable<string>;
 	display: 'inline' | 'leaf-block' | 'container-block';
 	render: Function;
 	split?: string | any[];
+}
+
+export interface ElementClassInstantiateArgumentType {
+	code: string;
+	attributes: any[];
+	children: Node[];
+	options: any;
 }
 
 export default class ElementClass {
@@ -42,11 +50,8 @@ export default class ElementClass {
 		}
 	}
 
-	public instantiate({code, attributes, children, options}) {
-		if (!(this instanceof ElementClass)) {
-			throw Error('ElementClass.prototype.instantiate should be called as a method of an ElementClass instance');
-		}
-	
+	public instantiate({code, attributes, children, options}: ElementClassInstantiateArgumentType) {
+		
 		return new Element({
 			name: this.name,
 			display: this.display,

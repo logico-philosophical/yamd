@@ -6,6 +6,7 @@ import Node from './nodes/Node';
 import ErrorNode from './nodes/ErrorNode';
 import TextNode from './nodes/TextNode';
 import HtmlNode from './nodes/HtmlNode';
+import { AstRootType, AstType } from '../parser';
 
 var rootClass = new ElementClass({
 	name: '[root]',
@@ -13,13 +14,13 @@ var rootClass = new ElementClass({
 	render: el => el.html(el.innerHtml)
 });
 
-function ast2nt(ast, options) {
+function ast2nt(ast: AstRootType, options): Element {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 
 	var tagNameMap = cascade.tags(defaultTagNameMap, options.tags);
 	
-	return (function recurse(tree) {
+	return (function recurse(tree: AstType): Node {
 		if (tree.type == 'root') {
 			return rootClass.instantiate({
 				code: tree.code,
@@ -32,9 +33,11 @@ function ast2nt(ast, options) {
 			return new TextNode(tree.text);
 		}
 		
+		// @ts-ignore
 		if (tree.type == 'error') {
 			return new ErrorNode({
 				message: 'Parser error',
+				// @ts-ignore
 				code: tree.text
 			});
 		}
@@ -114,8 +117,9 @@ function ast2nt(ast, options) {
 			});
 		}
 
+		// @ts-ignore
 		throw TypeError(tree.type);
-	})(ast.root);
+	})(ast.root) as Element;
 }
 
 export default {
