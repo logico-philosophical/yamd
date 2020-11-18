@@ -1,5 +1,34 @@
 import peg from '../dist/peg';
 
+export interface AstRootType {
+	input: string;
+	root: AstRootTypeInner;
+}
+
+export interface AstRootTypeInner {
+	type: 'root';
+	children: (AstElementType | AstTextType)[];
+	code: string;
+}
+
+interface AstElementType {
+	type: 'element';
+	name: string;
+	attributes: ({
+		name: string;
+		value: string;
+	})[];
+	children: (AstElementType | AstTextType)[];
+	code: string;
+}
+
+interface AstTextType {
+	type: 'text';
+	text: string;
+}
+
+export type AstType = AstRootTypeInner | AstElementType | AstTextType;
+
 function input2pt(input) {
 	var pt = peg.parse(input);
 	pt.input = input;
@@ -7,7 +36,7 @@ function input2pt(input) {
 	return pt;
 }
 
-function pt2ast(pt) {
+function pt2ast(pt): AstRootType {
 	var input = pt.input;
 
 	var r = (function recurse(pt) {

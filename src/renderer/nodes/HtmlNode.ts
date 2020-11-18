@@ -27,6 +27,6 @@ export default class HtmlNode extends Node {
 	public toIndentedString(level: number) {
 		var a = ['display'].map(k =>
 			k + '=' + JSON.stringify(this[k])).join(' ');
-		return '\t'.repeat(level) + `Html(${a}) {${JSON.stringify(this.html)}}`;
+		return `Html(${a}) {${JSON.stringify(this.html)}}`;
 	};
 }

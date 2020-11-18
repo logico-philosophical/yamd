@@ -19,6 +19,6 @@ export default class TextNode extends Node {
 	}
 
 	public toIndentedString(level: number) {
-		return '\t'.repeat(level) + `Text {${JSON.stringify(this.text)}}`;
+		return `Text {${JSON.stringify(this.text)}}`;
 	}
 }

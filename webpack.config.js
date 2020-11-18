@@ -23,6 +23,15 @@ module.exports = {
 			}
 		]
 	},
+	optimization: {
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					keep_fnames: true
+				}
+			})
+		]
+	},
 	devtool: 'source-map',
 	stats: {
 		cached: false,

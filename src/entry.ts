@@ -1,4 +1,4 @@
-import parser from './parser';
+import parser, { AstRootType } from './parser';
 import renderer from './renderer';
 import highlighter from './highlighter';
 import cascade from './cascade';
@@ -18,7 +18,7 @@ function setOptions(options) {
 	globalOptions = options;
 }
 
-function ast2nt(ast, options) {
+function ast2nt(ast: AstRootType, options) {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 
