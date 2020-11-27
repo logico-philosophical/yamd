@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>m42kup.highlighter API</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/default.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/tomorrow.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
 		<style>
 			* {
@@ -42,8 +42,8 @@
 				max-width: 100%;
 			}
 
-			pre, code {
-				font-family: 'Roboto Mono', monospace;
+			pre, pre.hljs, code {
+				font-family: Consolas, 'Roboto Mono', monospace;
 				background-color: rgba(0,0,0,.05);
 				white-space: pre-wrap;
 				word-break: break-all;
@@ -56,10 +56,13 @@
 
 			code {
 				font-size: .85em;
+				padding: .15em .3em;
+				border-radius: .3em;
 			}
 
 			pre code {
 				background-color: unset;
+				padding: 0;
 			}
 
 			p {
@@ -70,13 +73,12 @@
 				margin-top: 1em;
 			}
 
-			li p {
-				margin-top: 1em;
-				margin-bottom: 1em;
-			}
-
 			ul, ol {
 				margin: 1em 0;
+			}
+
+			ol li, ul li {
+				margin: .5em 0;
 			}
 
 			table {
@@ -147,6 +149,7 @@
 
 			#toc ol li {
 				list-style: none;
+				margin: 0;
 			}
 
 			#toc ol li a {
@@ -279,11 +282,11 @@
 		<div id="content">
 			
 				<h1><code>m42kup.highlighter</code> API</h1><pre class="hljs"><code>highlighter: {
-	<span class="hljs-attr">pt2hl</span>: <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Function</span>&gt;</span>
-}</span>
+	<span class="hljs-attr">pt2hl</span>: &lt;<span class="hljs-built_in">Function</span>&gt;
+}
 </code></pre><h2><code>pt2hl(pt)</code></h2><p>파스 트리로부터 구문 강조된 HTML을 생성합니다. 파스 트리 상의 특정 타입을 <code>m42hl-</code>로 시작하는 특정 클래스를 가지는 <code>&lt;span&gt;</code>으로 감싸는데 <code>m42hl-</code> 이후에 오는 이름은 다음과 같습니다.</p><h3>텍스트</h3><table><tr><td><p>
 	some text </p></td></tr><tr><td><p><code>tx</code>
-</p></td></tr></table><p>즉 </p><pre class="hljs"><code>&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">"m42hl-tx"</span>&gt;some text&lt;/span&gt;
+</p></td></tr></table><p>즉 </p><pre class="hljs"><code>&lt;span <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;m42hl-tx&quot;</span>&gt;some text&lt;/span&gt;
 </code></pre><p>처럼 됩니다.</p><h3>요소</h3><p><code>[~(href=&quot;example.com&quot; foo=bar)asdf]</code>의 경우
 </p><table><tr><td><p><code>[</code> </p></td><td><p> <code>~</code> </p></td><td><p> <code>(</code> </p></td><td><p> <code>href</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code>example.com</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code> </code> </p></td><td><p> <code>foo</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>bar</code> </p></td><td><p> <code>)</code> </p></td><td><p> <code>asdf</code> </p></td><td><p> <code>]</code> </p></td></tr><tr><td><p><code>lbm</code> </p></td><td><p> <code>tn</code> </p></td><td><p> <code>lpm</code> </p></td><td><p> <code>pk</code> </p></td><td><p> <code>eq</code> </p></td><td><p> <code>lqm</code> </p></td><td><p> <code>pv</code> </p></td><td><p> <code>rqm</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>pk</code> </p></td><td><p> <code>eq</code> </p></td><td><p> <code>pv</code> </p></td><td><p> <code>rpm</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>rbm</code>
 </p></td></tr></table><p>전체가 <code>elem</code>으로 감싸집니다.</p><p><code>[~.example.com]</code>의 경우</p><table><tr><td><p><code>[</code> </p></td><td><p> <code>~</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>example.com</code> </p></td><td><p> <code>]</code> </p></td></tr><tr><td><p><code>lbm</code> </p></td><td><p> <code>tn</code> </p></td><td><p> <code>sp</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>rbm</code>

@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>기본적인 사용법</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/default.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/tomorrow.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
 		<style>
 			* {
@@ -42,8 +42,8 @@
 				max-width: 100%;
 			}
 
-			pre, code {
-				font-family: 'Roboto Mono', monospace;
+			pre, pre.hljs, code {
+				font-family: Consolas, 'Roboto Mono', monospace;
 				background-color: rgba(0,0,0,.05);
 				white-space: pre-wrap;
 				word-break: break-all;
@@ -56,10 +56,13 @@
 
 			code {
 				font-size: .85em;
+				padding: .15em .3em;
+				border-radius: .3em;
 			}
 
 			pre code {
 				background-color: unset;
+				padding: 0;
 			}
 
 			p {
@@ -70,13 +73,12 @@
 				margin-top: 1em;
 			}
 
-			li p {
-				margin-top: 1em;
-				margin-bottom: 1em;
-			}
-
 			ul, ol {
 				margin: 1em 0;
+			}
+
+			ol li, ul li {
+				margin: .5em 0;
 			}
 
 			table {
@@ -147,6 +149,7 @@
 
 			#toc ol li {
 				list-style: none;
+				margin: 0;
 			}
 
 			#toc ol li a {
@@ -278,42 +281,42 @@
 		</div>
 		<div id="content">
 			
-				<h1>기본적인 사용법</h1><p>온라인 <a href="https://logico-philosophical.github.io/m42kup/web/demo.html" title="https://logico-philosophical.github.io/m42kup/web/demo.html">데모 페이지</a>에서 써볼 수 있습니다.</p><h2>설치</h2><pre class="hljs"><code><span class="hljs-built_in">npm</span> install m42kup
-</code></pre><h2>서버 사이드에서 사용</h2><pre class="hljs"><code><span class="hljs-keyword">const</span> m42kup = <span class="hljs-built_in">require</span>(<span class="hljs-string">'m42kup'</span>);
+				<h1>기본적인 사용법</h1><p>온라인 <a href="https://logico-philosophical.github.io/m42kup/web/demo.html" title="https://logico-philosophical.github.io/m42kup/web/demo.html">데모 페이지</a>에서 써볼 수 있습니다.</p><h2>설치</h2><pre class="hljs"><code><span class="hljs-attribute">npm</span> install m<span class="hljs-number">42</span>kup
+</code></pre><h2>서버 사이드에서 사용</h2><pre class="hljs"><code><span class="hljs-keyword">const</span> m42kup = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;m42kup&#x27;</span>);
 
-m42kup.render(<span class="hljs-string">'[*italic text]'</span>); <span class="hljs-comment">// &lt;p&gt;&lt;i&gt;italic text&lt;/i&gt;&lt;/p&gt;</span>
-</code></pre><h3>KaTeX 및 highlight.js와 함께 사용</h3><p><code>[$]</code>나 <code>[;;;]</code> 같은 요소를 사용하려면 수식/코드 렌더러를 제공해야 합니다.</p><pre class="hljs"><code><span class="hljs-keyword">const</span> m42kup = <span class="hljs-built_in">require</span>(<span class="hljs-string">'m42kup'</span>),
-	hljs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highlight.js'</span>),
-	katex = <span class="hljs-built_in">require</span>(<span class="hljs-string">'katex'</span>);
+m42kup.render(<span class="hljs-string">&#x27;[*italic text]&#x27;</span>); <span class="hljs-comment">// &lt;p&gt;&lt;i&gt;italic text&lt;/i&gt;&lt;/p&gt;</span>
+</code></pre><h3>KaTeX 및 highlight.js와 함께 사용</h3><p><code>[$]</code>나 <code>[;;;]</code> 같은 요소를 사용하려면 수식/코드 렌더러를 제공해야 합니다.</p><pre class="hljs"><code><span class="hljs-keyword">const</span> m42kup = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;m42kup&#x27;</span>),
+	hljs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;highlight.js&#x27;</span>),
+	katex = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;katex&#x27;</span>);
 
 m42kup.set({hljs, katex});
 
 m42kup.render(<span class="hljs-string">`
 [;;;
-var foo = 'some highlighted code',
-	bar = 'more highlighted code';
+var foo = &#x27;some highlighted code&#x27;,
+	bar = &#x27;more highlighted code&#x27;;
 ]
 
 [$\sum_{n=1}^4 e^{in\pi}=0]
 `</span>);
-</code></pre><h2>클라이언트 사이드에서 사용</h2><p><code>/dist/m42kup.min.js</code>에 있는 파일을 적당한 곳에 복사해서 사용합니다. 아니면 <a href="https://www.jsdelivr.com/package/npm/m42kup" title="https://www.jsdelivr.com/package/npm/m42kup">jsDelivr</a>에도 있으므로 그걸 써도 됩니다.</p><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/path/to/m42kup/m42kup.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre><h2>클라이언트 사이드에서 사용</h2><p><code>/dist/m42kup.min.js</code>에 있는 파일을 적당한 곳에 복사해서 사용합니다. 아니면 <a href="https://www.jsdelivr.com/package/npm/m42kup" title="https://www.jsdelivr.com/package/npm/m42kup">jsDelivr</a>에도 있으므로 그걸 써도 됩니다.</p><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/path/to/m42kup/m42kup.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="handlebars"><span class="xml">
-m42kup.render('[**bold text]'); // <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>bold text<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+m42kup.render(&#x27;[**bold text]&#x27;); // <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>bold text<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 </span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-</code></pre><h3>KaTeX 및 highlight.js와 함께 사용</h3><p><code>[$]</code>나 <code>[;;;]</code> 같은 요소를 사용하려면 수식/코드 렌더러를 제공해야 합니다.</p><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/path/to/highlight.js/highlight.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/path/to/katex/katex.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/path/to/m42kup/m42kup.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+</code></pre><h3>KaTeX 및 highlight.js와 함께 사용</h3><p><code>[$]</code>나 <code>[;;;]</code> 같은 요소를 사용하려면 수식/코드 렌더러를 제공해야 합니다.</p><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/path/to/highlight.js/highlight.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/path/to/katex/katex.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/path/to/m42kup/m42kup.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
 m42kup.set({hljs, katex});
 
-m42kup.render(`
+m42kup.render(<span class="hljs-string">`
 [;;;
-<span class="hljs-keyword">var</span> foo = <span class="hljs-string">'some highlighted code'</span>,
-	bar = <span class="hljs-string">'more highlighted code'</span>;
+var foo = &#x27;some highlighted code&#x27;,
+	bar = &#x27;more highlighted code&#x27;;
 ]
 
-[$\sum_{n=<span class="hljs-number">1</span>}^<span class="hljs-number">4</span> e^{<span class="hljs-keyword">in</span>\pi}=<span class="hljs-number">0</span>]
-`);
+[$\sum_{n=1}^4 e^{in\pi}=0]
+`</span>);
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 			

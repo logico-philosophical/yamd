@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>m42kup.parser API</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/default.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/tomorrow.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
 		<style>
 			* {
@@ -42,8 +42,8 @@
 				max-width: 100%;
 			}
 
-			pre, code {
-				font-family: 'Roboto Mono', monospace;
+			pre, pre.hljs, code {
+				font-family: Consolas, 'Roboto Mono', monospace;
 				background-color: rgba(0,0,0,.05);
 				white-space: pre-wrap;
 				word-break: break-all;
@@ -56,10 +56,13 @@
 
 			code {
 				font-size: .85em;
+				padding: .15em .3em;
+				border-radius: .3em;
 			}
 
 			pre code {
 				background-color: unset;
+				padding: 0;
 			}
 
 			p {
@@ -70,13 +73,12 @@
 				margin-top: 1em;
 			}
 
-			li p {
-				margin-top: 1em;
-				margin-bottom: 1em;
-			}
-
 			ul, ol {
 				margin: 1em 0;
+			}
+
+			ol li, ul li {
+				margin: .5em 0;
 			}
 
 			table {
@@ -147,6 +149,7 @@
 
 			#toc ol li {
 				list-style: none;
+				margin: 0;
 			}
 
 			#toc ol li a {
@@ -279,8 +282,8 @@
 		<div id="content">
 			
 				<h1><code>m42kup.parser</code> API</h1><pre class="hljs"><code>parser: {
-    <span class="hljs-attr">input2pt</span>: &lt;Function&gt;,
-    pt2ast: &lt;Function&gt;
+    <span class="hljs-attr">input2pt</span>: &lt;<span class="hljs-built_in">Function</span>&gt;,
+    pt2ast: &lt;<span class="hljs-built_in">Function</span>&gt;
 }
 </code></pre><h2><code>input2pt(input)</code></h2><p>입력으로부터 파스 트리(parse tree)를 생성합니다.</p><p><b>Parameters</b></p><ul><li><p> <code>input &lt;string&gt;</code>: 입력 문자열.
 </p></li></ul><p><b>Returns</b></p><p><code>&lt;Object&gt;</code> 생성된 파스 트리. 형식은 <a href="./formats.html" title="./formats.html">입출력 형식</a> 참조.</p><h2><code>pt2ast(pt)</code></h2><p>파스 트리로부터 AST(abstract syntax tree; 추상 구문 트리)를 생성합니다.</p><p><b>Parameters</b></p><ul><li><p> <code>pt &lt;Object&gt;</code>: 파스 트리. 형식은 <a href="./formats.html" title="./formats.html">입출력 형식</a> 참조.
