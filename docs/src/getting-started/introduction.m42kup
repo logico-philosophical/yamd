@@ -1,8 +1,5 @@
 [=m42kup 소개]
 
-[~(href=https://www.npmjs.com/package/m42kup)[~~https://img.shields.io/npm/v/m42kup]]
-[~(href=https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)[~~https://img.shields.io/github/license/logico-philosophical/m42kup]]
-
 m42kup은 간결하고 일관적인 문법을 갖는 가벼운 마크업 언어(lightweight markup language)입니다. m42kup 언어 명세와 HTML 렌더러 등을 만드는 프로젝트는 [~(href='https://github.com/logico-philosophical/m42kup')GitHub]에서 호스트됩니다.
 
 이 문서는 m42kup 언어 명세 및 HTML 렌더러의 사용법 및 API를 기록하는 것을 목적으로 합니다. 또 이 문서는 m42kup으로 쓰였으며 [~(href=https://github.com/logico-philosophical/m42kup-builder)m42kup-builder]로 빌드되었습니다.
