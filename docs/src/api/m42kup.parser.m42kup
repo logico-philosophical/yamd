@@ -1,37 +1,37 @@
-[=[;m42kup.parser] API]
+[=[;m42kup.parser]]
 
 [;;;(lang=javascript)
 parser: {
-    input2pt: <Function>,
-    pt2ast: <Function>
+    input2pt: Function,
+    pt2ast: Function
 }
 ]
 
 [==[;input2pt(input)]]
 
-입력으로부터 파스 트리(parse tree)를 생성합니다.
+입력으로부터 파스 트리(parse tree)를 생성한다.
 
 [**Parameters]
 
 [ul
-	[*] [;input <string>]: 입력 문자열.
+	[*] [;input: string]: m42kup 코드.
 ]
 
 [**Returns]
 
-[;<Object>] 생성된 파스 트리. 형식은 [~(href='./formats.html')입출력 형식] 참조.
+생성된 파스 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.
 
 
 [==[;pt2ast(pt)]]
 
-파스 트리로부터 AST(abstract syntax tree; 추상 구문 트리)를 생성합니다.
+파스 트리로부터 추상 구문 트리(abstract syntax tree)를 생성한다.
 
 [**Parameters]
 
 [ul
-	[*] [;pt <Object>]: 파스 트리. 형식은 [~(href='./formats.html')입출력 형식] 참조.
+	[*] [;pt]: 파스 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.
 ]
 
 [**Returns]
 
-[;<Object>] 생성된 AST. 형식은 [~(href='./formats.html')입출력 형식] 참조.
+생성된 추상 구문 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.

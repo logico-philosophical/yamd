@@ -1,15 +1,15 @@
-[=[;m42kup] API]
+[=[;m42kup]]
 
 [;;;(lang=javascript)
 m42kup: {
     parser: { ... },
     renderer: { ... },
     highlighter: { ... },
-    ast2nt: <Function>,
-    render: <Function>,
-    highlight: <Function>,
-    cascade: <Function>,
-    set: <Function>
+    ast2nt: Function,
+    render: Function,
+    highlight: Function,
+    cascade: Function,
+    set: Function
 }
 ]
 
@@ -24,38 +24,37 @@ m42kup: {
 
 [==[;highlighter]]
 
-구문 강조를 합니다. 개별 문서 참조.
+구문 강조를 한다. 개별 문서 참조.
 
 [==[;ast2nt(ast, options)]]
 
-AST로부터 노드의 트리를 만듭니다. [;m42kup.renderer.ast2nt(ast, options)]와 같은데 [;m42kup]의 글로벌 옵션이 적용되며 [;options]는 글로벌 옵션을 cascade 합니다.
+AST로부터 노드의 트리를 만든다. [;m42kup.renderer.ast2nt(ast, options)]와 같은데 [;m42kup]의 글로벌 옵션이 적용되며 [;options]는 글로벌 옵션을 cascade 한다.
 
 [**Parameters]
 
 [ul
-    [*] [;ast <Object>]: AST. 형식은 [~(href='./formats.html')입출력 형식] 참조.
-    [*] [;options <Object>]: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 [~(href='./options.html')렌더링 옵션] 참조.
+    [*] [;ast]: 추상 구문 트리. [~(href='./formats.html')입출력 형식]을 참조하라.
+    [*] [;options]: 렌더링 옵션. [~(href='./options.html')렌더링 옵션]을 참조하라.
 ]
 
 [**Returns]
 
-[;<Element>] 노드 트리. 형식은 [;Element] 참조.
-
+[;Element] 노드 트리.
 
 [==[;render(input, options)]]
 
-입력으로부터 HTML을 렌더링 합니다.
+입력으로부터 HTML을 렌더링 한다.
 
 [**Parameters]
 
 [ul
-    [*] [;input <string>]: 입력 문자열.
-    [*] [;options <Object>]: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 [~(href='./options.html')렌더링 옵션] 참조.
+    [*] [;input: string]: 입력 문자열.
+    [*] [;options]: 렌더링 옵션. [~(href='./options.html')렌더링 옵션]을 참조하라.
 ]
 
 [**Returns]
 
-[;<string>] 렌더링 된 HTML.
+[;string] 렌더링 된 HTML.
 
 [**Examples]
 
@@ -70,17 +69,17 @@ m42kup.render('[*hello]');
 
 [==[;highlight(input)]]
 
-입력 문자열로부터 구문 강조된 HTML을 생성합니다. 자세한 생성 방식은 [;m42kup.highlighter.pt2hl] 참조.
+m42kup 코드를 구문 강조한다. 출력 형식에 관하여는 [;m42kup.highlighter.pt2hl]을 참조하라.
 
 [**Parameters]
 
 [ul
-    [*] [;input <string>]: 입력 문자열.
+    [*] [;input: string]: m42kup 코드.
 ]
 
 [**Returns]
 
-[;<string>] 구문 강조된 HTML.
+[;string] 구문 강조된 코드. HTML로 되어 있다.
 
 [**Examples]
 
@@ -94,12 +93,12 @@ m42kup.highlight('[*hello]');
 
 [==[;cascade(options)]]
 
-현재의 글로벌 옵션을 보존하면서 [;options]로 적당히 덮어 씁니다. [;m42kup.cascade]나 [;m42kup.set]을 한 번도 호출하지 않은 경우 [;m42kup.set]과 효과가 같습니다.
+현재의 글로벌 옵션을 보존하면서 [;options]로 적당히 덮어 쓴다. [;m42kup.cascade]나 [;m42kup.set]을 한 번도 호출하지 않은 경우 [;m42kup.set]과 효과가 같다.
 
 [**Parameters]
 
 [ul
-    [*] [;options <Object>]: 가능한 옵션은 [~(href='./options.html')렌더링 옵션] 참조.
+    [*] [;options]: [~(href='./options.html')렌더링 옵션] 참조.
 ]
 
 [**Examples]
@@ -137,14 +136,12 @@ m42kup.cascade({
 
 [==[;set(options)]]
 
-현재의 글로벌 옵션을 버리고 [;options]로 설정합니다. [;m42kup.cascade]나 [;m42kup.set]을 한 번도 호출하지 않은 경우 [;m42kup.cascade]와 효과가 같습니다.
-
-[;m42kup.set({})]으로 글로벌 옵션을 없애버릴 수 있습니다.
+현재의 글로벌 옵션을 버리고 [;options]로 설정한다. [;m42kup.cascade]나 [;m42kup.set]을 한 번도 호출하지 않은 경우 [;m42kup.cascade]와 효과가 같다. [;m42kup.set({})]으로 글로벌 옵션을 없애버릴 수 있다.
 
 [**Parameters]
 
 [ul
-    [*] [;options <Object>]: 가능한 옵션은 [~(href='./options.html')렌더링 옵션] 참조.
+    [*] [;options]: 가능한 옵션은 [~(href='./options.html')렌더링 옵션] 참조.
 ]
 
 [**Examples]

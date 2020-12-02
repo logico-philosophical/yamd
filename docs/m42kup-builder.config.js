@@ -9,7 +9,7 @@ function render(text) {
 }
 
 module.exports = {
-	name: 'm42kup의 문서화',
+	name: 'm42kup 설명서',
 	src: 'src',
 	dst: 'build',
 	render,
@@ -23,13 +23,17 @@ module.exports = {
 					file: 'introduction'
 				},
 				{
-					name: '기본적인 사용법',
+					name: '간단한 사용법',
 					file: 'basic-usage'
+				},
+				{
+					name: '설치',
+					file: 'installation'
 				}
 			]
 		},
 		{
-			name: 'API 명세',
+			name: 'API',
 			dir: 'api',
 			list: [
 				{
@@ -41,19 +45,19 @@ module.exports = {
 					file: 'formats'
 				},
 				{
-					name: 'm42kup API',
+					name: 'm42kup',
 					file: 'm42kup'
 				},
 				{
-					name: 'm42kup.parser API',
+					name: 'm42kup.parser',
 					file: 'm42kup.parser'
 				},
 				{
-					name: 'm42kup.renderer API',
+					name: 'm42kup.renderer',
 					file: 'm42kup.renderer'
 				},
 				{
-					name: 'm42kup.highlighter API',
+					name: 'm42kup.highlighter',
 					file: 'm42kup.highlighter'
 				}
 			]
