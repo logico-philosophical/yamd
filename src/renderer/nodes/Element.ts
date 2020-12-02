@@ -9,30 +9,46 @@ interface ElementArgumentType
 	extends ElementClassArgumentType, ElementClassInstantiateArgumentType {
 }
 
+export type Nested<T> = T | Nested<T>[];
+
+export type ElementDisplayType = 'inline' | 'leaf-block' | 'container-block';
+
+export function isElementDisplayType(obj: string): obj is ElementDisplayType {
+	return ['inline', 'leaf-block', 'container-block'].includes(obj);
+}
+
 export default class Element extends Node {
 
-	public readonly name: string;
-	public readonly display: 'inline' | 'leaf-block' | 'container-block';
+	public readonly name: NonNullable<string>;
+	public readonly display: ElementDisplayType;
+	private readonly renderer: (el: Element, options) => Node;
+	public readonly split: string[];
+
 	public readonly code: string;
 	public readonly attributes: any[];
-	public readonly children: Node[];
-	public readonly split: string | any[];
-	public readonly innerIsText: boolean;
-	public readonly innerText: string;
-	public readonly innerHtml: string;
-	public readonly outerIsText: boolean;
-	public readonly outerText: string;
-	public readonly isError: boolean;
-	public readonly errorMessage: string;
-	public readonly outerHtml: string;
+	public readonly children: Nested<Node>[];
+	public readonly options: any;
 
-	constructor ({name, display, render, code, attributes, children, split, options}: ElementArgumentType) {
+	private innerIsRendered = false;
+	#innerIsText: Nested<boolean>;
+	#innerText: Nested<string>;
+	#innerHtml: Nested<string>;
+
+	private outerIsRendered = false;
+	#rendered: Node;
+	#outerIsText: boolean;
+	#outerText: string;
+	#isError: boolean;
+	#errorMessage: string;
+	#outerHtml: string;
+
+	constructor ({name, display, renderer, split, code, attributes, children, options}: ElementArgumentType) {
 		super();
 
 		if (!name) throw TypeError('You give arg0 a bad name');
-		if (!['inline', 'leaf-block', 'container-block'].includes(display))
+		if (!isElementDisplayType(display))
 			throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
-		if (!(render instanceof Function))
+		if (!(renderer instanceof Function))
 			throw TypeError('arg0.render should be a function');
 		if (typeof code != 'string') throw TypeError('You give arg0 a bad code');
 		if (!(attributes instanceof Array)) throw TypeError('attributes should be an array');
@@ -47,40 +63,64 @@ export default class Element extends Node {
 				throw TypeError('All arg0.children should either be an Element, a TextNode, or an ErrorNode');
 		})();
 	
-		if (typeof split != 'undefined') {
-			if (typeof split == 'string') split = [split];
+		if (!split) split = [];
+		if (typeof split == 'string') split = [split];
+
+		if (!(split instanceof Array))
+			throw TypeError('arg0.split should be either undefined, a string, or an array');
+
+		this.name = name;
+		this.display = display;
+		this.renderer = renderer;
+		this.split = split;
+		this.code = code;
+		this.attributes = attributes;
+		this.children = children;
+		this.options = options;
+	}
+
+	private renderInner() {
+		if (this.innerIsRendered) return;
+
+		// Render children first
+		(() => {
+			var len = this.split ? this.split.length : 0;
+
+			(function recurse(children: Nested<Node>, len: number) {
+				if (len > 0) {
+					return (children as Nested<Node>[]).forEach(grandchildren => {
+						recurse(grandchildren, len - 1);
+					});
+				}
+
+				(children as Node[]).forEach(child => {
+					if (child instanceof Element) {
+						child.render();
+					}
+				})
+			})(this.children, len);
+		})();
+
+		this.#innerIsText = (() => {
+			var len = this.split ? this.split.length : 0;
 	
-			if (!(split instanceof Array))
-				throw TypeError('arg0.split should be either undefined, a string, or an array');
-	
-			if (!split.length)
-				throw TypeError('arg0.split.length == 0');
-	
-			this.split = split;
-		}
-	
-		[this.name, this.display, this.code, this.attributes, this.children]
-			= [name, display, code, attributes, children];
-	
-		this.innerIsText = (() => {
-			var len = split ? split.length : 0;
-	
-			var foo = (li, le) => {
+			var foo = (li: Nested<Node>, le: number) => {
 				if (le > 0)
-					return li.map(l => foo(l, le - 1));
+					return (li as Nested<Node>[]).map(l => foo(l, le - 1));
 				
-				return li.map(c => {
+				return (li as Node[]).map(c => {
 					if (c instanceof TextNode) return true;
 					if (c instanceof ErrorNode) return false;
-					return c.outerIsText;
+					if (c instanceof Element) return c.outerIsText;
+					throw Error('wut');
 				}).every(e => e);
 			};
 	
-			return foo(children, len);
+			return foo(this.children, len);
 		})();
 	
-		this.innerText = (() => {
-			var len = split ? split.length : 0;
+		this.#innerText = (() => {
+			var len = this.split ? this.split.length : 0;
 	
 			var foo = (li, le, iit) => {
 				if (le > 0)
@@ -94,11 +134,11 @@ export default class Element extends Node {
 					: null;
 			};
 	
-			return foo(children, len, this.innerIsText);
+			return foo(this.children, len, this.#innerIsText);
 		})();
 	
-		this.innerHtml = (() => {
-			var len = split ? split.length : 0;
+		this.#innerHtml = (() => {
+			var len = this.split ? this.split.length : 0;
 	
 			var foo = (li, le, iit, it) => {
 				if (le > 0)
@@ -187,24 +227,99 @@ export default class Element extends Node {
 				}).join('');
 			};
 	
-			return foo(children, len, this.innerIsText, this.innerText);
+			return foo(this.children, len, this.#innerIsText, this.#innerText);
 		})();
+
+		this.innerIsRendered = true;
+	}
+
+	public get innerIsText() {
+		if (!this.innerIsRendered) {
+			throw Error('Cannot access Element#innerIsText before it is initialized');
+		}
+
+		return this.#innerIsText;
+	}
+
+	public get innerText() {
+		if (!this.innerIsRendered) {
+			throw Error('Cannot access Element#innerText before it is initialized');
+		}
+
+		return this.#innerText;
+	}
+
+	public get innerHtml() {
+		if (!this.innerIsRendered) {
+			throw Error('Cannot access Element#innerHtml before it is initialized');
+		}
+
+		return this.#innerHtml;
+	}
+
+	public render(): Node {
+		if (this.outerIsRendered) return this.#rendered;
+
+		this.renderInner();
+		var r = this.renderer(this, this.options);
+
+		this.#rendered = r;
+		this.#outerIsText = r instanceof TextNode;
+		this.#outerText = r instanceof TextNode ? r.text : null;
+		this.#isError = r instanceof ErrorNode;
+		this.#errorMessage = r instanceof ErrorNode ? r.message : null;
 	
-		var r = render(this, options);
-		this.outerIsText = r instanceof TextNode;
-		this.outerText = this.outerIsText ? r.text : null;
-		this.isError = r instanceof ErrorNode;
-		this.errorMessage = r instanceof ErrorNode ? r.message : null;
-	
-		if (this.outerIsText) {
-			this.outerHtml = escapeHtml(this.outerText);
+		if (this.#outerIsText) {
+			this.#outerHtml = escapeHtml(this.#outerText);
 		} else if (r instanceof HtmlNode) {
-			this.outerHtml = r.html;
+			this.#outerHtml = r.html;
 		} else if (r instanceof ErrorNode) {
-			this.outerHtml = r.toHtml();
+			this.#outerHtml = r.toHtml();
 		} else {
 			throw TypeError('Render output should be one of TextNode, HtmlNode, or ErrorNode');
 		}
+
+		this.outerIsRendered = true;
+	}
+
+	public get outerIsText() {
+		if (!this.outerIsRendered) {
+			throw Error('Cannot access Element#outerIsText before it is initialized');
+		}
+
+		return this.#outerIsText;
+	}
+
+	public get outerText() {
+		if (!this.outerIsRendered) {
+			throw Error('Cannot access Element#outerText before it is initialized');
+		}
+
+		return this.#outerText;
+	}
+
+	public get outerHtml() {
+		if (!this.outerIsRendered) {
+			throw Error('Cannot access Element#outerHtml before it is initialized');
+		}
+
+		return this.#outerHtml;
+	}
+
+	public get isError() {
+		if (!this.outerIsRendered) {
+			throw Error('Cannot access Element#isError before it is initialized');
+		}
+
+		return this.#isError;
+	}
+
+	public get errorMessage() {
+		if (!this.outerIsRendered) {
+			throw Error('Cannot access Element#errorMessage before it is initialized');
+		}
+
+		return this.#errorMessage;
 	}
 
 	public text(text: string) {
@@ -230,12 +345,34 @@ export default class Element extends Node {
 	
 		return null;
 	};
+
+	public readonly code: string;
+	public readonly attributes: any[];
+	public readonly children: Nested<Node>[];
+	public readonly options: any;
+
+	private innerIsRendered = false;
+	#innerIsText: Nested<boolean>;
+	#innerText: Nested<string>;
+	#innerHtml: Nested<string>;
+
+	private outerIsRendered = false;
+	#rendered: Node;
+	#outerIsText: boolean;
+	#outerText: string;
+	#isError: boolean;
+	#errorMessage: string;
+	#outerHtml: string;
 	
 	public toIndentedString(level: number) {
 		var a = [
-			'display', 'code', 'attributes', 'split', 'isError', 'errorMessage',
-			'innerIsText', 'innerText', 'innerHtml', 'outerIsText', 'outerText',
-			'outerHtml'
+			'display', 'split',
+			'code', 'attributes',
+			// inner
+			'innerIsText', 'innerText', 'innerHtml',
+			// outer
+			'outerIsText', 'outerText', 'outerHtml',
+			'isError', 'errorMessage'
 		].map(k => k + '='
 			+ (typeof this[k] == 'string' || this[k] instanceof Array
 				? JSON.stringify(this[k])

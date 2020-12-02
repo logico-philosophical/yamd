@@ -44,7 +44,7 @@ AST로부터 노드의 트리를 만듭니다.
 노드 트리에서 텍스트를 표현하는 클래스입니다. [;new] 키워드와 함께 사용하세요.
 
 [>(type=info)
-	[;new ElementClass({name, display, render, ?split})]의 [;render] 콜백의 반환값을 만들기 위해서는 [;Element.prototype.text(...)]를 쓰세요.
+	[;new ElementClass({name, display, renderer, ?split})]의 [;renderer] 콜백의 반환값을 만들기 위해서는 [;Element.prototype.text(...)]를 쓰세요.
 ]
 
 [**Parameters]
@@ -66,7 +66,7 @@ AST로부터 노드의 트리를 만듭니다.
 [>(type=warn)[;html] 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있습니다.]
 
 [>(type=info)
-	[;new ElementClass({name, display, render, ?split})]의 [;render] 콜백의 반환값을 만들기 위해서는 [;Element.prototype.html(...)]을 쓰세요.
+	[;new ElementClass({name, display, renderer, ?split})]의 [;renderer] 콜백의 반환값을 만들기 위해서는 [;Element.prototype.html(...)]을 쓰세요.
 ]
 
 [**Parameters]
@@ -87,7 +87,7 @@ AST로부터 노드의 트리를 만듭니다.
 노드 트리에서 에러를 표현하는 클래스입니다. [;new] 키워드와 함께 사용하세요.
 
 [>(type=info)
-	[;new ElementClass({name, display, render, ?split})]의 [;render] 콜백의 반환값을 만들기 위해서는 [;Element.prototype.error(...)]를 쓰세요.
+	[;new ElementClass({name, display, renderer, ?split})]의 [;renderer] 콜백의 반환값을 만들기 위해서는 [;Element.prototype.error(...)]를 쓰세요.
 ]
 
 [**Inherits]
@@ -96,7 +96,7 @@ AST로부터 노드의 트리를 만듭니다.
 	[*] [;Node]
 ]
 
-[==[;ElementClass({name, display, render, ?split})]]
+[==[;ElementClass({name, display, renderer, ?split})]]
 
 새로운 m42kup 요소 종류를 만듭니다. [;new] 키워드와 함께 사용하세요.
 
@@ -107,7 +107,7 @@ AST로부터 노드의 트리를 만듭니다.
 [ul
 	[*] [;`name <string>`]: 요소 이름.
 	[*] [;`display <string>`]: 요소의 디스플레이 타입. [;"inline"], [;"leaf-block"], [;"container-block"]  중 하나여야 합니다.
-	[*] [;`render <Function (element <Element>, options <Object>) => <TextNode | HtmlNode | ErrorNode>>`]: 렌더링 함수. 렌더링 할 [;Element](이름이 해당 [;ElementClass]와 같음)와 렌더링 옵션을 입력받아 [;TextNode], [;HtmlNode], [;ErrorNode] 중 하나를 반환합니다.
+	[*] [;`renderer <Function (element <Element>, options <Object>) => <TextNode | HtmlNode | ErrorNode>>`]: 렌더링 함수. 렌더링 할 [;Element](이름이 해당 [;ElementClass]와 같음)와 렌더링 옵션을 입력받아 [;TextNode], [;HtmlNode], [;ErrorNode] 중 하나를 반환합니다.
 	[*] [;`split <string | string[]>`] (optional): 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 [;`[ol]`]의 경우 [;'*']이고 [;`[table]`]의 경우 [;`['*', '**']`].
 ]
 
@@ -117,14 +117,14 @@ AST로부터 노드의 트리를 만듭니다.
 var i = new ElementClass({
     name: 'i',
     display: 'inline',
-    render: (el, options) => {
+    renderer: (el, options) => {
         return el.html(`<i>${el.innerHtml}</i>`);
     }
 });
 >>`]
 
 
-[==[;Element({name, display, render, code, attributes, children, ?split, options})]]
+[==[;Element({name, display, renderer, code, attributes, children, ?split, options})]]
 
 노드 트리에서 텍스트를 표현하는 클래스입니다. 이걸 직접 생성하는 것은 현재 지원하지 않고 내부적으로 [;ElementClass]로부터 생성됩니다.
 
@@ -155,7 +155,7 @@ var i = new ElementClass({
 var reverse = new ElementClass({
     name: 'reverse',
     display: 'inline',
-    render: (el, options) => {
+    renderer: (el, options) => {
         if (!el.innerIsText)
             return el.error('Non-text input');
 
@@ -187,7 +187,7 @@ HTML 노드를 반환하고 싶을 때 사용합니다. [;<Element>.html(...)] �
 var i = new ElementClass({
     name: 'i',
     display: 'inline',
-    render: (el, options) => {
+    renderer: (el, options) => {
         return el.html(`<i>${el.innerHtml}</i>`);
     }
 });
@@ -214,7 +214,7 @@ var i = new ElementClass({
 var reverse = new ElementClass({
     name: 'reverse',
     display: 'inline',
-    render: (el, options) => {
+    renderer: (el, options) => {
         if (!el.innerIsText)
             return el.error('Non-text input');
 
@@ -253,7 +253,7 @@ var reverse = new ElementClass({
 
 [==[;<Element>]가 갖는 속성]
 
-[>(type=info)[;new ElementClass({name, display, render, ?split})]의 [;render] 콜백으로 전달되는 [;Element] 인스턴스의 경우 렌더링 되기 전이므로 [;isError], [;errorMessage], [;outerIsText], [;outerText], [;outerHtml] 속성을 사용할 수 없습니다.]
+[>(type=info)[;new ElementClass({name, display, renderer, ?split})]의 [;renderer] 콜백으로 전달되는 [;Element] 인스턴스의 경우 렌더링 되기 전이므로 [;isError], [;errorMessage], [;outerIsText], [;outerText], [;outerHtml] 속성을 사용할 수 없습니다.]
 
 [ul
 	[*] [;name <string>]: 요소의 이름.
