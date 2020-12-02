@@ -179,7 +179,7 @@
 					greet: new m42kup.renderer.ElementClass({
 						name: 'greet',
 						display: 'inline',
-						render: (el, options) => {
+						renderer: (el, options) => {
 							return el.html(`Hello ${el.innerHtml}`);
 						}
 					})

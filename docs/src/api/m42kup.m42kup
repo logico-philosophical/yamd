@@ -123,7 +123,7 @@ m42kup.cascade({
         '*': new m42kup.renderer.ElementClass({
             name: '*',
             display: 'inline',
-            render: (el, options) => {
+            renderer: (el, options) => {
                 if (el.innerIsText)
                     return el.text(`*${el.innerText}*`);
                 return el.html(`*${el.innerHtml}*`);
@@ -168,7 +168,7 @@ m42kup.set({
         '*': new m42kup.renderer.ElementClass({
             name: '*',
             display: 'inline',
-            render: (el, options) => {
+            renderer: (el, options) => {
                 if (el.innerIsText)
                     return el.text(`*${el.innerText}*`);
                 return el.html(`*${el.innerHtml}*`);

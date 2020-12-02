@@ -5,17 +5,17 @@ var tagNameMap: any = {};
 tagNameMap.comment = new ElementClass({
 	name: 'comment',
 	display: 'inline',
-	render: el => el.text('')
+	renderer: el => el.text('')
 });
 
 tagNameMap.entity = new ElementClass({
 	name: 'entity',
 	display: 'inline',
-	render: el => {
+	renderer: el => {
 		if (!el.innerIsText)
 			return el.error('Non-text input');
 
-		if(!/^([a-z]{1,50}|#[0-9]{1,10}|#x[0-9a-f]{1,10})$/i.test(el.innerText))
+		if(!/^([a-z]{1,50}|#[0-9]{1,10}|#x[0-9a-f]{1,10})$/i.test(el.innerText as string))
 			return el.error('Invalid value');
 
 		return el.html(`&${el.innerText};`);
@@ -27,7 +27,7 @@ tagNameMap.entity = new ElementClass({
 ].forEach(name => tagNameMap[name] = new ElementClass({
 	name: name,
 	display: 'inline',
-	render: el => {
+	renderer: el => {
 		return el.html(`<${name}>${el.innerHtml}</${name}>`);
 	}
 }));
@@ -37,7 +37,7 @@ tagNameMap.entity = new ElementClass({
 ].forEach(name => tagNameMap[name] = new ElementClass({
 	name: name,
 	display: 'leaf-block',
-	render: el => {
+	renderer: el => {
 		return el.html(`<${name}>${el.innerHtml}</${name}>`);
 	}
 }));
@@ -45,7 +45,7 @@ tagNameMap.entity = new ElementClass({
 tagNameMap['blockquote'] = new ElementClass({
 	name: 'blockquote',
 	display: 'container-block',
-	render: el => {
+	renderer: el => {
 		var type = el.getAttribute('type');
 
 		if (['info', 'warn'].includes(type))
@@ -60,7 +60,7 @@ tagNameMap['blockquote'] = new ElementClass({
 ].forEach(name => tagNameMap[name] = new ElementClass({
 	name,
 	display: 'inline',
-	render: el => {
+	renderer: el => {
 		return el.html(`<${name}>${el.innerHtml}`);
 	}
 }));
@@ -70,7 +70,7 @@ tagNameMap['blockquote'] = new ElementClass({
 ].forEach(name => tagNameMap[name] = new ElementClass({
 	name,
 	display: 'leaf-block',
-	render: el => {
+	renderer: el => {
 		return el.html(`<${name}>${el.innerHtml}`);
 	}
 }));
@@ -80,9 +80,9 @@ tagNameMap['blockquote'] = new ElementClass({
 		name,
 		display: 'container-block',
 		split: '*',
-		render: el => {
+		renderer: el => {
 			return el.html(`<${name}>`
-				+ el.innerHtml.map(h => `<li>${h}</li>`).join('')
+				+ (el.innerHtml as string[]).map(h => `<li>${h}</li>`).join('')
 				+ `</${name}>`);
 		}
 	});
@@ -92,11 +92,11 @@ tagNameMap.table = new ElementClass({
 	name: 'table',
 	display: 'container-block',
 	split: ['*', '**'],
-	render: el => {
-		var n = el.innerHtml.map(e => e.length).reduce((l, r) => l < r ? r : l);
+	renderer: el => {
+		var n = (el.innerHtml as string[][]).map(e => e.length).reduce((l, r) => l < r ? r : l);
 
 		return el.html('<table>'
-			+ el.innerHtml.map(hh => `<tr>${
+			+ (el.innerHtml as string[][]).map(hh => `<tr>${
 				hh.concat(Array(n - hh.length).fill(''))
 					.map(h => `<td>${h}</td>`).join('')
 			}</tr>`).join('')
@@ -107,8 +107,8 @@ tagNameMap.table = new ElementClass({
 tagNameMap.blockcode = new ElementClass({
 	name: 'blockcode',
 	display: 'leaf-block',
-	render: el => {
-		var trimmed = el.innerHtml.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
+	renderer: el => {
+		var trimmed = (el.innerHtml as string).replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
 		return el.html(`<pre><code>${trimmed}\n</code></pre>`);
 	}
 });
@@ -116,7 +116,7 @@ tagNameMap.blockcode = new ElementClass({
 tagNameMap.bi = new ElementClass({
 	name: 'bi',
 	display: 'inline',
-	render: el => {
+	renderer: el => {
 		return el.html(`<i><b>${el.innerHtml}</b></i>`);
 	}
 });
@@ -150,7 +150,7 @@ function normalizeUrl(url) {
 tagNameMap.link = new ElementClass({
 	name: 'link',
 	display: 'inline',
-	render: el => {
+	renderer: el => {
 		var href = el.getAttribute('href');
 
 		if (href == null) {
@@ -175,7 +175,7 @@ tagNameMap.link = new ElementClass({
 tagNameMap.img = new ElementClass({
 	name: 'img',
 	display: 'leaf-block',
-	render: el => {
+	renderer: el => {
 		if (!el.innerIsText)
 			return el.error('Non-text input');
 
@@ -192,7 +192,7 @@ tagNameMap.img = new ElementClass({
 ].forEach(name => tagNameMap[name] = new ElementClass({
 	name,
 	display: 'inline',
-	render: el => {
+	renderer: el => {
 		var quotes = {
 			squote: {
 				normal: ['\u2018', '\u2019'],
@@ -217,7 +217,7 @@ tagNameMap.img = new ElementClass({
 tagNameMap.highlight = new ElementClass({
 	name: 'highlight',
 	display: 'leaf-block',
-	render: (el, options) => {
+	renderer: (el, options) => {
 		if (!options.hljs)
 			return el.error('Element not implemented (options.highlight not given)');
 
@@ -232,7 +232,7 @@ tagNameMap.highlight = new ElementClass({
 			'ruby', 'sql'
 		];
 
-		var trimmed = el.innerText.replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
+		var trimmed = (el.innerText as string).replace(/(^[ \t]*(\r\n|\r|\n))|((\r\n|\r|\n)[ \t]*$)/g, '');
 
 		var highlighted;
 
@@ -250,7 +250,7 @@ tagNameMap.highlight = new ElementClass({
 tagNameMap.math = new ElementClass({
 	name: 'math',
 	display: 'inline',
-	render: (el, options) => {
+	renderer: (el, options) => {
 		if (!options.katex)
 			return el.error('Element not implemented (options.katex not given)');
 
@@ -270,7 +270,7 @@ tagNameMap.math = new ElementClass({
 tagNameMap.displaymath = new ElementClass({
 	name: 'displaymath',
 	display: 'leaf-block',
-	render: (el, options) => {
+	renderer: (el, options) => {
 		if (!options.katex)
 			return el.error('Element not implemented (options.katex not given)');
 

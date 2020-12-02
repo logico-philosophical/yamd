@@ -1,65 +1,60 @@
-import Element from "./Element";
+import Element, { ElementDisplayType, isElementDisplayType, Nested } from "./Element";
 import Node from "./Node";
 
 export interface ElementClassArgumentType {
 	name: NonNullable<string>;
-	display: 'inline' | 'leaf-block' | 'container-block';
-	render: Function;
+	display: ElementDisplayType;
+	renderer: (el: Element, options) => Node;
 	split?: string | any[];
 }
 
 export interface ElementClassInstantiateArgumentType {
 	code: string;
 	attributes: any[];
-	children: Node[];
+	children: Nested<Node>[];
 	options: any;
 }
 
 export default class ElementClass {
 
-	public readonly name: string;
-	public readonly display: 'inline' | 'leaf-block' | 'container-block';
-	public readonly render: Function;
-	public readonly split: string | any[];
+	public readonly name: NonNullable<string>;
+	public readonly display: ElementDisplayType;
+	public readonly renderer: (el: Element, options) => Node;
+	public readonly split: string[];
 
-	constructor ({name, display, render, split}: ElementClassArgumentType) {
+	constructor ({name, display, renderer, split}: ElementClassArgumentType) {
 		if (!name) throw TypeError('You give arg0 a bad name');
-		if (!['inline', 'leaf-block', 'container-block'].includes(display))
+		if (!isElementDisplayType(display))
 			throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
-		if (!(render instanceof Function))
+		if (!(renderer instanceof Function))
 			throw TypeError('arg0.render should be a function');
 
 		[this.name, this.display] = [name, display];
 
-		this.render = (el, options) => {
+		this.renderer = (el, options) => {
 			if (!(el instanceof Element))
 				throw TypeError('arg0 should be an instance of m42kup.renderer.Element');
-			return render(el, options);
+			return renderer(el, options);
 		};
 
-		if (typeof split != 'undefined') {
-			if (typeof split == 'string') split = [split];
+		if (!split) split = [];
+		if (typeof split == 'string') split = [split];
 
-			if (!(split instanceof Array))
-				throw TypeError('arg0.split should be either undefined, a string, or an array');
+		if (!(split instanceof Array))
+			throw TypeError('arg0.split should be either undefined, a string, or an array');
 
-			if (!split.length)
-				throw TypeError('arg0.split.length == 0');
-
-			this.split = split;
-		}
+		this.split = split;
 	}
 
 	public instantiate({code, attributes, children, options}: ElementClassInstantiateArgumentType) {
-		
 		return new Element({
 			name: this.name,
 			display: this.display,
-			render: this.render,
+			renderer: this.renderer,
+			split: this.split,
 			code,
 			attributes,
 			children,
-			split: this.split,
 			options
 		});
 	};

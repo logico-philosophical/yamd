@@ -319,7 +319,7 @@ m42kup.cascade({
         <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">new</span> m42kup.renderer.ElementClass({
             <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;*&#x27;</span>,
             <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
-            <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+            <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
                 <span class="hljs-keyword">if</span> (el.innerIsText)
                     <span class="hljs-keyword">return</span> el.text(<span class="hljs-string">`*<span class="hljs-subst">${el.innerText}</span>*`</span>);
                 <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`*<span class="hljs-subst">${el.innerHtml}</span>*`</span>);
@@ -348,7 +348,7 @@ m42kup.set({
         <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">new</span> m42kup.renderer.ElementClass({
             <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;*&#x27;</span>,
             <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
-            <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+            <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
                 <span class="hljs-keyword">if</span> (el.innerIsText)
                     <span class="hljs-keyword">return</span> el.text(<span class="hljs-string">`*<span class="hljs-subst">${el.innerText}</span>*`</span>);
                 <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`*<span class="hljs-subst">${el.innerHtml}</span>*`</span>);

@@ -1,3 +1,4 @@
+import { ElementDisplayType, isElementDisplayType } from "./Element";
 import Node from "./Node";
 
 /**
@@ -9,7 +10,7 @@ import Node from "./Node";
 export default class HtmlNode extends Node {
 
 	public readonly html: string;
-	public readonly display: 'inline' | 'leaf-block' | 'container-block';
+	public readonly display: ElementDisplayType;
 
 	constructor ({html, display}) {
 		super();
@@ -17,7 +18,7 @@ export default class HtmlNode extends Node {
 		if (typeof html != 'string')
 			throw TypeError('html not string');
 
-		if (!['inline', 'leaf-block', 'container-block'].includes(display))
+		if (!isElementDisplayType(display))
 			throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
 
 		this.html = html;
