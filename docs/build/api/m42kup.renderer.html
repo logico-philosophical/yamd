@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>m42kup.renderer API</title>
+		<title>m42kup.renderer</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/tomorrow.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
@@ -275,42 +275,36 @@
 							<svg class="toc-on-folded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
 							<svg class="toc-on-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 						</button>
-						<a href="../index.html">m42kup의 문서화</a>
+						<a href="../index.html">m42kup 설명서</a>
 					</div>
-					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">m42kup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">기본적인 사용법</a></div></li></ol></li><li><div><a href="./index.html">API 명세</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup API</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser API</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer API</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter API</a></div></li></ol></li></ol>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">m42kup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">간단한 사용법</a></div></li><li><div><a href="../getting-started/installation.html">설치</a></div></li></ol></li><li><div><a href="./index.html">API</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter</a></div></li></ol></li></ol>
 		</div>
 		<div id="content">
 			
-				<h1><code>m42kup.renderer</code> API</h1><pre class="hljs"><code>renderer: {
-    <span class="hljs-attr">ast2nt</span>: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    TextNode: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    HtmlNode: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    ErrorNode: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    ElementClass: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    Element: &lt;<span class="hljs-built_in">Function</span>&gt;
+				<h1><code>m42kup.renderer</code></h1><pre class="hljs"><code>renderer: {
+    <span class="hljs-attr">ast2nt</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">TextNode</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">HtmlNode</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">ErrorNode</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">ElementClass</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">Element</span>: <span class="hljs-built_in">Function</span>
 }
-</code></pre><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만듭니다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast &lt;Object&gt;</code>: AST. 형식은 <a href="./formats.html" title="./formats.html">입출력 형식</a> 참조.
-	</p></li><li><p> <code>options &lt;Object&gt;</code>: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;Element&gt;</code> 노드 트리의 최상단 요소. 형식은 <code>&lt;Element&gt;</code>가 갖는 속성 참조.</p><h2><code>Node()</code></h2><p>노드 트리에서 사용되는 노드 클래스를 구현합니다. 딱히 하는 것은 없음.</p><p><b>Inherited by</b></p><ul><li><p> <code>TextNode</code>
+</code></pre><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast</code>: AST. 형식에 관하여는 <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
+	</p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>Element</code> 노드 트리의 최상단 요소.</p><h2><code>Node()</code></h2><p><b>Inherited by</b></p><ul><li><p> <code>TextNode</code>
 	</p></li><li><p> <code>HtmlNode</code>
 	</p></li><li><p> <code>ErrorNode</code>
 	</p></li><li><p> <code>Element</code>
-</p></li></ul><h2><code>TextNode(text)</code></h2><p>노드 트리에서 텍스트를 표현하는 클래스입니다. <code>new</code> 키워드와 함께 사용하세요.</p><blockquote class="m42kup-bq-info"><p>
-	<code>new ElementClass({name, display, renderer, ?split})</code>의 <code>renderer</code> 콜백의 반환값을 만들기 위해서는 <code>Element.prototype.text(...)</code>를 쓰세요.
-</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>text &lt;string&gt;</code>: 텍스트.
+</p></li></ul><h2><code>TextNode(text)</code></h2><p>텍스트를 표현하는 노드.</p><p><b>Parameters</b></p><ul><li><p> <code>text: string</code>: 텍스트.
 </p></li></ul><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
-</p></li></ul><h2><code>HtmlNode({html, display})</code></h2><p>노드 트리에서 HTML을 표현하는 클래스입니다. <code>new</code> 키워드와 함께 사용하세요.</p><blockquote class="m42kup-bq-warn"><p><code>html</code> 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있습니다.</p></blockquote><blockquote class="m42kup-bq-info"><p>
-	<code>new ElementClass({name, display, renderer, ?split})</code>의 <code>renderer</code> 콜백의 반환값을 만들기 위해서는 <code>Element.prototype.html(...)</code>을 쓰세요.
-</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html &lt;string&gt;</code>: HTML 코드.
-	</p></li><li><p> <code>display &lt;string&gt;</code>: 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code>  중 하나여야 합니다.
+</p></li></ul><h2><code>HtmlNode({html, display})</code></h2><p>HTML을 표현하는 노드.</p><blockquote class="m42kup-bq-warn"><p><code>html</code> 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html: string</code>: HTML 코드.
+	</p></li><li><p> <code>display: ElementDisplayType</code>: 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code> 중 하나이다.
 </p></li></ul><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
-</p></li></ul><h2><code>ErrorNode({message, code})</code></h2><p>노드 트리에서 에러를 표현하는 클래스입니다. <code>new</code> 키워드와 함께 사용하세요.</p><blockquote class="m42kup-bq-info"><p>
-	<code>new ElementClass({name, display, renderer, ?split})</code>의 <code>renderer</code> 콜백의 반환값을 만들기 위해서는 <code>Element.prototype.error(...)</code>를 쓰세요.
-</p></blockquote><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
-</p></li></ul><h2><code>ElementClass({name, display, renderer, ?split})</code></h2><p>새로운 m42kup 요소 종류를 만듭니다. <code>new</code> 키워드와 함께 사용하세요.</p><p>어떤 <code>ElementClass</code> 인스턴스와 <code>Element</code> 인스턴스의 관계는 HTML DOM에서의 <code>HTMLParagraphElement</code> 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있겠습니다. 새로운 클래스를 만드는 대신 <code>ElementClass</code> 인스턴스를 만든다고 할 수 있겠습니다.</p><p><b>Parameters</b></p><ul><li><p> <code>name &lt;string&gt;</code>: 요소 이름.
-	</p></li><li><p> <code>display &lt;string&gt;</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code>  중 하나여야 합니다.
-	</p></li><li><p> <code>renderer &lt;Function (element &lt;Element&gt;, options &lt;Object&gt;) =&gt; &lt;TextNode | HtmlNode | ErrorNode&gt;&gt;</code>: 렌더링 함수. 렌더링 할 <code>Element</code>(이름이 해당 <code>ElementClass</code>와 같음)와 렌더링 옵션을 입력받아 <code>TextNode</code>, <code>HtmlNode</code>, <code>ErrorNode</code> 중 하나를 반환합니다.
-	</p></li><li><p> <code>split &lt;string | string[]&gt;</code> (optional): 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>&#39;*&#39;</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>.
+</p></li></ul><h2><code>ErrorNode({message, code})</code></h2><p>에러를 표현하는 노드.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
+</p></li></ul><h2><code>ElementClass({name, display, renderer, split?})</code></h2><p>새로운 m42kup 요소 종류를 만든다.</p><p>어떤 <code>ElementClass</code> 인스턴스와 <code>Element</code> 인스턴스의 관계는 HTML DOM에서의 <code>HTMLParagraphElement</code> 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있다. 새로운 클래스를 만드는 대신 <code>ElementClass</code> 인스턴스를 만드는 것이다.</p><p><b>Parameters</b></p><ul><li><p> <code>name: string</code>: 요소 이름.
+	</p></li><li><p> <code>display: ElementDisplayType</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code>  중 하나이다.
+	</p></li><li><p> <code>renderer: (element: Element, options) =&gt; (TextNode | HtmlNode | ErrorNode)</code>: 렌더링 함수. 렌더링 할 요소와 렌더링 옵션을 입력받아 <code>TextNode</code>, <code>HtmlNode</code>, <code>ErrorNode</code> 중 하나를 반환한다.
+	</p></li><li><p> <code>split?: string | string[]</code>: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>&#39;*&#39;</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>이다.
 </p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> ElementClass({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;i&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
@@ -318,9 +312,9 @@
         <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`&lt;i&gt;<span class="hljs-subst">${el.innerHtml}</span>&lt;/i&gt;`</span>);
     }
 });
-</code></pre><h2><code>Element({name, display, renderer, code, attributes, children, ?split, options})</code></h2><p>노드 트리에서 텍스트를 표현하는 클래스입니다. 이걸 직접 생성하는 것은 현재 지원하지 않고 내부적으로 <code>ElementClass</code>로부터 생성됩니다.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
-</p></li></ul><h2><code>Element.prototype.text(text)</code></h2><p>텍스트 노드를 반환하고 싶을 때 사용합니다. <code>&lt;Element&gt;.text(...)</code> 형태로 사용하세요.</p><p><b>Parameters</b></p><ul><li><p> <code>text &lt;string&gt;</code>: 텍스트.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;TextNode&gt;</code> 만들어진 <code>TextNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
+</code></pre><h2><code>Element({name, display, renderer, split?, code, attributes, children, options})</code></h2><p>요소.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
+</p></li></ul><h2><code>Element#text(text)</code></h2><p>텍스트 노드를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>text: string</code>: 텍스트.
+</p></li></ul><p><b>Returns</b></p><p><code>TextNode</code> 만들어진 <code>TextNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
 <span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> ElementClass({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;reverse&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
@@ -331,8 +325,8 @@
         <span class="hljs-keyword">return</span> el.text(el.innerText.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join());
     }
 });
-</code></pre><h2><code>Element.prototype.html(html)</code></h2><p>HTML 노드를 반환하고 싶을 때 사용합니다. <code>&lt;Element&gt;.html(...)</code> 형태로 사용하세요.</p><blockquote class="m42kup-bq-warn"><p><code>html</code> 인자에  <code>&lt;Element&gt;.innerText</code>를 비롯한 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있습니다.</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html &lt;string&gt;</code>: HTML 코드.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;HtmlNode&gt;</code> 만들어진 <code>HtmlNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// &lt;i&gt;...&lt;/i&gt;</span>
+</code></pre><h2><code>Element#html(html)</code></h2><p>HTML 노드를 만든다.</p><blockquote class="m42kup-bq-warn"><p><code>html</code> 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html: string</code>: HTML 코드.
+</p></li></ul><p><b>Returns</b></p><p><code>HtmlNode</code> 만들어진 <code>HtmlNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// &lt;i&gt;...&lt;/i&gt;</span>
 <span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> ElementClass({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;i&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
@@ -340,8 +334,8 @@
         <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`&lt;i&gt;<span class="hljs-subst">${el.innerHtml}</span>&lt;/i&gt;`</span>);
     }
 });
-</code></pre><h2><code>Element.prototype.error(message)</code></h2><p>에러 노드를 반환하고 싶을 때 사용합니다. <code>&lt;Element&gt;.error(...)</code> 형태로 사용하세요.</p><p><b>Parameters</b></p><ul><li><p> <code>message &lt;string&gt;</code>: 에러 메시지. 이스케이프 되지 않은 텍스트를 집어넣어도 됩니다.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;ErrorNode&gt;</code> 만들어진 <code>ErrorNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
+</code></pre><h2><code>Element#error(message)</code></h2><p>에러 노드를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>message: string</code>: 에러 메시지. 이스케이프 하지 않아도 된다.
+</p></li></ul><p><b>Returns</b></p><p><code>ErrorNode</code> 만들어진 <code>ErrorNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
 <span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> ElementClass({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;reverse&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
@@ -352,9 +346,9 @@
         <span class="hljs-keyword">return</span> el.text(el.innerText.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join());
     }
 });
-</code></pre><h2><code>Element.prototype.getAttribute(name)</code></h2><p><code>name</code>에 대응하는 속성 값을 반환합니다. 여러 개 있을 경우 제일 처음에 작성된 것이 반환됩니다. 없으면 <code>null</code>.</p><p><b>Parameters</b></p><ul><li><p> <code>name &lt;string&gt;</code>: 속성 이름.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;string&gt;</code> 제일 왼쪽에 있는 속성 값. 없으면 <code>null</code>.</p><h2><code>Element.prototype.escapeHtml(string)</code></h2><p>평범한 HTML 이스케이프 함수입니다.</p><p><b>Parameters</b></p><ul><li><p> <code>string &lt;string&gt;</code>: 이스케이프 할 문자열.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;string&gt;</code> HTML 이스케이프 된 문자열.</p><h2><code>&lt;Element&gt;</code>가 갖는 속성</h2><blockquote class="m42kup-bq-info"><p><code>new ElementClass({name, display, renderer, ?split})</code>의 <code>renderer</code> 콜백으로 전달되는 <code>Element</code> 인스턴스의 경우 렌더링 되기 전이므로 <code>isError</code>, <code>errorMessage</code>, <code>outerIsText</code>, <code>outerText</code>, <code>outerHtml</code> 속성을 사용할 수 없습니다.</p></blockquote><ul><li><p> <code>name &lt;string&gt;</code>: 요소의 이름.</p></li><li><p> <code>children &lt;Node[]&gt;</code>: 요소의 자식 노드 리스트.</p></li><li><p> <code>display &lt;string&gt;</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code>  중 하나.</p></li><li><p> <code>code &lt;string&gt;</code>: 요소의 m42kup 코드.</p></li><li><p> <code>attributes&lt;Array&gt;</code>: <code>{name, value}</code>의 0개 이상의 배열.</p></li><li><p> <code>split &lt;string | string[]&gt;</code>: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>&#39;*&#39;</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>. 구분하지 않으면 <code>undefined</code>.</p></li><li><p> <code>isError &lt;boolean&gt;</code>: 렌더링 결과 에러가 났는지 여부.</p></li><li><p> <code>errorMessage &lt;string&gt;</code>: 렌더링 결과 에러가 났을 경우 에러 메시지. 아니면 <code>null</code>.</p></li><li><p> <code>innerIsText &lt;boolean&gt;</code>: 내부 컨텐트가 텍스트로 인식될 수 있는지 여부. <code>&lt;Element&gt;.split</code>이 설정되어 있을 경우 구분자에 의해 분리된 내부 컨텐트의 차원과 일치하는 중첩 배열입니다.</p></li><li><p> <code>innerText &lt;string&gt;</code>: 텍스트 형태의 내부 컨텐트. <code>&lt;Element&gt;.innerIsText == false</code>일 경우 <code>null</code>. <code>&lt;Element&gt;.split</code>이 설정되어 있을 경우 구분자에 의해 분리된 내부 컨텐트의 차원과 일치하는 중첩 배열입니다.</p></li><li><p> <code>innerHtml &lt;string&gt;</code>: HTML 형태의 내부 컨텐트. 내부 컨텐트의 타입과 관련 없이 항상 제공됩니다. <code>&lt;Element&gt;.split</code>이 설정되어 있을 경우 구분자에 의해 분리된 내부 컨텐트의 차원과 일치하는 중첩 배열입니다.</p></li><li><p> <code>outerIsText &lt;boolean&gt;</code>: 렌더링 결과가 텍스트로 인식될 수 있는지 여부.</p></li><li><p> <code>outerText &lt;string&gt;</code>: 텍스트 형태의 렌더링 결과. <code>&lt;Element&gt;.outerIsText == false</code>일 경우 <code>null</code>.</p></li><li><p> <code>outerHtml &lt;string&gt;</code>: HTML 형태의 렌더링 결과. 렌더링 결과의 타입과 관련 없이 항상 제공됩니다.
+</code></pre><h2><code>Element#getAttribute(name)</code></h2><p><code>name</code>에 대응하는 속성 값을 반환한다. 여러 개 있을 경우 제일 처음에 작성된 것이 반환한다. 없으면 <code>null</code>을 반환한다.</p><p><b>Parameters</b></p><ul><li><p> <code>name: string</code>: 속성 이름.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 제일 왼쪽에 있는 속성 값. 없으면 <code>null</code>이다.</p><h2><code>Element#escapeHtml(string)</code></h2><p>HTML 이스케이프 함수.</p><p><b>Parameters</b></p><ul><li><p> <code>string: string</code>: 이스케이프 할 문자열.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> HTML 이스케이프 된 문자열.</p><h2><code>Element</code>가 갖는 속성</h2><p><code>Nested&lt;T&gt;</code>는 <code>T | Nested&lt;T&gt;[]</code>로 정의된다.</p><ul><li><p> <code>name: string</code>: 요소의 이름.</p></li><li><p> <code>children: Nested&lt;Node&gt;[]</code>: 요소의 자식 노드의 트리. <code>Node</code>의 <code>split.length + 1</code>차원 배열이다.</p></li><li><p> <code>display: ElementDisplayType</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code> 중 하나이다.</p></li><li><p> <code>split: string[]</code>: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>[&#39;*&#39;]</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>이다. 구분하지 않으면 <code>[]</code>이다.</p></li><li><p> <code>code: string</code>: 요소의 m42kup 코드.</p></li><li><p> <code>attributes: Array&lt;{name: string, value: string}&gt;</code>: 속성 목록.</p></li><li><p> <code>innerIsText: Nested&lt;boolean&gt;</code>: 내부 컨텐트가 텍스트로 인식될 수 있는지 여부. <code>split.length</code>이 <code>0</code>이면 <code>boolean</code>이고 아니면 <code>split.length</code>차원 배열이다.</p></li><li><p> <code>innerText: Nested&lt;string&gt;</code>: 텍스트 형태의 내부 컨텐트. <code>split.length</code>이 <code>0</code>이면 <code>string</code>이고 아니면 <code>split.length</code>차원 배열이다. 텍스트가 아닌 것에 대하여는 <code>null</code>이 된다.</p></li><li><p> <code>innerHtml: Nested&lt;string&gt;</code>: HTML 형태의 내부 컨텐트. <code>split.length</code>이 <code>0</code>이면 <code>string</code>이고 아니면 <code>split.length</code>차원 배열이다. 내부 컨텐트의 타입과 관련 없이 항상 제공된다.</p></li><li><p> <code>outerIsText: boolean</code>: 렌더링 결과가 텍스트로 인식될 수 있는지 여부.</p></li><li><p> <code>outerText: string</code>: 텍스트 형태의 렌더링 결과. 텍스트가 아닐 경우 <code>null</code>.</p></li><li><p> <code>outerHtml: string</code>: HTML 형태의 렌더링 결과. 렌더링 결과의 타입과 관련 없이 항상 제공된다.</p></li><li><p> <code>isError: boolean</code>: 렌더링 결과 에러가 났는지 여부.</p></li><li><p> <code>errorMessage: string</code>: 렌더링 결과 에러가 났을 경우 에러 메시지. 아니면 <code>null</code>이다.
 </p></li></ul>
 			
 		</div>

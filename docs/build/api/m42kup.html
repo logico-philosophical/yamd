@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>m42kup API</title>
+		<title>m42kup</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/tomorrow.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
@@ -275,32 +275,32 @@
 							<svg class="toc-on-folded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
 							<svg class="toc-on-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 						</button>
-						<a href="../index.html">m42kup의 문서화</a>
+						<a href="../index.html">m42kup 설명서</a>
 					</div>
-					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">m42kup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">기본적인 사용법</a></div></li></ol></li><li><div><a href="./index.html">API 명세</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup API</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser API</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer API</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter API</a></div></li></ol></li></ol>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">m42kup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">간단한 사용법</a></div></li><li><div><a href="../getting-started/installation.html">설치</a></div></li></ol></li><li><div><a href="./index.html">API</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter</a></div></li></ol></li></ol>
 		</div>
 		<div id="content">
 			
-				<h1><code>m42kup</code> API</h1><pre class="hljs"><code>m42kup: {
+				<h1><code>m42kup</code></h1><pre class="hljs"><code>m42kup: {
     <span class="hljs-attr">parser</span>: { ... },
     <span class="hljs-attr">renderer</span>: { ... },
     <span class="hljs-attr">highlighter</span>: { ... },
-    <span class="hljs-attr">ast2nt</span>: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    render: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    highlight: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    cascade: &lt;<span class="hljs-built_in">Function</span>&gt;,
-    set: &lt;<span class="hljs-built_in">Function</span>&gt;
+    <span class="hljs-attr">ast2nt</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">render</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">highlight</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">cascade</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">set</span>: <span class="hljs-built_in">Function</span>
 }
-</code></pre><h2><code>parser</code></h2><p>파서. 개별 문서 참조.</p><h2><code>renderer</code></h2><p>렌더러. 개별 문서 참조.</p><h2><code>highlighter</code></h2><p>구문 강조를 합니다. 개별 문서 참조.</p><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만듭니다. <code>m42kup.renderer.ast2nt(ast, options)</code>와 같은데 <code>m42kup</code>의 글로벌 옵션이 적용되며 <code>options</code>는 글로벌 옵션을 cascade 합니다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast &lt;Object&gt;</code>: AST. 형식은 <a href="./formats.html" title="./formats.html">입출력 형식</a> 참조.
-    </p></li><li><p> <code>options &lt;Object&gt;</code>: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;Element&gt;</code> 노드 트리. 형식은 <code>Element</code> 참조.</p><h2><code>render(input, options)</code></h2><p>입력으로부터 HTML을 렌더링 합니다.</p><p><b>Parameters</b></p><ul><li><p> <code>input &lt;string&gt;</code>: 입력 문자열.
-    </p></li><li><p> <code>options &lt;Object&gt;</code>: 렌더링 옵션. 글로벌 옵션을 cascade 함. 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;string&gt;</code> 렌더링 된 HTML.</p><p><b>Examples</b></p><pre class="hljs"><code>m42kup.render(<span class="hljs-string">&#x27;[*hello]&#x27;</span>);
+</code></pre><h2><code>parser</code></h2><p>파서. 개별 문서 참조.</p><h2><code>renderer</code></h2><p>렌더러. 개별 문서 참조.</p><h2><code>highlighter</code></h2><p>구문 강조를 한다. 개별 문서 참조.</p><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만든다. <code>m42kup.renderer.ast2nt(ast, options)</code>와 같은데 <code>m42kup</code>의 글로벌 옵션이 적용되며 <code>options</code>는 글로벌 옵션을 cascade 한다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast</code>: 추상 구문 트리. <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
+    </p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>Element</code> 노드 트리.</p><h2><code>render(input, options)</code></h2><p>입력으로부터 HTML을 렌더링 한다.</p><p><b>Parameters</b></p><ul><li><p> <code>input: string</code>: 입력 문자열.
+    </p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 렌더링 된 HTML.</p><p><b>Examples</b></p><pre class="hljs"><code>m42kup.render(<span class="hljs-string">&#x27;[*hello]&#x27;</span>);
 </code></pre><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>hello<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-</code></pre><h2><code>highlight(input)</code></h2><p>입력 문자열로부터 구문 강조된 HTML을 생성합니다. 자세한 생성 방식은 <code>m42kup.highlighter.pt2hl</code> 참조.</p><p><b>Parameters</b></p><ul><li><p> <code>input &lt;string&gt;</code>: 입력 문자열.
-</p></li></ul><p><b>Returns</b></p><p><code>&lt;string&gt;</code> 구문 강조된 HTML.</p><p><b>Examples</b></p><pre class="hljs"><code>m42kup.highlight(<span class="hljs-string">&#x27;[*hello]&#x27;</span>);
+</code></pre><h2><code>highlight(input)</code></h2><p>m42kup 코드를 구문 강조한다. 출력 형식에 관하여는 <code>m42kup.highlighter.pt2hl</code>을 참조하라.</p><p><b>Parameters</b></p><ul><li><p> <code>input: string</code>: m42kup 코드.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 구문 강조된 코드. HTML로 되어 있다.</p><p><b>Examples</b></p><pre class="hljs"><code>m42kup.highlight(<span class="hljs-string">&#x27;[*hello]&#x27;</span>);
 </code></pre><pre class="hljs"><code>&lt;span <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;m42hl-elem&quot;</span>&gt;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;m42hl-lbm&quot;</span>&gt;</span>[<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;m42hl-tn&quot;</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;m42hl-sp&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;m42hl-tx&quot;</span>&gt;</span>hello<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;m42hl-rbm&quot;</span>&gt;</span>]<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span>&lt;/span&gt;
-</code></pre><h2><code>cascade(options)</code></h2><p>현재의 글로벌 옵션을 보존하면서 <code>options</code>로 적당히 덮어 씁니다. <code>m42kup.cascade</code>나 <code>m42kup.set</code>을 한 번도 호출하지 않은 경우 <code>m42kup.set</code>과 효과가 같습니다.</p><p><b>Parameters</b></p><ul><li><p> <code>options &lt;Object&gt;</code>: 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</code></pre><h2><code>cascade(options)</code></h2><p>현재의 글로벌 옵션을 보존하면서 <code>options</code>로 적당히 덮어 쓴다. <code>m42kup.cascade</code>나 <code>m42kup.set</code>을 한 번도 호출하지 않은 경우 <code>m42kup.set</code>과 효과가 같다.</p><p><b>Parameters</b></p><ul><li><p> <code>options</code>: <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
 </p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// global options: {}</span>
 
 m42kup.cascade({
@@ -329,7 +329,7 @@ m42kup.cascade({
 });
 
 <span class="hljs-comment">// global options: {tags: {&#x27;=&#x27;: false, &#x27;*&#x27;: &lt;Function&gt;}}</span>
-</code></pre><h2><code>set(options)</code></h2><p>현재의 글로벌 옵션을 버리고 <code>options</code>로 설정합니다. <code>m42kup.cascade</code>나 <code>m42kup.set</code>을 한 번도 호출하지 않은 경우 <code>m42kup.cascade</code>와 효과가 같습니다.</p><p><code>m42kup.set({})</code>으로 글로벌 옵션을 없애버릴 수 있습니다.</p><p><b>Parameters</b></p><ul><li><p> <code>options &lt;Object&gt;</code>: 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</code></pre><h2><code>set(options)</code></h2><p>현재의 글로벌 옵션을 버리고 <code>options</code>로 설정한다. <code>m42kup.cascade</code>나 <code>m42kup.set</code>을 한 번도 호출하지 않은 경우 <code>m42kup.cascade</code>와 효과가 같다. <code>m42kup.set({})</code>으로 글로벌 옵션을 없애버릴 수 있다.</p><p><b>Parameters</b></p><ul><li><p> <code>options</code>: 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
 </p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// global options: {}</span>
 
 m42kup.set({

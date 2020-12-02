@@ -275,99 +275,91 @@
 							<svg class="toc-on-folded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
 							<svg class="toc-on-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 						</button>
-						<a href="../index.html">m42kup의 문서화</a>
+						<a href="../index.html">m42kup 설명서</a>
 					</div>
-					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">m42kup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">기본적인 사용법</a></div></li></ol></li><li><div><a href="./index.html">API 명세</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup API</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser API</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer API</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter API</a></div></li></ol></li></ol>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">m42kup 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">간단한 사용법</a></div></li><li><div><a href="../getting-started/installation.html">설치</a></div></li></ol></li><li><div><a href="./index.html">API</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./m42kup.html">m42kup</a></div></li><li><div><a href="./m42kup.parser.html">m42kup.parser</a></div></li><li><div><a href="./m42kup.renderer.html">m42kup.renderer</a></div></li><li><div><a href="./m42kup.highlighter.html">m42kup.highlighter</a></div></li></ol></li></ol>
 		</div>
 		<div id="content">
 			
-				<h1>입출력 형식</h1><h2>파스 트리</h2><p>PEG.js가 만든 파서의 출력.</p><h3>최상단</h3><pre><code>{
-	input: <i>input</i>,
+				<h1>입출력 형식</h1><h2>파스 트리</h2><p>PEG.js가 만든 파서의 출력이다.</p><h3>최상단</h3><pre><code>{
+	input: string,
 	root: {
 		type: &#39;root&#39;,
-		children: <i>children</i>,
+		children: (<i>element</i> | <i>verbatim</i> | <i>text</i>)[],
 		location: <i>location</i>
 	}
 }
-</code></pre><ul><li><p> <code>input &lt;string&gt;</code>: 파스 트리에 입력이 저장됩니다.
-	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code>, <code>verbatim</code>, 또는 <code>text</code>의 0개 이상의 배열입니다.
+</code></pre><ul><li><p> <code>input</code>: 입력된 m42kup 코드.
 </p></li></ul><h3><code>element</code></h3><pre><code>{
 	type: &#39;element&#39;,
-	lbm: <i>lbm</i>,
-	name: <i>name</i>,
-	attributes: <i>attributes</i>,
-	children: <i>children</i>
-	rbm: <i>rbm</i>,
+	lbm: string,
+	name: string,
+	attributes: <i>attribute</i>[],
+	children: (<i>element</i> | <i>verbatim</i> | <i>text</i>)[],
+	rbm: string,
 	location: <i>location</i>
 }
-</code></pre><ul><li><p> <code>lbm &lt;string&gt;</code>: 왼쪽 경계.
-	</p></li><li><p> <code>name &lt;string&gt;</code>: 태그 이름.
-	</p></li><li><p> <code>attributes &lt;Array&gt;</code>: <code>attribute</code>의 0개 이상의 배열.
-	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code>, <code>verbatim</code>, 또는 <code>text</code>의 0개 이상의 배열입니다.
-	</p></li><li><p> <code>rbm &lt;string&gt;</code>: 오른쪽 경계.
-</p></li></ul><h4><code>attribute</code></h4><pre><code>{
+</code></pre><ul><li><p> <code>lbm</code>: 왼쪽 경계.
+	</p></li><li><p> <code>name</code>: 태그 이름.
+	</p></li><li><p> <code>rbm</code>: 오른쪽 경계.
+</p></li></ul><h4><code>attribute</code></h4><p>다음의 둘 중 하나이다.</p><ul><li><p> </p><pre><code>{
 	_type: &#39;attribute&#39;,
 	attribute: [<i>a</i>, <i>b</i>, <i>c</i>, <i>d</i>, <i>e</i>]
 }
-</code></pre><p>또는</p><pre><code>{
+</code></pre><p><code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>, <code>e</code>는 <code>foo=&quot;bar&quot;</code>의 경우 다음과 같이 된다.</p><table><tr><td><p><code>foo</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code>bar</code> </p></td><td><p> <code>&quot;</code> </p></td></tr><tr><td><p><code>a</code> </p></td><td><p> <code>b</code> </p></td><td><p> <code>c</code> </p></td><td><p> <code>d</code> </p></td><td><p> <code>e</code>
+	</p></td></tr></table><p><code>foo=bar</code>의 경우 다음과 같이 된다.</p><table><tr><td><p><code>foo</code> </p></td><td><p> <code>=</code> </p></td><td> </td><td><p> <code>bar</code> </p></td><td> </td></tr><tr><td><p><code>a</code> </p></td><td><p> <code>b</code> </p></td><td><p> <code>c</code> </p></td><td><p> <code>d</code> </p></td><td><p> <code>e</code>
+	</p></td></tr></table></li><li><p> </p><pre><code>{
 	_type: &#39;whitespace&#39;,
-	whitespace: <i>whitespace</i>
+	whitespace: string
 }
-</code></pre><p><code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>, <code>e</code>는 <code>foo=&quot;bar&quot;</code>의 경우 다음과 같이 됩니다.</p><table><tr><td><p><code>foo</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code>bar</code> </p></td><td><p> <code>&quot;</code> </p></td></tr><tr><td><p><code>a</code> </p></td><td><p> <code>b</code> </p></td><td><p> <code>c</code> </p></td><td><p> <code>d</code> </p></td><td><p> <code>e</code>
-</p></td></tr></table><p><code>foo=bar</code>의 경우 다음과 같이 됩니다.</p><table><tr><td><p><code>foo</code> </p></td><td><p> <code>=</code> </p></td><td> </td><td><p> <code>bar</code> </p></td><td> </td></tr><tr><td><p><code>a</code> </p></td><td><p> <code>b</code> </p></td><td><p> <code>c</code> </p></td><td><p> <code>d</code> </p></td><td><p> <code>e</code>
-</p></td></tr></table><p><code>whitespace</code>는 공백 문자열입니다.</p><h3><code>verbatim</code></h3><pre><code>{
+</code></pre><ul><li><p> <code>whitespace</code>: 공백 문자열.
+	</p></li></ul><p>
+</p></li></ul><h3><code>verbatim</code></h3><pre><code>{
 	type: &#39;verbatim&#39;,
-	lvm: <i>lvm</i>,
-	separator: <i>separator</i>,
+	lvm: string,
+	separator: string,
 	child: <i>text</i>,
-	rvm: <i>rvm</i>,
+	rvm: string,
 	location: <i>location</i>
 }
-</code></pre><p><code>`&lt;.&lt;script&gt;&gt;`</code>의 경우 <code>lvm</code>, <code>separator</code>, <code>rvm</code>은 다음과 같이 됩니다.</p><table><tr><td><p><code>`&lt;</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>&lt;script&gt;</code> </p></td><td><p> <code>&gt;`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
-</p></td></tr></table><p><code>`asdf`</code>의 경우 다음과 같이 됩니다.</p><table><tr><td><p><code>`</code> </p></td><td> </td><td><p> <code>asdf</code> </p></td><td><p> <code>`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
-</p></td></tr></table><p><code>text</code>는 문자열이 아니며 밑에 있는 겁니다.</p><h3><code>text</code></h3><pre><code>{
+</code></pre><p><code>`&lt;.&lt;script&gt;&gt;`</code>의 경우 <code>lvm</code>, <code>separator</code>, <code>rvm</code>이 다음과 같이 된다.</p><table><tr><td><p><code>`&lt;</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>&lt;script&gt;</code> </p></td><td><p> <code>&gt;`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p><code>`asdf`</code>의 경우 다음과 같이 된다.</p><table><tr><td><p><code>`</code> </p></td><td> </td><td><p> <code>asdf</code> </p></td><td><p> <code>`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p>이때 <code>text</code>는 문자열이 아니며 아래에 있는 객체이다.</p><h3><code>text</code></h3><pre><code>{
 	type: &#39;text&#39;,
-	text: <i>text</i>,
+	text: string,
 	location: <i>location</i>
 }
-</code></pre><ul><li><p> <code>text &lt;string&gt;</code>: 텍스트.
-</p></li></ul><h3><code>location</code></h3><pre><code>{
+</code></pre><h3><code>location</code></h3><pre><code>{
 	start: { offset: <i>start-offset</i>, line: <i>start-line</i>, column: <i>start-column</i> },
 	end: { offset: <i>end-offset</i>, line: <i>end-line</i>, column: <i>end-column</i> }
 }
-</code></pre><p>어떤 문법적 요소의 시작 및 끝 지점의 오프셋, 줄 번호, 컬럼을 나타냅니다. PEG.js의 <code>location()</code>을 호출한 것입니다.</p><h2>AST</h2><p>파스 트리에서 <code>verbatim</code>이 <code>text</code>로 통합되고 몇 가지 토큰이 사라집니다.</p><h3>최상단</h3><pre><code>{
-	input: <i>input</i>,
+</code></pre><p>어떤 토큰의 시작 및 끝의 오프셋, 줄 번호, 열을 나타낸다. PEG.js의 <code>location()</code>을 호출한 것이다.</p><h2>AST</h2><p>파스 트리에서 <code>verbatim</code>이 <code>text</code>로 통합되고 몇 가지 토큰이 사라진다.</p><h3>최상단</h3><pre><code>{
+	input: string,
 	root: {
 		type: &#39;root&#39;,
-		children: <i>children</i>,
-		code: <i>code</i>
+		children: (<i>element</i> | <i>text</i>)[],
+		code: string
 	}
 }
-</code></pre><ul><li><p> <code>input &lt;string&gt;</code>: AST에 입력이 저장됩니다.
-	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code> 또는 <code>text</code>의 0개 이상의 배열입니다.
-	</p></li><li><p> <code>code &lt;string&gt;</code>: 전체 코드. <code>input</code>과 같음.
+</code></pre><ul><li><p> <code>input</code>: 입력된 m42kup 코드.
+	</p></li><li><p> <code>code</code>: 전체 코드. <code>input</code>과 같다.
 </p></li></ul><h3><code>element</code></h3><pre><code>{
 	type: &#39;element&#39;,
-	name: <i>name</i>,
-	attributes: <i>attributes</i>,
-	code: <i>code</i>,
-	children: <i>children</i>
+	name: string,
+	attributes: Array&lt;{
+		name: string,
+		value: string
+	}&gt;,
+	code: string,
+	children: (<i>element</i> | <i>text</i>)[]
 }
-</code></pre><ul><li><p> <code>name &lt;string&gt;</code> 태그 이름.
-	</p></li><li><p> <code>attributes &lt;Array&gt;</code>
-</p><pre><code>{
-	name: <i>attribute-name</i>,
-	value: <i>attribute-value</i>
-}
-</code></pre><p>
-	의 0개 이상의 배열.
-	</p></li><li><p> <code>code &lt;string&gt;</code>: 왼쪽 및 오른쪽 경계까지를 포함하는 요소의 코드.
-	</p></li><li><p> <code>children &lt;Array&gt;</code>: <code>element</code> 또는 <code>text</code>의 0개 이상의 배열입니다.
+</code></pre><ul><li><p> <code>name</code>: 태그 이름.
+	</p></li><li><p> <code>code</code>: 요소의 코드. 왼쪽 및 오른쪽 경계를 포함한다.
 </p></li></ul><h3><code>text</code></h3><pre><code>{
 	type: &#39;text&#39;,
-	text: <i>text</i>
+	text: string
 }
-</code></pre><h2>노드 트리</h2><p><code>Element</code> 타입입니다.</p><h2><code>m42kup.highlight(...)</code>의 출력</h2><p>문자열. <a href="./m42kup.highlighter.html" title="./m42kup.highlighter.html"><code>m42kup.highlighter</code> API</a> 페이지에서 자세히 다룹니다.</p>
+</code></pre>
 			
 		</div>
 		<script>

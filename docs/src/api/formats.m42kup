@@ -2,24 +2,23 @@
 
 [==파스 트리]
 
-PEG.js가 만든 파서의 출력.
+PEG.js가 만든 파서의 출력이다.
 
 [===최상단]
 
 [;;
 {
-	input: [*input],
+	input: string,
 	root: {
 		type: 'root',
-		children: [*children],
+		children: ([*element] | [*verbatim] | [*text])`[]`,
 		location: [*location]
 	}
 }
 ]
 
 [ul
-	[*] [;input <string>]: 파스 트리에 입력이 저장됩니다.
-	[*] [;children <Array>]: [;element], [;verbatim], 또는 [;text]의 0개 이상의 배열입니다.
+	[*] [;input]: 입력된 m42kup 코드.
 ]
 
 [===[;element]]
@@ -27,95 +26,93 @@ PEG.js가 만든 파서의 출력.
 [;;
 {
 	type: 'element',
-	lbm: [*lbm],
-	name: [*name],
-	attributes: [*attributes],
-	children: [*children]
-	rbm: [*rbm],
+	lbm: string,
+	name: string,
+	attributes: [*attribute]`[]`,
+	children: ([*element] | [*verbatim] | [*text])`[]`,
+	rbm: string,
 	location: [*location]
 }
 ]
 
 [ul
-	[*] [;lbm <string>]: 왼쪽 경계.
-	[*] [;name <string>]: 태그 이름.
-	[*] [;attributes <Array>]: [;attribute]의 0개 이상의 배열.
-	[*] [;children <Array>]: [;element], [;verbatim], 또는 [;text]의 0개 이상의 배열입니다.
-	[*] [;rbm <string>]: 오른쪽 경계.
+	[*] [;lbm]: 왼쪽 경계.
+	[*] [;name]: 태그 이름.
+	[*] [;rbm]: 오른쪽 경계.
 ]
 
 [====[;attribute]]
 
-[<;;
+다음의 둘 중 하나이다.
+
+[ul
+	[*] [<;;
 {
 	_type: 'attribute',
 	attribute: [[<*a>], [<*b>], [<*c>], [<*d>], [<*e>]]
 }>]
 
-또는
+	[;a], [;b], [;c], [;d], [;e]는 [;foo="bar"]의 경우 다음과 같이 된다.
 
-[;;{
+	[table
+		[;foo] [*] [;=] [*] [;"] [*] [;bar] [*] [;"] [**]
+		[;a] [*] [;b] [*] [;c] [*] [;d] [*] [;e]
+	]
+
+	[;foo=bar]의 경우 다음과 같이 된다.
+
+	[table
+		[;foo] [*] [;=] [*] [*] [;bar] [*] [**]
+		[;a] [*] [;b] [*] [;c] [*] [;d] [*] [;e]
+	]
+
+	[*] [;;{
 	_type: 'whitespace',
-	whitespace: [*whitespace]
+	whitespace: string
 }]
 
-[;a], [;b], [;c], [;d], [;e]는 [;foo="bar"]의 경우 다음과 같이 됩니다.
-
-[table
-	[;foo] [*] [;=] [*] [;"] [*] [;bar] [*] [;"] [**]
-	[;a] [*] [;b] [*] [;c] [*] [;d] [*] [;e]
+	[ul
+		[*] [;whitespace]: 공백 문자열.
+	]
 ]
-
-[;foo=bar]의 경우 다음과 같이 됩니다.
-
-[table
-	[;foo] [*] [;=] [*] [*] [;bar] [*] [**]
-	[;a] [*] [;b] [*] [;c] [*] [;d] [*] [;e]
-]
-
-[;whitespace]는 공백 문자열입니다.
 
 [===[;verbatim]]
 
 [;;
 {
 	type: 'verbatim',
-	lvm: [*lvm],
-	separator: [*separator],
+	lvm: string,
+	separator: string,
 	child: [*text],
-	rvm: [*rvm],
+	rvm: string,
 	location: [*location]
 }
 ]
 
-[;`<<<`<.<script>>`>>>`]의 경우 [;lvm], [;separator], [;rvm]은 다음과 같이 됩니다.
+[;`<<<`<.<script>>`>>>`]의 경우 [;lvm], [;separator], [;rvm]이 다음과 같이 된다.
 
 [table
 	[;`<<`<>>`] [*] [;..] [*] [;<script>] [*] [;`<<>`>>`] [**]
 	[;lvm] [*] [;separator] [*] [;text] [*] [;rvm]
 ]
 
-[;`<`asdf`>`]의 경우 다음과 같이 됩니다.
+[;`<`asdf`>`]의 경우 다음과 같이 된다.
 
 [table
 	[;`<`>`] [*] [*] [;asdf] [*] [;`<`>`] [**]
 	[;lvm] [*] [;separator] [*] [;text] [*] [;rvm]
 ]
 
-[;text]는 문자열이 아니며 밑에 있는 겁니다.
+이때 [;text]는 문자열이 아니며 아래에 있는 객체이다.
 
 [===[;text]]
 
 [;;
 {
 	type: 'text',
-	text: [*text],
+	text: string,
 	location: [*location]
 }
-]
-
-[ul
-	[*] [;text <string>]: 텍스트.
 ]
 
 [===[;location]]
@@ -127,64 +124,51 @@ PEG.js가 만든 파서의 출력.
 }
 ]
 
-어떤 문법적 요소의 시작 및 끝 지점의 오프셋, 줄 번호, 컬럼을 나타냅니다. PEG.js의 [;location()]을 호출한 것입니다.
+어떤 토큰의 시작 및 끝의 오프셋, 줄 번호, 열을 나타낸다. PEG.js의 [;location()]을 호출한 것이다.
 
 [==AST]
 
-파스 트리에서 [;verbatim]이 [;text]로 통합되고 몇 가지 토큰이 사라집니다.
+파스 트리에서 [;verbatim]이 [;text]로 통합되고 몇 가지 토큰이 사라진다.
 
 [===최상단]
 
 [;;
 {
-	input: [*input],
+	input: string,
 	root: {
 		type: 'root',
-		children: [*children],
-		code: [*code]
+		children: ([*element] | [*text])`[]`,
+		code: string
 	}
 }
 ]
 
 [ul
-	[*] [;input <string>]: AST에 입력이 저장됩니다.
-	[*] [;children <Array>]: [;element] 또는 [;text]의 0개 이상의 배열입니다.
-	[*] [;code <string>]: 전체 코드. [;input]과 같음.
+	[*] [;input]: 입력된 m42kup 코드.
+	[*] [;code]: 전체 코드. [;input]과 같다.
 ]
 
 [===[;element]]
 
 [;;{
 	type: 'element',
-	name: [*name],
-	attributes: [*attributes],
-	code: [*code],
-	children: [*children]
+	name: string,
+	attributes: Array<{
+		name: string,
+		value: string
+	}>,
+	code: string,
+	children: ([*element] | [*text])`[]`
 }]
 
 [ul
-	[*] [;name <string>] 태그 이름.
-	[*] [;attributes <Array>]
-[;;{
-	name: [*attribute-name],
-	value: [*attribute-value]
-}]
-	의 0개 이상의 배열.
-	[*] [;code <string>]: 왼쪽 및 오른쪽 경계까지를 포함하는 요소의 코드.
-	[*] [;children <Array>]: [;element] 또는 [;text]의 0개 이상의 배열입니다.
+	[*] [;name]: 태그 이름.
+	[*] [;code]: 요소의 코드. 왼쪽 및 오른쪽 경계를 포함한다.
 ]
 
 [===[;text]]
 
 [;;{
 	type: 'text',
-	text: [*text]
+	text: string
 }]
-
-[==노드 트리]
-
-[;Element] 타입입니다.
-
-[==[;m42kup.highlight(...)]의 출력]
-
-문자열. [~(href='./m42kup.highlighter.html')[;m42kup.highlighter] API] 페이지에서 자세히 다룹니다.
