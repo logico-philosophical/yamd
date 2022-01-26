@@ -145,7 +145,7 @@ var reverse = new ElementClass({
         if (!el.innerIsText)
             return el.error('Non-text input');
 
-        return el.text(el.innerText.split('').reverse().join());
+        return el.text(el.innerText.split('').reverse().join(''));
     }
 });
 >>`]	
@@ -248,7 +248,7 @@ HTML 이스케이프 함수.
 
 	[*] [;display: ElementDisplayType]: 요소의 디스플레이 타입. [;"inline"], [;"leaf-block"], [;"container-block"] 중 하나이다.
 
-	[*] [;`split: string[]`]: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 [;`[ol]`]의 경우 [;`['*']`]이고 [;`[table]`]의 경우 [;`['*', '**']`]이다. 구분하지 않으면 [;`[]`]이다.
+	[*] [;`split: string[]`]: 컨텐트를 분리시킬 구분자의 리스트. 예를 들어 [;`[ol]`]의 경우 [;`['*']`]이고 [;`[table]`]의 경우 [;`['*', '**']`]이다. 구분하지 않으면 [;`[]`]이다.
 
 	[*] [;code: string]: 요소의 m42kup 코드.
 

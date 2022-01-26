@@ -322,9 +322,9 @@
 	rvm: string,
 	location: <i>location</i>
 }
-</code></pre><p><code>`&lt;.&lt;script&gt;&gt;`</code>의 경우 <code>lvm</code>, <code>separator</code>, <code>rvm</code>이 다음과 같이 된다.</p><table><tr><td><p><code>`&lt;</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>&lt;script&gt;</code> </p></td><td><p> <code>&gt;`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
-</p></td></tr></table><p><code>`asdf`</code>의 경우 다음과 같이 된다.</p><table><tr><td><p><code>`</code> </p></td><td> </td><td><p> <code>asdf</code> </p></td><td><p> <code>`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>text</code> </p></td><td><p> <code>rvm</code>
-</p></td></tr></table><p>이때 <code>text</code>는 문자열이 아니며 아래에 있는 객체이다.</p><h3><code>text</code></h3><pre><code>{
+</code></pre><p><code>`&lt;.&lt;script&gt;&gt;`</code>의 경우 <code>lvm</code>, <code>separator</code>, <code>child</code>, <code>rvm</code>이 다음과 같이 된다.</p><table><tr><td><p><code>`&lt;</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>&lt;script&gt;</code> </p></td><td><p> <code>&gt;`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>child</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p><code>`asdf`</code>의 경우 다음과 같이 된다.</p><table><tr><td><p><code>`</code> </p></td><td> </td><td><p> <code>asdf</code> </p></td><td><p> <code>`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>separator</code> </p></td><td><p> <code>child</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p>이때 <code>child</code>는 문자열이 아니며 아래에 있는 <code>text</code> 객체이다.</p><h3><code>text</code></h3><pre><code>{
 	type: &#39;text&#39;,
 	text: string,
 	location: <i>location</i>
