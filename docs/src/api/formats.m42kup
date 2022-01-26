@@ -89,21 +89,21 @@ PEG.js가 만든 파서의 출력이다.
 }
 ]
 
-[;`<<<`<.<script>>`>>>`]의 경우 [;lvm], [;separator], [;rvm]이 다음과 같이 된다.
+[;`<<<`<.<script>>`>>>`]의 경우 [;lvm], [;separator], [;child], [;rvm]이 다음과 같이 된다.
 
 [table
 	[;`<<`<>>`] [*] [;..] [*] [;<script>] [*] [;`<<>`>>`] [**]
-	[;lvm] [*] [;separator] [*] [;text] [*] [;rvm]
+	[;lvm] [*] [;separator] [*] [;child] [*] [;rvm]
 ]
 
 [;`<`asdf`>`]의 경우 다음과 같이 된다.
 
 [table
 	[;`<`>`] [*] [*] [;asdf] [*] [;`<`>`] [**]
-	[;lvm] [*] [;separator] [*] [;text] [*] [;rvm]
+	[;lvm] [*] [;separator] [*] [;child] [*] [;rvm]
 ]
 
-이때 [;text]는 문자열이 아니며 아래에 있는 객체이다.
+이때 [;child]는 문자열이 아니며 아래에 있는 [;text] 객체이다.
 
 [===[;text]]
 
