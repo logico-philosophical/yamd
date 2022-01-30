@@ -283,8 +283,7 @@
 			
 				<h1>렌더링 옵션</h1><p><code>m42kup.render(input, options)</code> 및 <code>m42kup.cascade(options)</code>, <code>m42kup.set(options)</code>에서 쓸 수 있는 옵션은 다음과 같다.</p><pre class="hljs"><code>{
     <span class="hljs-attr">tags</span>: {
-        [tag name]: m42kup.renderer.Tag,
-        ...
+        [key: string]: m42kup.renderer.Tag
     },
     hljs,
     katex

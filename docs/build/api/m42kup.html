@@ -289,7 +289,8 @@
     <span class="hljs-attr">render</span>: <span class="hljs-built_in">Function</span>,
     <span class="hljs-attr">highlight</span>: <span class="hljs-built_in">Function</span>,
     <span class="hljs-attr">cascade</span>: <span class="hljs-built_in">Function</span>,
-    <span class="hljs-attr">set</span>: <span class="hljs-built_in">Function</span>
+    <span class="hljs-attr">set</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">addCodeMirrorMode</span>: <span class="hljs-built_in">Function</span>
 }
 </code></pre><h2><code>parser</code></h2><p>파서. 개별 문서 참조.</p><h2><code>renderer</code></h2><p>렌더러. 개별 문서 참조.</p><h2><code>highlighter</code></h2><p>구문 강조를 한다. 개별 문서 참조.</p><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만든다. <code>m42kup.renderer.ast2nt(ast, options)</code>와 같은데 <code>m42kup</code>의 글로벌 옵션이 적용되며 <code>options</code>는 글로벌 옵션을 cascade 한다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast</code>: 추상 구문 트리. <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
     </p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
@@ -358,7 +359,8 @@ m42kup.set({
 });
 
 <span class="hljs-comment">// global options: {tags: {&#x27;*&#x27;: &lt;Function&gt;}}</span>
-</code></pre>
+</code></pre><h2><code>addCodeMirrorMode(CodeMirror)</code></h2><p>CodeMirror에 m42kup 구문 지원을 추가한다.</p><p><b>Parameters</b></p><ul><li><p> <code>CodeMirror</code>
+</p></li></ul>
 			
 		</div>
 		<script>
