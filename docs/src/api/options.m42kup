@@ -5,7 +5,7 @@
 [;;;(lang=javascript)`
 {
     tags: {
-        [tag name]: m42kup.renderer.Tag,
+        [key: string]: m42kup.renderer.Tag,
         ...
     },
     hljs,

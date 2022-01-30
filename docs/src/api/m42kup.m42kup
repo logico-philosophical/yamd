@@ -9,7 +9,8 @@ m42kup: {
     render: Function,
     highlight: Function,
     cascade: Function,
-    set: Function
+    set: Function,
+    addCodeMirrorMode: Function
 }
 ]
 
@@ -176,3 +177,13 @@ m42kup.set({
 
 // global options: {tags: {'*': <Function>}}
 >`]
+
+[==[;addCodeMirrorMode(CodeMirror)]]
+
+CodeMirror에 m42kup 구문 지원을 추가한다.
+
+[**Parameters]
+
+[ul
+    [*] [;CodeMirror]
+]
