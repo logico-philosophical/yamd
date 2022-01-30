@@ -1,14 +1,14 @@
 import defaultTagNameMap from './elements/default';
 import cascade from '../cascade';
 import Element from './nodes/Element';
-import ElementClass from './nodes/ElementClass';
+import Tag from './nodes/Tag';
 import Node from './nodes/Node';
 import ErrorNode from './nodes/ErrorNode';
 import TextNode from './nodes/TextNode';
 import HtmlNode from './nodes/HtmlNode';
 import { AstRootType, AstType } from '../parser';
 
-var rootClass = new ElementClass({
+var rootClass = new Tag({
 	name: '[root]',
 	display: 'container-block',
 	renderer: el => el.html(el.innerHtml as string)
@@ -132,6 +132,6 @@ export default {
 	TextNode,
 	HtmlNode,
 	ErrorNode,
-	ElementClass,
+	Tag,
 	Element
 };

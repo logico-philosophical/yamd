@@ -1,14 +1,16 @@
-import ElementClass from "../nodes/ElementClass";
+import Tag from "../nodes/Tag";
 
-var tagNameMap: any = {};
+var tagNameMap: {
+	[key: string]: Tag
+} = {};
 
-tagNameMap.comment = new ElementClass({
+tagNameMap.comment = new Tag({
 	name: 'comment',
 	display: 'inline',
 	renderer: el => el.text('')
 });
 
-tagNameMap.entity = new ElementClass({
+tagNameMap.entity = new Tag({
 	name: 'entity',
 	display: 'inline',
 	renderer: el => {
@@ -24,7 +26,7 @@ tagNameMap.entity = new ElementClass({
 
 [
 	'b', 'code', 'i', 'u', 'sup', 'sub'
-].forEach(name => tagNameMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new Tag({
 	name: name,
 	display: 'inline',
 	renderer: el => {
@@ -34,7 +36,7 @@ tagNameMap.entity = new ElementClass({
 
 [
 	'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'
-].forEach(name => tagNameMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new Tag({
 	name: name,
 	display: 'leaf-block',
 	renderer: el => {
@@ -42,7 +44,7 @@ tagNameMap.entity = new ElementClass({
 	}
 }));
 
-tagNameMap['blockquote'] = new ElementClass({
+tagNameMap['blockquote'] = new Tag({
 	name: 'blockquote',
 	display: 'container-block',
 	renderer: el => {
@@ -57,7 +59,7 @@ tagNameMap['blockquote'] = new ElementClass({
 
 [
 	'br'
-].forEach(name => tagNameMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new Tag({
 	name,
 	display: 'inline',
 	renderer: el => {
@@ -67,7 +69,7 @@ tagNameMap['blockquote'] = new ElementClass({
 
 [
 	'hr'
-].forEach(name => tagNameMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new Tag({
 	name,
 	display: 'leaf-block',
 	renderer: el => {
@@ -76,7 +78,7 @@ tagNameMap['blockquote'] = new ElementClass({
 }));
 
 ['ul', 'ol'].forEach(name => {
-	tagNameMap[name] = new ElementClass({
+	tagNameMap[name] = new Tag({
 		name,
 		display: 'container-block',
 		split: '*',
@@ -88,7 +90,7 @@ tagNameMap['blockquote'] = new ElementClass({
 	});
 });
 
-tagNameMap.table = new ElementClass({
+tagNameMap.table = new Tag({
 	name: 'table',
 	display: 'container-block',
 	split: ['*', '**'],
@@ -104,7 +106,7 @@ tagNameMap.table = new ElementClass({
 	}
 });
 
-tagNameMap.blockcode = new ElementClass({
+tagNameMap.blockcode = new Tag({
 	name: 'blockcode',
 	display: 'leaf-block',
 	renderer: el => {
@@ -113,7 +115,7 @@ tagNameMap.blockcode = new ElementClass({
 	}
 });
 
-tagNameMap.bi = new ElementClass({
+tagNameMap.bi = new Tag({
 	name: 'bi',
 	display: 'inline',
 	renderer: el => {
@@ -147,7 +149,7 @@ function normalizeUrl(url) {
 	} else return false;
 }
 
-tagNameMap.link = new ElementClass({
+tagNameMap.link = new Tag({
 	name: 'link',
 	display: 'inline',
 	renderer: el => {
@@ -172,7 +174,7 @@ tagNameMap.link = new ElementClass({
 	}
 });
 
-tagNameMap.img = new ElementClass({
+tagNameMap.img = new Tag({
 	name: 'img',
 	display: 'leaf-block',
 	renderer: el => {
@@ -189,7 +191,7 @@ tagNameMap.img = new ElementClass({
 
 [
 	'squote', 'dquote'
-].forEach(name => tagNameMap[name] = new ElementClass({
+].forEach(name => tagNameMap[name] = new Tag({
 	name,
 	display: 'inline',
 	renderer: el => {
@@ -214,7 +216,7 @@ tagNameMap.img = new ElementClass({
 	}
 }));
 
-tagNameMap.highlight = new ElementClass({
+tagNameMap.highlight = new Tag({
 	name: 'highlight',
 	display: 'leaf-block',
 	renderer: (el, options) => {
@@ -247,7 +249,7 @@ tagNameMap.highlight = new ElementClass({
 	}
 });
  
-tagNameMap.math = new ElementClass({
+tagNameMap.math = new Tag({
 	name: 'math',
 	display: 'inline',
 	renderer: (el, options) => {
@@ -267,7 +269,7 @@ tagNameMap.math = new ElementClass({
 	}
 });
 
-tagNameMap.displaymath = new ElementClass({
+tagNameMap.displaymath = new Tag({
 	name: 'displaymath',
 	display: 'leaf-block',
 	renderer: (el, options) => {

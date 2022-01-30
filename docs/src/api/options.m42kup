@@ -5,7 +5,7 @@
 [;;;(lang=javascript)`
 {
     tags: {
-        [tag name]: m42kup.renderer.ElementClass,
+        [tag name]: m42kup.renderer.Tag,
         ...
     },
     hljs,
@@ -15,7 +15,7 @@
 
 [==[;tags]]
 
-태그 이름과 [;m42kup.renderer.ElementClass] 인스턴스의 키-값 쌍. 새로운 요소를 정의하기 위해 사용되며, 태그 이름이 사용 중인 경우 덮어 쓰고 아니면 새로 만든다.
+태그 이름과 [;m42kup.renderer.Tag] 인스턴스의 키-값 쌍. 새로운 요소를 정의하기 위해 사용되며, 태그 이름이 사용 중인 경우 덮어 쓰고 아니면 새로 만든다.
 
 [==[;hljs]]
 

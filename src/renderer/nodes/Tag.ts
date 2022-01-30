@@ -1,28 +1,28 @@
 import Element, { ElementDisplayType, isElementDisplayType, Nested } from "./Element";
 import Node from "./Node";
 
-export interface ElementClassArgumentType {
+export interface TagArgumentType {
 	name: NonNullable<string>;
 	display: ElementDisplayType;
 	renderer: (el: Element, options) => Node;
 	split?: string | any[];
 }
 
-export interface ElementClassInstantiateArgumentType {
+export interface TagInstantiateArgumentType {
 	code: string;
 	attributes: any[];
 	children: Nested<Node>[];
 	options: any;
 }
 
-export default class ElementClass {
+export default class Tag {
 
 	public readonly name: NonNullable<string>;
 	public readonly display: ElementDisplayType;
 	public readonly renderer: (el: Element, options) => Node;
 	public readonly split: string[];
 
-	constructor ({name, display, renderer, split}: ElementClassArgumentType) {
+	constructor ({name, display, renderer, split}: TagArgumentType) {
 		if (!name) throw TypeError('You give arg0 a bad name');
 		if (!isElementDisplayType(display))
 			throw TypeError('arg0.display should be one of "inline", "leaf-block", or "container-block".');
@@ -46,7 +46,7 @@ export default class ElementClass {
 		this.split = split;
 	}
 
-	public instantiate({code, attributes, children, options}: ElementClassInstantiateArgumentType) {
+	public instantiate({code, attributes, children, options}: TagInstantiateArgumentType) {
 		return new Element({
 			name: this.name,
 			display: this.display,

@@ -119,7 +119,7 @@ m42kup.cascade({
     tags: {
         // overwrites default element behavior of [*].
         // wraps content with '*'.
-        '*': new m42kup.renderer.ElementClass({
+        '*': new m42kup.renderer.Tag({
             name: '*',
             display: 'inline',
             renderer: (el, options) => {
@@ -162,7 +162,7 @@ m42kup.set({
     tags: {
         // overwrites default element behavior of [*].
         // wraps content with '*'.
-        '*': new m42kup.renderer.ElementClass({
+        '*': new m42kup.renderer.Tag({
             name: '*',
             display: 'inline',
             renderer: (el, options) => {
