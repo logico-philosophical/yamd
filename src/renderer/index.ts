@@ -7,6 +7,7 @@ import ErrorNode from './nodes/ErrorNode';
 import TextNode from './nodes/TextNode';
 import HtmlNode from './nodes/HtmlNode';
 import { AstRootType, AstType } from '../parser';
+import { RenderingOptionsType } from './RenderingOptionsType';
 
 var rootClass = new Tag({
 	name: '[root]',
@@ -14,7 +15,7 @@ var rootClass = new Tag({
 	renderer: el => el.html(el.innerHtml as string)
 });
 
-function ast2nt(ast: AstRootType, options): Element {
+function ast2nt(ast: AstRootType, options: RenderingOptionsType): Element {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 

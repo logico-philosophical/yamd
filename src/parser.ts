@@ -29,7 +29,7 @@ interface AstTextType {
 
 export type AstType = AstRootTypeInner | AstElementType | AstTextType;
 
-function input2pt(input) {
+function input2pt(input: string) {
 	var pt = peg.parse(input);
 	pt.input = input;
 	

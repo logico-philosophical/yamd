@@ -1,10 +1,11 @@
+import { RenderingOptionsType } from "../RenderingOptionsType";
 import Element, { ElementDisplayType, isElementDisplayType, Nested } from "./Element";
 import Node from "./Node";
 
 export interface TagArgumentType {
 	name: NonNullable<string>;
 	display: ElementDisplayType;
-	renderer: (el: Element, options) => Node;
+	renderer: (el: Element, options: RenderingOptionsType) => Node;
 	split?: string | any[];
 }
 
@@ -12,14 +13,14 @@ export interface TagInstantiateArgumentType {
 	code: string;
 	attributes: any[];
 	children: Nested<Node>[];
-	options: any;
+	options: RenderingOptionsType;
 }
 
 export default class Tag {
 
 	public readonly name: NonNullable<string>;
 	public readonly display: ElementDisplayType;
-	public readonly renderer: (el: Element, options) => Node;
+	public readonly renderer: (el: Element, options: RenderingOptionsType) => Node;
 	public readonly split: string[];
 
 	constructor ({name, display, renderer, split}: TagArgumentType) {

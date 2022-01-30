@@ -4,6 +4,7 @@ import escapeHtml from "./escapeHtml";
 import HtmlNode from "./HtmlNode";
 import Node from "./Node";
 import TextNode from "./TextNode";
+import { RenderingOptionsType } from "../RenderingOptionsType";
 
 interface ElementArgumentType
 	extends TagArgumentType, TagInstantiateArgumentType {
@@ -21,13 +22,13 @@ export default class Element extends Node {
 
 	public readonly name: NonNullable<string>;
 	public readonly display: ElementDisplayType;
-	private readonly renderer: (el: Element, options) => Node;
+	private readonly renderer: (el: Element, options: RenderingOptionsType) => Node;
 	public readonly split: string[];
 
 	public readonly code: string;
 	public readonly attributes: any[];
 	public readonly children: Nested<Node>[];
-	public readonly options: any;
+	public readonly options: RenderingOptionsType;
 
 	private innerIsRendered = false;
 	#innerIsText: Nested<boolean>;
