@@ -5,8 +5,7 @@
 [;;;(lang=javascript)`
 {
     tags: {
-        [key: string]: m42kup.renderer.Tag,
-        ...
+        [key: string]: m42kup.renderer.Tag
     },
     hljs,
     katex
