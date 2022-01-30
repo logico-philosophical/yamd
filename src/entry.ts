@@ -3,22 +3,23 @@ import renderer from './renderer';
 import highlighter from './highlighter';
 import cascade from './cascade';
 import addCodeMirrorMode from './codemirror';
+import { RenderingOptionsType } from './renderer/RenderingOptionsType';
 
-var globalOptions = {};
+var globalOptions: RenderingOptionsType = {};
 
-function cascadeOptions(options) {
+function cascadeOptions(options: RenderingOptionsType) {
 	if (typeof options != 'object')
 		throw TypeError('typeof options != \'object\'');
 	globalOptions = cascade.options(globalOptions, options);
 }
 
-function setOptions(options) {
+function setOptions(options: RenderingOptionsType) {
 	if (typeof options != 'object')
 		throw TypeError('typeof options != \'object\'');
 	globalOptions = options;
 }
 
-function ast2nt(ast: AstRootType, options) {
+function ast2nt(ast: AstRootType, options: RenderingOptionsType) {
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
 
@@ -29,7 +30,7 @@ function ast2nt(ast: AstRootType, options) {
 	return nt;
 }
 
-function render(input, options) {
+function render(input: string, options: RenderingOptionsType) {
 	input += '';
 	if (!options) options = {};
 	if (!options.tags) options.tags = {};
@@ -43,7 +44,7 @@ function render(input, options) {
 	return html;
 }
 
-function highlight(input) {
+function highlight(input: string) {
 	input += '';
 
 	var pt = parser.input2pt(input);
