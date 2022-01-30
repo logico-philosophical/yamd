@@ -345,24 +345,6 @@ export default class Element extends Node {
 	
 		return null;
 	};
-
-	public readonly code: string;
-	public readonly attributes: any[];
-	public readonly children: Nested<Node>[];
-	public readonly options: any;
-
-	private innerIsRendered = false;
-	#innerIsText: Nested<boolean>;
-	#innerText: Nested<string>;
-	#innerHtml: Nested<string>;
-
-	private outerIsRendered = false;
-	#rendered: Node;
-	#outerIsText: boolean;
-	#outerText: string;
-	#isError: boolean;
-	#errorMessage: string;
-	#outerHtml: string;
 	
 	public toIndentedString(level: number) {
 		var a = [
