@@ -9,7 +9,7 @@ export interface TagArgumentType {
 	split?: string | any[];
 }
 
-export interface TagInstantiateArgumentType {
+export interface CreateElementArgumentType {
 	code: string;
 	attributes: any[];
 	children: Nested<Node>[];
@@ -47,7 +47,7 @@ export default class Tag {
 		this.split = split;
 	}
 
-	public instantiate({code, attributes, children, options}: TagInstantiateArgumentType) {
+	public createElement({code, attributes, children, options}: CreateElementArgumentType) {
 		return new Element({
 			name: this.name,
 			display: this.display,
