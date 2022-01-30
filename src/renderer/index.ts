@@ -23,7 +23,7 @@ function ast2nt(ast: AstRootType, options: RenderingOptionsType): Element {
 	
 	var root = (function recurse(tree: AstType): Node {
 		if (tree.type == 'root') {
-			return rootClass.instantiate({
+			return rootClass.createElement({
 				code: tree.code,
 				attributes: [],
 				children: tree.children.map(recurse),
@@ -93,7 +93,7 @@ function ast2nt(ast: AstRootType, options: RenderingOptionsType): Element {
 						return a.map(e => recurseSplit(e, split.slice(0, -1)));
 					};
 
-					return tagNameMap[tree.name].instantiate({
+					return tagNameMap[tree.name].createElement({
 						code: tree.code,
 						attributes: tree.attributes,
 						children: recurseSplit(
@@ -104,7 +104,7 @@ function ast2nt(ast: AstRootType, options: RenderingOptionsType): Element {
 					});
 				}
 
-				return tagNameMap[tree.name].instantiate({
+				return tagNameMap[tree.name].createElement({
 					code: tree.code,
 					attributes: tree.attributes,
 					children: tree.children.map(recurse),
