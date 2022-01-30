@@ -286,7 +286,7 @@
     <span class="hljs-attr">TextNode</span>: <span class="hljs-built_in">Function</span>,
     <span class="hljs-attr">HtmlNode</span>: <span class="hljs-built_in">Function</span>,
     <span class="hljs-attr">ErrorNode</span>: <span class="hljs-built_in">Function</span>,
-    <span class="hljs-attr">ElementClass</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">Tag</span>: <span class="hljs-built_in">Function</span>,
     <span class="hljs-attr">Element</span>: <span class="hljs-built_in">Function</span>
 }
 </code></pre><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast</code>: AST. 형식에 관하여는 <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
@@ -301,11 +301,11 @@
 	</p></li><li><p> <code>display: ElementDisplayType</code>: 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code> 중 하나이다.
 </p></li></ul><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
 </p></li></ul><h2><code>ErrorNode({message, code})</code></h2><p>에러를 표현하는 노드.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
-</p></li></ul><h2><code>ElementClass({name, display, renderer, split?})</code></h2><p>새로운 m42kup 요소 종류를 만든다.</p><p>어떤 <code>ElementClass</code> 인스턴스와 <code>Element</code> 인스턴스의 관계는 HTML DOM에서의 <code>HTMLParagraphElement</code> 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있다. 새로운 클래스를 만드는 대신 <code>ElementClass</code> 인스턴스를 만드는 것이다.</p><p><b>Parameters</b></p><ul><li><p> <code>name: string</code>: 요소 이름.
+</p></li></ul><h2><code>Tag({name, display, renderer, split?})</code></h2><p>새로운 m42kup 태그를 만든다.</p><p>어떤 <code>Tag</code> 인스턴스와 <code>Element</code> 인스턴스의 관계는 HTML DOM에서의 <code>HTMLParagraphElement</code> 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있다. 새로운 클래스를 만드는 대신 <code>Tag</code> 인스턴스를 만드는 것이다.</p><p><b>Parameters</b></p><ul><li><p> <code>name: string</code>: 요소 이름.
 	</p></li><li><p> <code>display: ElementDisplayType</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code>  중 하나이다.
 	</p></li><li><p> <code>renderer: (element: Element, options) =&gt; (TextNode | HtmlNode | ErrorNode)</code>: 렌더링 함수. 렌더링 할 요소와 렌더링 옵션을 입력받아 <code>TextNode</code>, <code>HtmlNode</code>, <code>ErrorNode</code> 중 하나를 반환한다.
 	</p></li><li><p> <code>split?: string | string[]</code>: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>&#39;*&#39;</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>이다.
-</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> ElementClass({
+</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> Tag({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;i&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
     <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
@@ -315,7 +315,7 @@
 </code></pre><h2><code>Element({name, display, renderer, split?, code, attributes, children, options})</code></h2><p>요소.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
 </p></li></ul><h2><code>Element#text(text)</code></h2><p>텍스트 노드를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>text: string</code>: 텍스트.
 </p></li></ul><p><b>Returns</b></p><p><code>TextNode</code> 만들어진 <code>TextNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
-<span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> ElementClass({
+<span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> Tag({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;reverse&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
     <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
@@ -327,7 +327,7 @@
 });
 </code></pre><h2><code>Element#html(html)</code></h2><p>HTML 노드를 만든다.</p><blockquote class="m42kup-bq-warn"><p><code>html</code> 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html: string</code>: HTML 코드.
 </p></li></ul><p><b>Returns</b></p><p><code>HtmlNode</code> 만들어진 <code>HtmlNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// &lt;i&gt;...&lt;/i&gt;</span>
-<span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> ElementClass({
+<span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> Tag({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;i&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
     <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
@@ -336,7 +336,7 @@
 });
 </code></pre><h2><code>Element#error(message)</code></h2><p>에러 노드를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>message: string</code>: 에러 메시지. 이스케이프 하지 않아도 된다.
 </p></li></ul><p><b>Returns</b></p><p><code>ErrorNode</code> 만들어진 <code>ErrorNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
-<span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> ElementClass({
+<span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> Tag({
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;reverse&#x27;</span>,
     <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
     <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {

@@ -1,4 +1,4 @@
-import { ElementClassArgumentType, ElementClassInstantiateArgumentType } from "./ElementClass";
+import { TagArgumentType, TagInstantiateArgumentType } from "./Tag";
 import ErrorNode from "./ErrorNode";
 import escapeHtml from "./escapeHtml";
 import HtmlNode from "./HtmlNode";
@@ -6,7 +6,7 @@ import Node from "./Node";
 import TextNode from "./TextNode";
 
 interface ElementArgumentType
-	extends ElementClassArgumentType, ElementClassInstantiateArgumentType {
+	extends TagArgumentType, TagInstantiateArgumentType {
 }
 
 export type Nested<T> = T | Nested<T>[];

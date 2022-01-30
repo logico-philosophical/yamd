@@ -283,13 +283,13 @@
 			
 				<h1>렌더링 옵션</h1><p><code>m42kup.render(input, options)</code> 및 <code>m42kup.cascade(options)</code>, <code>m42kup.set(options)</code>에서 쓸 수 있는 옵션은 다음과 같다.</p><pre class="hljs"><code>{
     <span class="hljs-attr">tags</span>: {
-        [tag name]: m42kup.renderer.ElementClass,
+        [tag name]: m42kup.renderer.Tag,
         ...
     },
     hljs,
     katex
 }
-</code></pre><h2><code>tags</code></h2><p>태그 이름과 <code>m42kup.renderer.ElementClass</code> 인스턴스의 키-값 쌍. 새로운 요소를 정의하기 위해 사용되며, 태그 이름이 사용 중인 경우 덮어 쓰고 아니면 새로 만든다.</p><h2><code>hljs</code></h2><p><a href="https://github.com/highlightjs/highlight.js" title="https://github.com/highlightjs/highlight.js">highlight.js</a>의 <code>hljs</code> 객체를 넘기면 <code>[highlight]</code>, <code>[;;;]</code>에서 highlight.js를 써서 구문 강조를 한다.</p><blockquote class="m42kup-bq-info"><p>highlight.js 이외의 구문 강조 프로그램을 사용하려면 <code>tags</code>를 통해 <code>[highlight]</code>, <code>[;;;]</code>를 재정의해야 한다.</p></blockquote><h2><code>katex</code></h2><p><a href="https://github.com/KaTeX/KaTeX" title="https://github.com/KaTeX/KaTeX">KaTeX</a>의 <code>katex</code> 객체를 넘기면 <code>[math]</code>, <code>[$]</code>, <code>[displaymath]</code>, <code>[$$]</code>에서 KaTeX을 써서 수식 렌더링을 한다.</p><blockquote class="m42kup-bq-info"><p>KaTeX 이외의 수식 렌더러를 사용하려면 <code>tags</code>를 통해 <code>[math]</code>, <code>[$]</code>, <code>[displaymath]</code>, <code>[$$]</code>를 재정의해야 한다.</p></blockquote><p>
+</code></pre><h2><code>tags</code></h2><p>태그 이름과 <code>m42kup.renderer.Tag</code> 인스턴스의 키-값 쌍. 새로운 요소를 정의하기 위해 사용되며, 태그 이름이 사용 중인 경우 덮어 쓰고 아니면 새로 만든다.</p><h2><code>hljs</code></h2><p><a href="https://github.com/highlightjs/highlight.js" title="https://github.com/highlightjs/highlight.js">highlight.js</a>의 <code>hljs</code> 객체를 넘기면 <code>[highlight]</code>, <code>[;;;]</code>에서 highlight.js를 써서 구문 강조를 한다.</p><blockquote class="m42kup-bq-info"><p>highlight.js 이외의 구문 강조 프로그램을 사용하려면 <code>tags</code>를 통해 <code>[highlight]</code>, <code>[;;;]</code>를 재정의해야 한다.</p></blockquote><h2><code>katex</code></h2><p><a href="https://github.com/KaTeX/KaTeX" title="https://github.com/KaTeX/KaTeX">KaTeX</a>의 <code>katex</code> 객체를 넘기면 <code>[math]</code>, <code>[$]</code>, <code>[displaymath]</code>, <code>[$$]</code>에서 KaTeX을 써서 수식 렌더링을 한다.</p><blockquote class="m42kup-bq-info"><p>KaTeX 이외의 수식 렌더러를 사용하려면 <code>tags</code>를 통해 <code>[math]</code>, <code>[$]</code>, <code>[displaymath]</code>, <code>[$$]</code>를 재정의해야 한다.</p></blockquote><p>
 </p>
 			
 		</div>
