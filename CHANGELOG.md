@@ -15,7 +15,7 @@
 * 파서가 PEG.js로 생성되게 바뀜
 * 입출력 형식이 바뀜 (하위 호환 깨짐)
 * 속성 입력을 위한 문법 추가
-* m42kup-builder로 /docs 작성
+* `documentation-generator`로 /docs 작성
 
 ## 0.2.1
 
