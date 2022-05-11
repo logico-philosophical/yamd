@@ -1,9 +1,9 @@
 # ![m42kup](logo/logotype.svg?raw=true)
 
 [![npm](https://img.shields.io/npm/v/m42kup)](https://www.npmjs.com/package/m42kup)
-[![GitHub](https://img.shields.io/github/license/logico-philosophical/m42kup)](https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/com/logico-philosophical/m42kup)](https://travis-ci.com/logico-philosophical/m42kup)
+[![Node.js CI](https://github.com/logico-philosophical/m42kup/actions/workflows/test-and-build.yml/badge.svg)](https://github.com/logico-philosophical/m42kup/actions/workflows/test-and-build.yml)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/m42kup/badge?style=rounded)](https://www.jsdelivr.com/package/npm/m42kup)
+[![GitHub](https://img.shields.io/github/license/logico-philosophical/m42kup)](https://github.com/logico-philosophical/m42kup/blob/master/LICENSE)
 
 <p align="center">
   <a href="https://logico-philosophical.github.io/m42kup/docs/build/index.html">docs</a> ·
