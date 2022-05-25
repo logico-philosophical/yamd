@@ -1,0 +1,37 @@
+[=[;yamd.parser]]
+
+[;;;(lang=javascript)
+parser: {
+    input2pt: Function,
+    pt2ast: Function
+}
+]
+
+[==[;input2pt(input)]]
+
+입력으로부터 파스 트리(parse tree)를 생성한다.
+
+[**Parameters]
+
+[ul
+	[*] [;input: string]: yamd 코드.
+]
+
+[**Returns]
+
+생성된 파스 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.
+
+
+[==[;pt2ast(pt)]]
+
+파스 트리로부터 추상 구문 트리(abstract syntax tree)를 생성한다.
+
+[**Parameters]
+
+[ul
+	[*] [;pt]: 파스 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.
+]
+
+[**Returns]
+
+생성된 추상 구문 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.

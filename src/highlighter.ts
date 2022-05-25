@@ -4,7 +4,7 @@ var escapeHtml = s => (s + '').replace(/[&<>"']/g, m => ({
 })[m]);
 
 function makeHtml(fragment) {
-	return `<span class="m42hl-${fragment.type}">${fragment.html || escapeHtml(fragment.text)}</span>`;
+	return `<span class="yamdhl-${fragment.type}">${fragment.html || escapeHtml(fragment.text)}</span>`;
 }
 
 function pt2hl(pt) {

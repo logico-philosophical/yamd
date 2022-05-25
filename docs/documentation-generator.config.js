@@ -1,19 +1,19 @@
-var m42kup = require('../');
+var yamd = require('../');
 var hljs = require('highlight.js');
 var katex = require('katex');
 
-m42kup.set({hljs, katex});
+yamd.set({hljs, katex});
 
 function render(text) {
-	return m42kup.render(text);
+	return yamd.render(text);
 }
 
 var styles = `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.3/styles/tomorrow.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/m42kup@latest/web/m42kup.default.css">`;
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yamd@latest/web/yamd.default.css">`;
 
 module.exports = {
-	name: 'm42kup 설명서',
+	name: 'yamd 설명서',
 	src: 'src',
 	dst: 'build',
 	render,
@@ -26,16 +26,16 @@ module.exports = {
 			dir: 'getting-started',
 			list: [
 				{
-					name: 'm42kup 소개',
-					file: 'introduction.m42kup'
+					name: 'yamd 소개',
+					file: 'introduction.yamd'
 				},
 				{
 					name: '간단한 사용법',
-					file: 'basic-usage.m42kup'
+					file: 'basic-usage.yamd'
 				},
 				{
 					name: '설치',
-					file: 'installation.m42kup'
+					file: 'installation.yamd'
 				}
 			]
 		},
@@ -45,27 +45,27 @@ module.exports = {
 			list: [
 				{
 					name: '렌더링 옵션',
-					file: 'options.m42kup'
+					file: 'options.yamd'
 				},
 				{
 					name: '입출력 형식',
-					file: 'formats.m42kup'
+					file: 'formats.yamd'
 				},
 				{
-					name: 'm42kup',
-					file: 'm42kup.m42kup'
+					name: 'yamd',
+					file: 'yamd.yamd'
 				},
 				{
-					name: 'm42kup.parser',
-					file: 'm42kup.parser.m42kup'
+					name: 'yamd.parser',
+					file: 'yamd.parser.yamd'
 				},
 				{
-					name: 'm42kup.renderer',
-					file: 'm42kup.renderer.m42kup'
+					name: 'yamd.renderer',
+					file: 'yamd.renderer.yamd'
 				},
 				{
-					name: 'm42kup.highlighter',
-					file: 'm42kup.highlighter.m42kup'
+					name: 'yamd.highlighter',
+					file: 'yamd.highlighter.yamd'
 				}
 			]
 		}

@@ -1,0 +1,272 @@
+[=[;yamd.renderer]]
+
+[;;;(lang=javascript)
+renderer: {
+    ast2nt: Function,
+    TextNode: Function,
+    HtmlNode: Function,
+    ErrorNode: Function,
+    Tag: Function,
+    Element: Function
+}
+]
+
+[==[;ast2nt(ast, options)]]
+
+AST로부터 노드의 트리를 만든다.
+
+[**Parameters]
+
+[ul
+	[*] [;ast]: AST. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.
+	[*] [;options]: 렌더링 옵션. [~(href='./options.html')렌더링 옵션]을 참조하라.
+]
+
+[**Returns]
+
+[;Element] 노드 트리의 최상단 요소.
+
+[==[;Node()]]
+
+[**Inherited by]
+
+[ul
+	[*] [;TextNode]
+	[*] [;HtmlNode]
+	[*] [;ErrorNode]
+	[*] [;Element]
+]
+
+[==[;TextNode(text)]]
+
+텍스트를 표현하는 노드.
+
+[**Parameters]
+
+[ul
+	[*] [;text: string]: 텍스트.
+]
+
+[**Inherits]
+
+[ul
+	[*] [;Node]
+]
+
+[==[;HtmlNode({html, display})]]
+
+HTML을 표현하는 노드.
+
+[>(type=warn)[;html] 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.]
+
+[**Parameters]
+
+[ul
+	[*] [;html: string]: HTML 코드.
+	[*] [;display: ElementDisplayType]: 디스플레이 타입. [;"inline"], [;"leaf-block"], [;"container-block"] 중 하나이다.
+]
+
+[**Inherits]
+
+[ul
+	[*] [;Node]
+]
+
+[==[;ErrorNode({message, code})]]
+
+에러를 표현하는 노드.
+
+[**Inherits]
+
+[ul
+	[*] [;Node]
+]
+
+[==[;Tag({name, display, renderer, split?})]]
+
+새로운 yamd 태그를 만든다.
+
+어떤 [;Tag] 인스턴스와 [;Element] 인스턴스의 관계는 HTML DOM에서의 [;HTMLParagraphElement] 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있다. 새로운 클래스를 만드는 대신 [;Tag] 인스턴스를 만드는 것이다.
+
+[**Parameters]
+
+[ul
+	[*] [;`name: string`]: 요소 이름.
+	[*] [;`display: ElementDisplayType`]: 요소의 디스플레이 타입. [;"inline"], [;"leaf-block"], [;"container-block"]  중 하나이다.
+	[*] [;`renderer: (element: Element, options) => (TextNode | HtmlNode | ErrorNode)`]: 렌더링 함수. 렌더링 할 요소와 렌더링 옵션을 입력받아 [;TextNode], [;HtmlNode], [;ErrorNode] 중 하나를 반환한다.
+	[*] [;`split?: string | string[]`]: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 [;`[ol]`]의 경우 [;'*']이고 [;`[table]`]의 경우 [;`['*', '**']`]이다.
+]
+
+[**Examples]
+
+[;;;(lang=javascript)`<<
+var i = new Tag({
+    name: 'i',
+    display: 'inline',
+    renderer: (el, options) => {
+        return el.html(`<i>${el.innerHtml}</i>`);
+    }
+});
+>>`]
+
+
+[==[;Element({name, display, renderer, split?, code, attributes, children, options})]]
+
+요소.
+
+[**Inherits]
+
+[ul
+	[*] [;Node]
+]
+
+[==[;Element#text(text)]]
+
+텍스트 노드를 만든다.
+
+[**Parameters]
+
+[ul
+	[*] [;text: string]: 텍스트.
+]
+
+[**Returns]
+
+[;TextNode] 만들어진 [;TextNode] 인스턴스.
+
+[**Examples]
+
+[;;;(lang=javascript)`<<
+// asdf -> fdsa
+var reverse = new Tag({
+    name: 'reverse',
+    display: 'inline',
+    renderer: (el, options) => {
+        if (!el.innerIsText)
+            return el.error('Non-text input');
+
+        return el.text(el.innerText.split('').reverse().join(''));
+    }
+});
+>>`]	
+
+[==[;Element#html(html)]]
+
+HTML 노드를 만든다.
+
+[>(type=warn)[;html] 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.]
+
+[**Parameters]
+
+[ul
+	[*] [;html: string]: HTML 코드.
+]
+
+[**Returns]
+
+[;HtmlNode] 만들어진 [;HtmlNode] 인스턴스.
+
+[**Examples]
+
+[;;;(lang=javascript)`<<
+// <i>...</i>
+var i = new Tag({
+    name: 'i',
+    display: 'inline',
+    renderer: (el, options) => {
+        return el.html(`<i>${el.innerHtml}</i>`);
+    }
+});
+>>`]
+
+[==[;Element#error(message)]]
+
+에러 노드를 만든다.
+
+[**Parameters]
+
+[ul
+	[*] [;message: string]: 에러 메시지. 이스케이프 하지 않아도 된다.
+]
+
+[**Returns]
+
+[;ErrorNode] 만들어진 [;ErrorNode] 인스턴스.
+
+[**Examples]
+
+[;;;(lang=javascript)`<<
+// asdf -> fdsa
+var reverse = new Tag({
+    name: 'reverse',
+    display: 'inline',
+    renderer: (el, options) => {
+        if (!el.innerIsText)
+            return el.error('Non-text input');
+
+        return el.text(el.innerText.split('').reverse().join());
+    }
+});
+>>`]
+
+[==[;Element#getAttribute(name)]]
+
+[;name]에 대응하는 속성 값을 반환한다. 여러 개 있을 경우 제일 처음에 작성된 것이 반환한다. 없으면 [;null]을 반환한다.
+
+[**Parameters]
+
+[ul
+	[*] [;name: string]: 속성 이름.
+]
+
+[**Returns]
+
+[;string] 제일 왼쪽에 있는 속성 값. 없으면 [;null]이다.
+
+[==[;Element#escapeHtml(string)]]
+
+HTML 이스케이프 함수.
+
+[**Parameters]
+
+[ul
+	[*] [;string: string]: 이스케이프 할 문자열.
+]
+
+[**Returns]
+
+[;string] HTML 이스케이프 된 문자열.
+
+[==[;Element]가 갖는 속성]
+
+[;Nested<T>]는 [;T | Nested<T>`[]`]로 정의된다.
+
+[ul
+	[*] [;name: string]: 요소의 이름.
+
+	[*] [;`children: Nested<Node>[]`]: 요소의 자식 노드의 트리. [;Node]의 [;split.length + 1]차원 배열이다.
+
+	[*] [;display: ElementDisplayType]: 요소의 디스플레이 타입. [;"inline"], [;"leaf-block"], [;"container-block"] 중 하나이다.
+
+	[*] [;`split: string[]`]: 컨텐트를 분리시킬 구분자의 리스트. 예를 들어 [;`[ol]`]의 경우 [;`['*']`]이고 [;`[table]`]의 경우 [;`['*', '**']`]이다. 구분하지 않으면 [;`[]`]이다.
+
+	[*] [;code: string]: 요소의 yamd 코드.
+
+	[*] [;attributes: Array<{name: string, value: string}>]: 속성 목록.
+
+	[*] [;innerIsText: Nested<boolean>]: 내부 컨텐트가 텍스트로 인식될 수 있는지 여부. [;split.length]이 [;0]이면 [;boolean]이고 아니면 [;split.length]차원 배열이다.
+
+	[*] [;innerText: Nested<string>]: 텍스트 형태의 내부 컨텐트. [;split.length]이 [;0]이면 [;string]이고 아니면 [;split.length]차원 배열이다. 텍스트가 아닌 것에 대하여는 [;null]이 된다.
+
+	[*] [;innerHtml: Nested<string>]: HTML 형태의 내부 컨텐트. [;split.length]이 [;0]이면 [;string]이고 아니면 [;split.length]차원 배열이다. 내부 컨텐트의 타입과 관련 없이 항상 제공된다.
+
+	[*] [;outerIsText: boolean]: 렌더링 결과가 텍스트로 인식될 수 있는지 여부.
+
+	[*] [;outerText: string]: 텍스트 형태의 렌더링 결과. 텍스트가 아닐 경우 [;null].
+
+	[*] [;outerHtml: string]: HTML 형태의 렌더링 결과. 렌더링 결과의 타입과 관련 없이 항상 제공된다.
+
+	[*] [;isError: boolean]: 렌더링 결과 에러가 났는지 여부.
+
+	[*] [;errorMessage: string]: 렌더링 결과 에러가 났을 경우 에러 메시지. 아니면 [;null]이다.
+]

@@ -20,7 +20,7 @@ export default class ErrorNode extends Node {
 	}
 
 	public toHtml() {
-		return `<code class="m42kup-error" title="Error: ${escapeHtml(this.message)}">${escapeHtml(this.code)}</code>`;
+		return `<code class="yamd-error" title="Error: ${escapeHtml(this.message)}">${escapeHtml(this.code)}</code>`;
 	};
 	
 	public toIndentedString(level: number) {

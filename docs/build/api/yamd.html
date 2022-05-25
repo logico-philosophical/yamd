@@ -1,0 +1,345 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>yamd</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.3/styles/tomorrow.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yamd@latest/web/yamd.default.css">
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				padding: 0; 
+				margin: 0;
+				font: 16px Roboto, sans-serif;
+				font-weight: 400;
+				-webkit-font-smoothing: antialiased;
+				color: #5f6368;
+				line-height: 1.5;
+				word-break: normal;
+				overflow-wrap: break-word;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				font-weight: 400;
+				line-height: 1.2;
+			}
+
+			h1, h2, h3, h4, h5, h6, a, b, strong, input, textarea, th, .katex {
+				color: #202124;
+			}
+
+			img {
+				max-width: 100%;
+			}
+
+			pre, pre.hljs, code {
+				font-family: Consolas, 'Roboto Mono', monospace;
+				background-color: rgba(0,0,0,.05);
+				white-space: pre-wrap;
+				word-break: break-all;
+				tab-size: 4;
+			}
+
+			pre {
+				padding: 6px;
+			}
+
+			code {
+				font-size: .85em;
+				padding: .15em .3em;
+				border-radius: .3em;
+			}
+
+			pre code {
+				background-color: unset;
+				padding: 0;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			p + p {
+				margin-top: 1em;
+			}
+
+			ul, ol {
+				margin: 1em 0;
+			}
+
+			ol li, ul li {
+				margin: .5em 0;
+			}
+
+			table {
+				margin: 1em 0;
+				border-collapse: collapse;
+			}
+
+			table tr td {
+				border: 1px #ccc solid;
+				padding: .6em;
+			}
+
+			kbd {
+				font: .85em 'Roboto Mono', monospace;
+				color: #202124;
+				border: 1px #ccc solid;
+				padding: .1em;
+				border-radius: .2em;
+			}
+
+			blockquote {
+				margin: 1em 0;
+				padding: .5em 20px;
+				border-left: 5px #202124 solid;
+				background-color: #f7f7f7;
+			}
+
+			#toc {
+				position: fixed;
+				z-index: 1;
+				overflow-y: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				width: 280px;
+				height: 100%;
+				background-color: #f1f1f1;
+				padding-bottom:100px;
+			}
+
+			#toc > div {
+				display: block;
+				text-align: center;
+				background-color: #263238;
+				padding: 1.5em;
+			}
+
+			#toc > div button {
+				background: none;
+				border: none;
+				vertical-align: middle;
+				display: none;
+			}
+
+			#toc > div a {
+				color: white;
+				text-decoration: none;
+			}
+
+			#toc ol {
+				padding: 0;
+				margin: 0;
+			}
+
+			#toc > ol {
+				background-color: #f1f1f1;
+			}
+
+			#toc ol li {
+				list-style: none;
+				margin: 0;
+			}
+
+			#toc ol li a {
+				display: block;
+				padding: .5em;
+				text-decoration: none;
+			}
+
+			#toc ol li a:hover {
+				background-color: rgba(0, 0, 0, .12);
+			}
+
+			#toc ol li ol {
+				padding: 0;
+				margin: 0;
+				background-color: rgba(0, 0, 0, .08);
+				font-size: .85em;
+			}
+
+			#toc ol li ol li {
+				list-style: none;
+			}
+
+			#content {
+				margin-left: 280px;
+				padding: 1em;
+				padding-top: 30px;
+				padding-bottom: 150px;
+			}
+
+			@media screen and (max-width: 800px) {
+				#toc {
+					position: fixed;
+					width: 100%;
+					top: 0;
+					border-bottom: 1px #ccc solid;
+				}
+
+				#toc:not(.toc-expanded) {
+					bottom: unset;
+					height: unset;
+					padding-bottom: 0;
+					box-shadow: 0 0 2px 0 rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
+				}
+
+				#toc.toc-expanded .toc-on-folded {
+					display: none;
+				}
+
+				#toc:not(.toc-expanded) .toc-on-expanded {
+					display: none;
+				}
+
+				#toc > div {
+					padding: 1em;
+					text-align: left;
+					height: 60px;
+				}
+
+				#toc > div button {
+					display: inline-block;
+					margin-right: 1em;
+				}
+
+				#content {
+					margin-left: 0;
+					margin-top: 60px;
+				}
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="toc">
+			<div>
+						<button id="toc-fold-toggle">
+							<svg class="toc-on-folded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+							<svg class="toc-on-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+						</button>
+						<a href="../index.html">yamd 설명서</a>
+					</div>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">yamd 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">간단한 사용법</a></div></li><li><div><a href="../getting-started/installation.html">설치</a></div></li></ol></li><li><div><a href="./index.html">API</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./yamd.html">yamd</a></div></li><li><div><a href="./yamd.parser.html">yamd.parser</a></div></li><li><div><a href="./yamd.renderer.html">yamd.renderer</a></div></li><li><div><a href="./yamd.highlighter.html">yamd.highlighter</a></div></li></ol></li></ol>
+		</div>
+		<div id="content">
+			
+				<h1><code>yamd</code></h1><pre class="hljs"><code>yamd: {
+    <span class="hljs-attr">parser</span>: { ... },
+    <span class="hljs-attr">renderer</span>: { ... },
+    <span class="hljs-attr">highlighter</span>: { ... },
+    <span class="hljs-attr">ast2nt</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">render</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">highlight</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">cascade</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">set</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">addCodeMirrorMode</span>: <span class="hljs-built_in">Function</span>
+}
+</code></pre><h2><code>parser</code></h2><p>파서. 개별 문서 참조.</p><h2><code>renderer</code></h2><p>렌더러. 개별 문서 참조.</p><h2><code>highlighter</code></h2><p>구문 강조를 한다. 개별 문서 참조.</p><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만든다. <code>yamd.renderer.ast2nt(ast, options)</code>와 같은데 <code>yamd</code>의 글로벌 옵션이 적용되며 <code>options</code>는 글로벌 옵션을 cascade 한다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast</code>: 추상 구문 트리. <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
+    </p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>Element</code> 노드 트리.</p><h2><code>render(input, options)</code></h2><p>입력으로부터 HTML을 렌더링 한다.</p><p><b>Parameters</b></p><ul><li><p> <code>input: string</code>: 입력 문자열.
+    </p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 렌더링 된 HTML.</p><p><b>Examples</b></p><pre class="hljs"><code>yamd.render(<span class="hljs-string">&#x27;[*hello]&#x27;</span>);
+</code></pre><pre class="hljs"><code>&lt;<span class="hljs-selector-tag">p</span>&gt;&lt;<span class="hljs-selector-tag">i</span>&gt;hello&lt;/<span class="hljs-selector-tag">i</span>&gt;&lt;/<span class="hljs-selector-tag">p</span>&gt;
+</code></pre><h2><code>highlight(input)</code></h2><p>yamd 코드를 구문 강조한다. 출력 형식에 관하여는 <code>yamd.highlighter.pt2hl</code>을 참조하라.</p><p><b>Parameters</b></p><ul><li><p> <code>input: string</code>: yamd 코드.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 구문 강조된 코드. HTML로 되어 있다.</p><p><b>Examples</b></p><pre class="hljs"><code>yamd.highlight(<span class="hljs-string">&#x27;[*hello]&#x27;</span>);
+</code></pre><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-elem&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-lbm&quot;</span>&gt;</span>[<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-tn&quot;</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-sp&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-tx&quot;</span>&gt;</span>hello<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-rbm&quot;</span>&gt;</span>]<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+</code></pre><h2><code>cascade(options)</code></h2><p>현재의 글로벌 옵션을 보존하면서 <code>options</code>로 적당히 덮어 쓴다. <code>yamd.cascade</code>나 <code>yamd.set</code>을 한 번도 호출하지 않은 경우 <code>yamd.set</code>과 효과가 같다.</p><p><b>Parameters</b></p><ul><li><p> <code>options</code>: <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// global options: {}</span>
+
+yamd.cascade({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// deletes default element [=]</span>
+        <span class="hljs-string">&#x27;=&#x27;</span>: <span class="hljs-literal">false</span>
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {&#x27;=&#x27;: false}}</span>
+
+yamd.cascade({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// overwrites default element behavior of [*].</span>
+        <span class="hljs-comment">// wraps content with &#x27;*&#x27;.</span>
+        <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">new</span> yamd.renderer.Tag({
+            <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;*&#x27;</span>,
+            <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
+            <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+                <span class="hljs-keyword">if</span> (el.innerIsText)
+                    <span class="hljs-keyword">return</span> el.text(<span class="hljs-string">`*<span class="hljs-subst">${el.innerText}</span>*`</span>);
+                <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`*<span class="hljs-subst">${el.innerHtml}</span>*`</span>);
+            }
+        })
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {&#x27;=&#x27;: false, &#x27;*&#x27;: &lt;Function&gt;}}</span>
+</code></pre><h2><code>set(options)</code></h2><p>현재의 글로벌 옵션을 버리고 <code>options</code>로 설정한다. <code>yamd.cascade</code>나 <code>yamd.set</code>을 한 번도 호출하지 않은 경우 <code>yamd.cascade</code>와 효과가 같다. <code>yamd.set({})</code>으로 글로벌 옵션을 없애버릴 수 있다.</p><p><b>Parameters</b></p><ul><li><p> <code>options</code>: 가능한 옵션은 <a href="./options.html" title="./options.html">렌더링 옵션</a> 참조.
+</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// global options: {}</span>
+
+yamd.set({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// deletes default element [=]</span>
+        <span class="hljs-string">&#x27;=&#x27;</span>: <span class="hljs-literal">false</span>
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {&#x27;=&#x27;: false}}</span>
+
+yamd.set({
+    <span class="hljs-attr">tags</span>: {
+        <span class="hljs-comment">// overwrites default element behavior of [*].</span>
+        <span class="hljs-comment">// wraps content with &#x27;*&#x27;.</span>
+        <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">new</span> yamd.renderer.Tag({
+            <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;*&#x27;</span>,
+            <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
+            <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+                <span class="hljs-keyword">if</span> (el.innerIsText)
+                    <span class="hljs-keyword">return</span> el.text(<span class="hljs-string">`*<span class="hljs-subst">${el.innerText}</span>*`</span>);
+                <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`*<span class="hljs-subst">${el.innerHtml}</span>*`</span>);
+            }
+        })
+    }
+});
+
+<span class="hljs-comment">// global options: {tags: {&#x27;*&#x27;: &lt;Function&gt;}}</span>
+</code></pre><h2><code>addCodeMirrorMode(CodeMirror)</code></h2><p>CodeMirror에 yamd 구문 지원을 추가한다.</p><p><b>Parameters</b></p><ul><li><p> <code>CodeMirror</code>
+</p></li></ul>
+			
+		</div>
+		<script>
+			$ = (q, n) => (n || document).querySelector(q);
+
+			var expanded = false;
+
+			function applyExpandedState(expanded) {
+				if (expanded) {
+					$('#toc').classList.add('toc-expanded');
+					$('#content').classList.add('toc-expanded');
+				} else {
+					$('#toc').classList.remove('toc-expanded');
+					$('#content').classList.remove('toc-expanded');
+				}
+			}
+
+			applyExpandedState(expanded);
+
+			$('#toc-fold-toggle').addEventListener('click', _ => {
+				expanded = !expanded;
+
+				applyExpandedState(expanded);
+			});
+		</script>
+	</body>
+</html>

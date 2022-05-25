@@ -1,0 +1,67 @@
+[=설치]
+
+[==npm으로 설치하기]
+
+[;;;(lang=shell)npm install yamd]
+
+[==서버 사이드에서 사용하기]
+
+[;;;`
+const yamd = require('yamd');
+
+yamd.render('[*italic text]'); // <p><i>italic text</i></p>
+`]
+
+[===KaTeX 및 highlight.js와 함께 사용하기]
+
+[;`[$]`]나 [;`[;;;]`] 같은 요소를 사용하려면 수식 및 코드 렌더러를 제공해야 한다.
+
+[;;;(lang=javascript)`<
+const yamd = require('yamd'),
+	hljs = require('highlight.js'),
+	katex = require('katex');
+
+yamd.set({hljs, katex});
+
+yamd.render(`
+[;;;
+var foo = 'some highlighted code',
+	bar = 'more highlighted code';
+]
+
+[$\sum_{n=1}^4 e^{in\pi}=0]
+`);
+>`]
+
+[==클라이언트 사이드에서 사용하기]
+
+[;/dist/yamd.min.js] 파일을 내려받아 사용하거나 [~(href=https://www.jsdelivr.com/package/npm/yamd)jsDelivr]와 같은 CDN을 사용하면 된다.
+
+[;;;`
+<script src="/path/to/yamd/yamd.min.js"></script>
+<script>
+yamd.render('[**bold text]'); // <p><b>bold text</b></p>
+</script>
+`]
+
+[===KaTeX 및 highlight.js와 함께 사용하기]
+
+[;`[$]`]나 [;`[;;;]`] 같은 요소를 사용하려면 수식 및 코드 렌더러를 제공해야 한다.
+
+[;;;`<<
+<script src="/path/to/highlight.js/highlight.min.js"></script>
+<script src="/path/to/katex/katex.min.js"></script>
+<script src="/path/to/yamd/yamd.min.js"></script>
+<script>
+yamd.set({hljs, katex});
+
+yamd.render(`
+[;;;
+var foo = 'some highlighted code',
+	bar = 'more highlighted code';
+]
+
+[$\sum_{n=1}^4 e^{in\pi}=0]
+`);
+</script>
+>>`]

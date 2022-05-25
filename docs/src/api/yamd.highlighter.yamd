@@ -1,0 +1,62 @@
+[=[;yamd.highlighter]]
+
+[;;;(lang=javascript)
+highlighter: {
+	pt2hl: Function
+}
+]
+
+[==[;pt2hl(pt)]]
+
+파스 트리로부터 구문 강조된 HTML을 생성한다. 파스 트리 상의 특정 타입을 [;yamdhl-]로 시작하는 특정 클래스를 가지는 [;<span>]으로 감싸는데, [;yamdhl-] 이후에 오는 이름은 다음과 같다.
+
+[===텍스트]
+
+[table
+	some text [**]
+	[;tx]
+]
+
+즉 [;;;<span class="yamdhl-tx">some text</span>]처럼 된다.
+
+[===요소]
+
+[;`[~(href="example.com" foo=bar)asdf]`]의 경우 다음과 같다.
+[table
+	[;`[`] [*] [;~] [*] [;`(`] [*] [;href] [*] [;=] [*] [;"] [*] [;example.com] [*] [;"] [*] [; ] [*] [;foo] [*] [;=] [*] [;bar] [*] [;)] [*] [;asdf] [*] [;`]`] [**]
+	[;lbm] [*] [;tn] [*] [;lpm] [*] [;pk] [*] [;eq] [*] [;lqm] [*] [;pv] [*] [;rqm] [*] [;tx] [*] [;pk] [*] [;eq] [*] [;pv] [*] [;rpm] [*] [;tx] [*] [;rbm]
+]
+
+전체가 [;elem]으로 감싸진다.
+
+[;`[~.example.com]`]의 경우 다음과 같다.
+
+[table
+	[;`[`] [*] [;~] [*] [;..] [*] [;example.com] [*] [;`]`] [**]
+	[;lbm] [*] [;tn] [*] [;sp] [*] [;tx] [*] [;rbm]
+]
+
+전체가 [;elem]으로 감싸진다.
+
+[===직역문]
+
+[;`<<<`<.<script>>`>>>`]의 경우 다음과 같다.
+
+[table
+	[;`<<`<.>>`] [*] [;<script>] [*] [;`<<>`>>`] [**]
+	[;lvm] [*] [;tx] [*] [;rvm]
+]
+
+전체가 [;verb]로 감싸진다.
+
+CSS 스타일시트의 예시를 보려면 [;/web/yamd-highlight.default.css]를 참고하라.
+
+[**Parameters]
+
+[ul
+	[*] [;pt]: 파스 트리. 형식에 관하여는 [~(href='./formats.html')입출력 형식]을 참조하라.
+]
+
+[**Returns]
+
+[;string] 구문 강조된 코드. HTML로 되어 있다.

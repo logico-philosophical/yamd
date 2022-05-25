@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>yamd.renderer</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.3/styles/tomorrow.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yamd@latest/web/yamd.default.css">
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				padding: 0; 
+				margin: 0;
+				font: 16px Roboto, sans-serif;
+				font-weight: 400;
+				-webkit-font-smoothing: antialiased;
+				color: #5f6368;
+				line-height: 1.5;
+				word-break: normal;
+				overflow-wrap: break-word;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				font-weight: 400;
+				line-height: 1.2;
+			}
+
+			h1, h2, h3, h4, h5, h6, a, b, strong, input, textarea, th, .katex {
+				color: #202124;
+			}
+
+			img {
+				max-width: 100%;
+			}
+
+			pre, pre.hljs, code {
+				font-family: Consolas, 'Roboto Mono', monospace;
+				background-color: rgba(0,0,0,.05);
+				white-space: pre-wrap;
+				word-break: break-all;
+				tab-size: 4;
+			}
+
+			pre {
+				padding: 6px;
+			}
+
+			code {
+				font-size: .85em;
+				padding: .15em .3em;
+				border-radius: .3em;
+			}
+
+			pre code {
+				background-color: unset;
+				padding: 0;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			p + p {
+				margin-top: 1em;
+			}
+
+			ul, ol {
+				margin: 1em 0;
+			}
+
+			ol li, ul li {
+				margin: .5em 0;
+			}
+
+			table {
+				margin: 1em 0;
+				border-collapse: collapse;
+			}
+
+			table tr td {
+				border: 1px #ccc solid;
+				padding: .6em;
+			}
+
+			kbd {
+				font: .85em 'Roboto Mono', monospace;
+				color: #202124;
+				border: 1px #ccc solid;
+				padding: .1em;
+				border-radius: .2em;
+			}
+
+			blockquote {
+				margin: 1em 0;
+				padding: .5em 20px;
+				border-left: 5px #202124 solid;
+				background-color: #f7f7f7;
+			}
+
+			#toc {
+				position: fixed;
+				z-index: 1;
+				overflow-y: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				width: 280px;
+				height: 100%;
+				background-color: #f1f1f1;
+				padding-bottom:100px;
+			}
+
+			#toc > div {
+				display: block;
+				text-align: center;
+				background-color: #263238;
+				padding: 1.5em;
+			}
+
+			#toc > div button {
+				background: none;
+				border: none;
+				vertical-align: middle;
+				display: none;
+			}
+
+			#toc > div a {
+				color: white;
+				text-decoration: none;
+			}
+
+			#toc ol {
+				padding: 0;
+				margin: 0;
+			}
+
+			#toc > ol {
+				background-color: #f1f1f1;
+			}
+
+			#toc ol li {
+				list-style: none;
+				margin: 0;
+			}
+
+			#toc ol li a {
+				display: block;
+				padding: .5em;
+				text-decoration: none;
+			}
+
+			#toc ol li a:hover {
+				background-color: rgba(0, 0, 0, .12);
+			}
+
+			#toc ol li ol {
+				padding: 0;
+				margin: 0;
+				background-color: rgba(0, 0, 0, .08);
+				font-size: .85em;
+			}
+
+			#toc ol li ol li {
+				list-style: none;
+			}
+
+			#content {
+				margin-left: 280px;
+				padding: 1em;
+				padding-top: 30px;
+				padding-bottom: 150px;
+			}
+
+			@media screen and (max-width: 800px) {
+				#toc {
+					position: fixed;
+					width: 100%;
+					top: 0;
+					border-bottom: 1px #ccc solid;
+				}
+
+				#toc:not(.toc-expanded) {
+					bottom: unset;
+					height: unset;
+					padding-bottom: 0;
+					box-shadow: 0 0 2px 0 rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
+				}
+
+				#toc.toc-expanded .toc-on-folded {
+					display: none;
+				}
+
+				#toc:not(.toc-expanded) .toc-on-expanded {
+					display: none;
+				}
+
+				#toc > div {
+					padding: 1em;
+					text-align: left;
+					height: 60px;
+				}
+
+				#toc > div button {
+					display: inline-block;
+					margin-right: 1em;
+				}
+
+				#content {
+					margin-left: 0;
+					margin-top: 60px;
+				}
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="toc">
+			<div>
+						<button id="toc-fold-toggle">
+							<svg class="toc-on-folded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+							<svg class="toc-on-expanded" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+						</button>
+						<a href="../index.html">yamd 설명서</a>
+					</div>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">yamd 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">간단한 사용법</a></div></li><li><div><a href="../getting-started/installation.html">설치</a></div></li></ol></li><li><div><a href="./index.html">API</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./yamd.html">yamd</a></div></li><li><div><a href="./yamd.parser.html">yamd.parser</a></div></li><li><div><a href="./yamd.renderer.html">yamd.renderer</a></div></li><li><div><a href="./yamd.highlighter.html">yamd.highlighter</a></div></li></ol></li></ol>
+		</div>
+		<div id="content">
+			
+				<h1><code>yamd.renderer</code></h1><pre class="hljs"><code>renderer: {
+    <span class="hljs-attr">ast2nt</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">TextNode</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">HtmlNode</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">ErrorNode</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">Tag</span>: <span class="hljs-built_in">Function</span>,
+    <span class="hljs-attr">Element</span>: <span class="hljs-built_in">Function</span>
+}
+</code></pre><h2><code>ast2nt(ast, options)</code></h2><p>AST로부터 노드의 트리를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>ast</code>: AST. 형식에 관하여는 <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
+	</p></li><li><p> <code>options</code>: 렌더링 옵션. <a href="./options.html" title="./options.html">렌더링 옵션</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>Element</code> 노드 트리의 최상단 요소.</p><h2><code>Node()</code></h2><p><b>Inherited by</b></p><ul><li><p> <code>TextNode</code>
+	</p></li><li><p> <code>HtmlNode</code>
+	</p></li><li><p> <code>ErrorNode</code>
+	</p></li><li><p> <code>Element</code>
+</p></li></ul><h2><code>TextNode(text)</code></h2><p>텍스트를 표현하는 노드.</p><p><b>Parameters</b></p><ul><li><p> <code>text: string</code>: 텍스트.
+</p></li></ul><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
+</p></li></ul><h2><code>HtmlNode({html, display})</code></h2><p>HTML을 표현하는 노드.</p><blockquote class="yamd-bq-warn"><p><code>html</code> 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html: string</code>: HTML 코드.
+	</p></li><li><p> <code>display: ElementDisplayType</code>: 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code> 중 하나이다.
+</p></li></ul><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
+</p></li></ul><h2><code>ErrorNode({message, code})</code></h2><p>에러를 표현하는 노드.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
+</p></li></ul><h2><code>Tag({name, display, renderer, split?})</code></h2><p>새로운 yamd 태그를 만든다.</p><p>어떤 <code>Tag</code> 인스턴스와 <code>Element</code> 인스턴스의 관계는 HTML DOM에서의 <code>HTMLParagraphElement</code> 등의 클래스와 그 인스턴스의 관계와 비슷하다고 할 수 있다. 새로운 클래스를 만드는 대신 <code>Tag</code> 인스턴스를 만드는 것이다.</p><p><b>Parameters</b></p><ul><li><p> <code>name: string</code>: 요소 이름.
+	</p></li><li><p> <code>display: ElementDisplayType</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code>  중 하나이다.
+	</p></li><li><p> <code>renderer: (element: Element, options) =&gt; (TextNode | HtmlNode | ErrorNode)</code>: 렌더링 함수. 렌더링 할 요소와 렌더링 옵션을 입력받아 <code>TextNode</code>, <code>HtmlNode</code>, <code>ErrorNode</code> 중 하나를 반환한다.
+	</p></li><li><p> <code>split?: string | string[]</code>: 컨텐트를 분리시킬 구분자 또는 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>&#39;*&#39;</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>이다.
+</p></li></ul><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> Tag({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;i&#x27;</span>,
+    <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
+    <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+        <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`&lt;i&gt;<span class="hljs-subst">${el.innerHtml}</span>&lt;/i&gt;`</span>);
+    }
+});
+</code></pre><h2><code>Element({name, display, renderer, split?, code, attributes, children, options})</code></h2><p>요소.</p><p><b>Inherits</b></p><ul><li><p> <code>Node</code>
+</p></li></ul><h2><code>Element#text(text)</code></h2><p>텍스트 노드를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>text: string</code>: 텍스트.
+</p></li></ul><p><b>Returns</b></p><p><code>TextNode</code> 만들어진 <code>TextNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
+<span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> Tag({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;reverse&#x27;</span>,
+    <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
+    <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (!el.innerIsText)
+            <span class="hljs-keyword">return</span> el.error(<span class="hljs-string">&#x27;Non-text input&#x27;</span>);
+
+        <span class="hljs-keyword">return</span> el.text(el.innerText.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join(<span class="hljs-string">&#x27;&#x27;</span>));
+    }
+});
+</code></pre><h2><code>Element#html(html)</code></h2><p>HTML 노드를 만든다.</p><blockquote class="yamd-bq-warn"><p><code>html</code> 인자에 이스케이프 되지 않은 텍스트를 집어넣으면 XSS 취약점이 발생할 수 있다.</p></blockquote><p><b>Parameters</b></p><ul><li><p> <code>html: string</code>: HTML 코드.
+</p></li></ul><p><b>Returns</b></p><p><code>HtmlNode</code> 만들어진 <code>HtmlNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// &lt;i&gt;...&lt;/i&gt;</span>
+<span class="hljs-keyword">var</span> i = <span class="hljs-keyword">new</span> Tag({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;i&#x27;</span>,
+    <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
+    <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+        <span class="hljs-keyword">return</span> el.html(<span class="hljs-string">`&lt;i&gt;<span class="hljs-subst">${el.innerHtml}</span>&lt;/i&gt;`</span>);
+    }
+});
+</code></pre><h2><code>Element#error(message)</code></h2><p>에러 노드를 만든다.</p><p><b>Parameters</b></p><ul><li><p> <code>message: string</code>: 에러 메시지. 이스케이프 하지 않아도 된다.
+</p></li></ul><p><b>Returns</b></p><p><code>ErrorNode</code> 만들어진 <code>ErrorNode</code> 인스턴스.</p><p><b>Examples</b></p><pre class="hljs"><code><span class="hljs-comment">// asdf -&gt; fdsa</span>
+<span class="hljs-keyword">var</span> reverse = <span class="hljs-keyword">new</span> Tag({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;reverse&#x27;</span>,
+    <span class="hljs-attr">display</span>: <span class="hljs-string">&#x27;inline&#x27;</span>,
+    <span class="hljs-attr">renderer</span>: <span class="hljs-function">(<span class="hljs-params">el, options</span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (!el.innerIsText)
+            <span class="hljs-keyword">return</span> el.error(<span class="hljs-string">&#x27;Non-text input&#x27;</span>);
+
+        <span class="hljs-keyword">return</span> el.text(el.innerText.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join());
+    }
+});
+</code></pre><h2><code>Element#getAttribute(name)</code></h2><p><code>name</code>에 대응하는 속성 값을 반환한다. 여러 개 있을 경우 제일 처음에 작성된 것이 반환한다. 없으면 <code>null</code>을 반환한다.</p><p><b>Parameters</b></p><ul><li><p> <code>name: string</code>: 속성 이름.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 제일 왼쪽에 있는 속성 값. 없으면 <code>null</code>이다.</p><h2><code>Element#escapeHtml(string)</code></h2><p>HTML 이스케이프 함수.</p><p><b>Parameters</b></p><ul><li><p> <code>string: string</code>: 이스케이프 할 문자열.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> HTML 이스케이프 된 문자열.</p><h2><code>Element</code>가 갖는 속성</h2><p><code>Nested&lt;T&gt;</code>는 <code>T | Nested&lt;T&gt;[]</code>로 정의된다.</p><ul><li><p> <code>name: string</code>: 요소의 이름.</p></li><li><p> <code>children: Nested&lt;Node&gt;[]</code>: 요소의 자식 노드의 트리. <code>Node</code>의 <code>split.length + 1</code>차원 배열이다.</p></li><li><p> <code>display: ElementDisplayType</code>: 요소의 디스플레이 타입. <code>&quot;inline&quot;</code>, <code>&quot;leaf-block&quot;</code>, <code>&quot;container-block&quot;</code> 중 하나이다.</p></li><li><p> <code>split: string[]</code>: 컨텐트를 분리시킬 구분자의 리스트. 예를 들어 <code>[ol]</code>의 경우 <code>[&#39;*&#39;]</code>이고 <code>[table]</code>의 경우 <code>[&#39;*&#39;, &#39;**&#39;]</code>이다. 구분하지 않으면 <code>[]</code>이다.</p></li><li><p> <code>code: string</code>: 요소의 yamd 코드.</p></li><li><p> <code>attributes: Array&lt;{name: string, value: string}&gt;</code>: 속성 목록.</p></li><li><p> <code>innerIsText: Nested&lt;boolean&gt;</code>: 내부 컨텐트가 텍스트로 인식될 수 있는지 여부. <code>split.length</code>이 <code>0</code>이면 <code>boolean</code>이고 아니면 <code>split.length</code>차원 배열이다.</p></li><li><p> <code>innerText: Nested&lt;string&gt;</code>: 텍스트 형태의 내부 컨텐트. <code>split.length</code>이 <code>0</code>이면 <code>string</code>이고 아니면 <code>split.length</code>차원 배열이다. 텍스트가 아닌 것에 대하여는 <code>null</code>이 된다.</p></li><li><p> <code>innerHtml: Nested&lt;string&gt;</code>: HTML 형태의 내부 컨텐트. <code>split.length</code>이 <code>0</code>이면 <code>string</code>이고 아니면 <code>split.length</code>차원 배열이다. 내부 컨텐트의 타입과 관련 없이 항상 제공된다.</p></li><li><p> <code>outerIsText: boolean</code>: 렌더링 결과가 텍스트로 인식될 수 있는지 여부.</p></li><li><p> <code>outerText: string</code>: 텍스트 형태의 렌더링 결과. 텍스트가 아닐 경우 <code>null</code>.</p></li><li><p> <code>outerHtml: string</code>: HTML 형태의 렌더링 결과. 렌더링 결과의 타입과 관련 없이 항상 제공된다.</p></li><li><p> <code>isError: boolean</code>: 렌더링 결과 에러가 났는지 여부.</p></li><li><p> <code>errorMessage: string</code>: 렌더링 결과 에러가 났을 경우 에러 메시지. 아니면 <code>null</code>이다.
+</p></li></ul>
+			
+		</div>
+		<script>
+			$ = (q, n) => (n || document).querySelector(q);
+
+			var expanded = false;
+
+			function applyExpandedState(expanded) {
+				if (expanded) {
+					$('#toc').classList.add('toc-expanded');
+					$('#content').classList.add('toc-expanded');
+				} else {
+					$('#toc').classList.remove('toc-expanded');
+					$('#content').classList.remove('toc-expanded');
+				}
+			}
+
+			applyExpandedState(expanded);
+
+			$('#toc-fold-toggle').addEventListener('click', _ => {
+				expanded = !expanded;
+
+				applyExpandedState(expanded);
+			});
+		</script>
+	</body>
+</html>

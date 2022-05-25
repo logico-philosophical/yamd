@@ -1,0 +1,13 @@
+[=yamd 소개]
+
+yamd는 간결하고 일관적인 문법을 갖는 가벼운 마크업 언어(lightweight markup language)이다.
+
+[==yamd의 특징]
+
+[ul
+	[*] [~(href=https://github.com/highlightjs/highlight.js)highlight.js]를 써서 구문 강조를 위한 요소를 만들 수 있다.
+	[*] [~(href=https://github.com/KaTeX/KaTeX)KaTeX]를 써서 수식 렌더링을 위한 요소를 만들 수 있다.
+	[*] 간결한 문법으로 인해 새로운 태그를 도입하기 쉽다.
+	[*] [~(href=https://github.com/logico-philosophical/documentation-generator)documentation-generator]를 써서 설명서를 만들 수 있다. 이 페이지 역시 documentation-generator로 빌드된 것이다.
+	[*] 구문 강조를 위한 API가 제공되며 [~(href=https://github.com/codemirror/CodeMirror)CodeMirror]에서도 사용할 수 있다.
+]

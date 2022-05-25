@@ -1,13 +1,14 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
 	mode: "production",
 	entry: "./src/entry.ts",
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "m42kup.min.js",
-		library: "m42kup",
+		filename: "yamd.min.js",
+		library: "yamd",
 		libraryTarget: 'umd',
 		globalObject: 'typeof self !== \'undefined\' ? self : this'
 	},
@@ -32,6 +33,11 @@ module.exports = {
 			})
 		]
 	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.__webpack__': true
+		})
+	],
 	devtool: 'source-map',
 	stats: {
 		cached: false,

@@ -1,0 +1,76 @@
+.yamdhl {
+	color: #222;
+}
+
+.yamdhl-tx {
+}
+
+.yamdhl-elem {
+	background-color: rgba(229, 115, 115, .1);
+}
+
+.yamdhl-lbm {
+	color: #D73A49;
+	font-weight: bold;
+}
+
+.yamdhl-tn {
+	color: #D73A49;
+	font-weight: bold;
+}
+
+.yamdhl-sp {
+	color: #D73A49;
+	font-weight: bold;
+}
+
+.yamdhl-lpm {
+	color: #D73A49;
+	font-weight: bold;
+}
+
+.yamdhl-pk {
+	color: #F57C00;
+}
+
+.yamdhl-eq {
+	color: #666;
+}
+
+.yamdhl-lqm {
+	color: #1976D2;
+}
+
+.yamdhl-pv {
+	color: #1976D2;
+}
+
+.yamdhl-rqm {
+	color: #1976D2;
+}
+
+.yamdhl-err {
+	background-color: #E57373;
+	color: white;
+}
+
+.yamdhl-rpm {
+	color: #D73A49;
+	font-weight: bold;
+}
+
+.yamdhl-rbm {
+	color: #D73A49;
+	font-weight: bold;
+}
+
+.yamdhl-verb {
+	background-color: rgba(200, 230, 201, .8);
+	color: #2e7d32;
+	font-style: italic;
+}
+
+.yamdhl-lvm, .yamdhl-rvm {
+	color: #2e7d32;
+	font-weight: bold;
+}

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>시작하기</title>
+		<title>yamd.highlighter</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.3/styles/tomorrow.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
@@ -232,11 +232,22 @@
 						</button>
 						<a href="../index.html">yamd 설명서</a>
 					</div>
-					<ol class="toc-on-expanded"><li><div><a href="./index.html">시작하기</a></div><ol><li><div><a href="./introduction.html">yamd 소개</a></div></li><li><div><a href="./basic-usage.html">간단한 사용법</a></div></li><li><div><a href="./installation.html">설치</a></div></li></ol></li><li><div><a href="../api/index.html">API</a></div><ol><li><div><a href="../api/options.html">렌더링 옵션</a></div></li><li><div><a href="../api/formats.html">입출력 형식</a></div></li><li><div><a href="../api/yamd.html">yamd</a></div></li><li><div><a href="../api/yamd.parser.html">yamd.parser</a></div></li><li><div><a href="../api/yamd.renderer.html">yamd.renderer</a></div></li><li><div><a href="../api/yamd.highlighter.html">yamd.highlighter</a></div></li></ol></li></ol>
+					<ol class="toc-on-expanded"><li><div><a href="../getting-started/index.html">시작하기</a></div><ol><li><div><a href="../getting-started/introduction.html">yamd 소개</a></div></li><li><div><a href="../getting-started/basic-usage.html">간단한 사용법</a></div></li><li><div><a href="../getting-started/installation.html">설치</a></div></li></ol></li><li><div><a href="./index.html">API</a></div><ol><li><div><a href="./options.html">렌더링 옵션</a></div></li><li><div><a href="./formats.html">입출력 형식</a></div></li><li><div><a href="./yamd.html">yamd</a></div></li><li><div><a href="./yamd.parser.html">yamd.parser</a></div></li><li><div><a href="./yamd.renderer.html">yamd.renderer</a></div></li><li><div><a href="./yamd.highlighter.html">yamd.highlighter</a></div></li></ol></li></ol>
 		</div>
 		<div id="content">
 			
-				<h1>시작하기</h1><ol><li><span><a href="./introduction.html">yamd 소개</a></span></li><li><span><a href="./basic-usage.html">간단한 사용법</a></span></li><li><span><a href="./installation.html">설치</a></span></li></ol>
+				<h1><code>yamd.highlighter</code></h1><pre class="hljs"><code>highlighter: {
+	<span class="hljs-attr">pt2hl</span>: <span class="hljs-built_in">Function</span>
+}
+</code></pre><h2><code>pt2hl(pt)</code></h2><p>파스 트리로부터 구문 강조된 HTML을 생성한다. 파스 트리 상의 특정 타입을 <code>yamdhl-</code>로 시작하는 특정 클래스를 가지는 <code>&lt;span&gt;</code>으로 감싸는데, <code>yamdhl-</code> 이후에 오는 이름은 다음과 같다.</p><h3>텍스트</h3><table><tr><td><p>
+	some text </p></td></tr><tr><td><p><code>tx</code>
+</p></td></tr></table><p>즉 </p><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yamdhl-tx&quot;</span>&gt;</span>some text<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+</code></pre><p>처럼 된다.</p><h3>요소</h3><p><code>[~(href=&quot;example.com&quot; foo=bar)asdf]</code>의 경우 다음과 같다.
+</p><table><tr><td><p><code>[</code> </p></td><td><p> <code>~</code> </p></td><td><p> <code>(</code> </p></td><td><p> <code>href</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code>example.com</code> </p></td><td><p> <code>&quot;</code> </p></td><td><p> <code> </code> </p></td><td><p> <code>foo</code> </p></td><td><p> <code>=</code> </p></td><td><p> <code>bar</code> </p></td><td><p> <code>)</code> </p></td><td><p> <code>asdf</code> </p></td><td><p> <code>]</code> </p></td></tr><tr><td><p><code>lbm</code> </p></td><td><p> <code>tn</code> </p></td><td><p> <code>lpm</code> </p></td><td><p> <code>pk</code> </p></td><td><p> <code>eq</code> </p></td><td><p> <code>lqm</code> </p></td><td><p> <code>pv</code> </p></td><td><p> <code>rqm</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>pk</code> </p></td><td><p> <code>eq</code> </p></td><td><p> <code>pv</code> </p></td><td><p> <code>rpm</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>rbm</code>
+</p></td></tr></table><p>전체가 <code>elem</code>으로 감싸진다.</p><p><code>[~.example.com]</code>의 경우 다음과 같다.</p><table><tr><td><p><code>[</code> </p></td><td><p> <code>~</code> </p></td><td><p> <code>.</code> </p></td><td><p> <code>example.com</code> </p></td><td><p> <code>]</code> </p></td></tr><tr><td><p><code>lbm</code> </p></td><td><p> <code>tn</code> </p></td><td><p> <code>sp</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>rbm</code>
+</p></td></tr></table><p>전체가 <code>elem</code>으로 감싸진다.</p><h3>직역문</h3><p><code>`&lt;.&lt;script&gt;&gt;`</code>의 경우 다음과 같다.</p><table><tr><td><p><code>`&lt;.</code> </p></td><td><p> <code>&lt;script&gt;</code> </p></td><td><p> <code>&gt;`</code> </p></td></tr><tr><td><p><code>lvm</code> </p></td><td><p> <code>tx</code> </p></td><td><p> <code>rvm</code>
+</p></td></tr></table><p>전체가 <code>verb</code>로 감싸진다.</p><p>CSS 스타일시트의 예시를 보려면 <code>/web/yamd-highlight.default.css</code>를 참고하라.</p><p><b>Parameters</b></p><ul><li><p> <code>pt</code>: 파스 트리. 형식에 관하여는 <a href="./formats.html" title="./formats.html">입출력 형식</a>을 참조하라.
+</p></li></ul><p><b>Returns</b></p><p><code>string</code> 구문 강조된 코드. HTML로 되어 있다.</p>
 			
 		</div>
 		<script>
