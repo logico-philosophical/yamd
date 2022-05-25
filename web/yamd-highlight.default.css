@@ -1,76 +1,76 @@
-.m42hl {
+.yamdhl {
 	color: #222;
 }
 
-.m42hl-tx {
+.yamdhl-tx {
 }
 
-.m42hl-elem {
+.yamdhl-elem {
 	background-color: rgba(229, 115, 115, .1);
 }
 
-.m42hl-lbm {
+.yamdhl-lbm {
 	color: #D73A49;
 	font-weight: bold;
 }
 
-.m42hl-tn {
+.yamdhl-tn {
 	color: #D73A49;
 	font-weight: bold;
 }
 
-.m42hl-sp {
+.yamdhl-sp {
 	color: #D73A49;
 	font-weight: bold;
 }
 
-.m42hl-lpm {
+.yamdhl-lpm {
 	color: #D73A49;
 	font-weight: bold;
 }
 
-.m42hl-pk {
+.yamdhl-pk {
 	color: #F57C00;
 }
 
-.m42hl-eq {
+.yamdhl-eq {
 	color: #666;
 }
 
-.m42hl-lqm {
+.yamdhl-lqm {
 	color: #1976D2;
 }
 
-.m42hl-pv {
+.yamdhl-pv {
 	color: #1976D2;
 }
 
-.m42hl-rqm {
+.yamdhl-rqm {
 	color: #1976D2;
 }
 
-.m42hl-err {
+.yamdhl-err {
 	background-color: #E57373;
 	color: white;
 }
 
-.m42hl-rpm {
+.yamdhl-rpm {
 	color: #D73A49;
 	font-weight: bold;
 }
 
-.m42hl-rbm {
+.yamdhl-rbm {
 	color: #D73A49;
 	font-weight: bold;
 }
 
-.m42hl-verb {
+.yamdhl-verb {
 	background-color: rgba(200, 230, 201, .8);
 	color: #2e7d32;
 	font-style: italic;
 }
 
-.m42hl-lvm, .m42hl-rvm {
+.yamdhl-lvm, .yamdhl-rvm {
 	color: #2e7d32;
 	font-weight: bold;
 }

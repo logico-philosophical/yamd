@@ -2,14 +2,14 @@
 
 [==npm으로 설치하기]
 
-[;;;(lang=shell)npm install m42kup]
+[;;;(lang=shell)npm install yamd]
 
 [==서버 사이드에서 사용하기]
 
 [;;;`
-const m42kup = require('m42kup');
+const yamd = require('yamd');
 
-m42kup.render('[*italic text]'); // <p><i>italic text</i></p>
+yamd.render('[*italic text]'); // <p><i>italic text</i></p>
 `]
 
 [===KaTeX 및 highlight.js와 함께 사용하기]
@@ -17,13 +17,13 @@ m42kup.render('[*italic text]'); // <p><i>italic text</i></p>
 [;`[$]`]나 [;`[;;;]`] 같은 요소를 사용하려면 수식 및 코드 렌더러를 제공해야 한다.
 
 [;;;(lang=javascript)`<
-const m42kup = require('m42kup'),
+const yamd = require('yamd'),
 	hljs = require('highlight.js'),
 	katex = require('katex');
 
-m42kup.set({hljs, katex});
+yamd.set({hljs, katex});
 
-m42kup.render(`
+yamd.render(`
 [;;;
 var foo = 'some highlighted code',
 	bar = 'more highlighted code';
@@ -35,12 +35,12 @@ var foo = 'some highlighted code',
 
 [==클라이언트 사이드에서 사용하기]
 
-[;/dist/m42kup.min.js] 파일을 내려받아 사용하거나 [~(href=https://www.jsdelivr.com/package/npm/m42kup)jsDelivr]와 같은 CDN을 사용하면 된다.
+[;/dist/yamd.min.js] 파일을 내려받아 사용하거나 [~(href=https://www.jsdelivr.com/package/npm/yamd)jsDelivr]와 같은 CDN을 사용하면 된다.
 
 [;;;`
-<script src="/path/to/m42kup/m42kup.min.js"></script>
+<script src="/path/to/yamd/yamd.min.js"></script>
 <script>
-m42kup.render('[**bold text]'); // <p><b>bold text</b></p>
+yamd.render('[**bold text]'); // <p><b>bold text</b></p>
 </script>
 `]
 
@@ -51,11 +51,11 @@ m42kup.render('[**bold text]'); // <p><b>bold text</b></p>
 [;;;`<<
 <script src="/path/to/highlight.js/highlight.min.js"></script>
 <script src="/path/to/katex/katex.min.js"></script>
-<script src="/path/to/m42kup/m42kup.min.js"></script>
+<script src="/path/to/yamd/yamd.min.js"></script>
 <script>
-m42kup.set({hljs, katex});
+yamd.set({hljs, katex});
 
-m42kup.render(`
+yamd.render(`
 [;;;
 var foo = 'some highlighted code',
 	bar = 'more highlighted code';

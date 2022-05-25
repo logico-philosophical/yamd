@@ -34,7 +34,7 @@ export default class Tag {
 
 		this.renderer = (el, options) => {
 			if (!(el instanceof Element))
-				throw TypeError('arg0 should be an instance of m42kup.renderer.Element');
+				throw TypeError('arg0 should be an instance of yamd.renderer.Element');
 			return renderer(el, options);
 		};
 

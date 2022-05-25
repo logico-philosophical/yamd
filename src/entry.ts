@@ -53,7 +53,7 @@ function highlight(input: string) {
 	return hl;
 }
 
-var m42kup = {
+var yamd = {
 	parser,
 	renderer,
 	highlighter,
@@ -65,4 +65,4 @@ var m42kup = {
 	addCodeMirrorMode
 };
 
-module.exports = m42kup;
+module.exports = yamd;

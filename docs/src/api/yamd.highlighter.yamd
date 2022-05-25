@@ -1,4 +1,4 @@
-[=[;m42kup.highlighter]]
+[=[;yamd.highlighter]]
 
 [;;;(lang=javascript)
 highlighter: {
@@ -8,7 +8,7 @@ highlighter: {
 
 [==[;pt2hl(pt)]]
 
-파스 트리로부터 구문 강조된 HTML을 생성한다. 파스 트리 상의 특정 타입을 [;m42hl-]로 시작하는 특정 클래스를 가지는 [;<span>]으로 감싸는데, [;m42hl-] 이후에 오는 이름은 다음과 같다.
+파스 트리로부터 구문 강조된 HTML을 생성한다. 파스 트리 상의 특정 타입을 [;yamdhl-]로 시작하는 특정 클래스를 가지는 [;<span>]으로 감싸는데, [;yamdhl-] 이후에 오는 이름은 다음과 같다.
 
 [===텍스트]
 
@@ -17,7 +17,7 @@ highlighter: {
 	[;tx]
 ]
 
-즉 [;;;<span class="m42hl-tx">some text</span>]처럼 된다.
+즉 [;;;<span class="yamdhl-tx">some text</span>]처럼 된다.
 
 [===요소]
 
@@ -49,8 +49,7 @@ highlighter: {
 
 전체가 [;verb]로 감싸진다.
 
-
-CSS 스타일시트의 예시를 보려면 [;/web/m42kup-highlight.default.css]를 참고하라.
+CSS 스타일시트의 예시를 보려면 [;/web/yamd-highlight.default.css]를 참고하라.
 
 [**Parameters]
 

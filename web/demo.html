@@ -3,18 +3,18 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no">
-		<title>m42kup client-side renderer test page</title>
+		<title>yamd client-side renderer test page</title>
 		<script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/addon/display/placeholder.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
-		<script src="../dist/m42kup.min.js"></script>
+		<script src="../dist/yamd.min.js"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/tomorrow.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-		<link rel="stylesheet" href="m42kup.default.css">
-		<link rel="stylesheet" href="m42kup-highlight.default.css">
+		<link rel="stylesheet" href="yamd.default.css">
+		<link rel="stylesheet" href="yamd-highlight.default.css">
 		<style>
 			* {
 				box-sizing: border-box;
@@ -155,12 +155,14 @@
 		</style>
 	</head>
 	<body>
-		<h1>m42kup client-side renderer test page</h1>
-		<a href="https://github.com/logico-philosophical/m42kup">GitHub repo</a>
+		<h1>yamd client-side renderer test page</h1>
+		<a href="https://github.com/logico-philosophical/yamd">GitHub repo</a>
 		<h2>Input</h2>
 		<textarea id="input" placeholder="input"></textarea>
 		<h2>Highlighted input</h2>
-		<pre id="input-highlighted" class="m42kup-hl"></pre>
+		<pre id="input-highlighted" class="yamd-hl"></pre>
+		<h2>Rendered output</h2>
+		<div id="output"></div>
 		<h2>Parse tree</h2>
 		<pre id="output-pt" class="hljs"></pre>
 		<h2>Abstract syntax tree</h2>
@@ -169,14 +171,12 @@
 		<pre id="output-nt" class="hljs"></pre>
 		<h2>Output HTML</h2>
 		<pre id="output-html" class="hljs"></pre>
-		<h2>Rendered output</h2>
-		<div id="output"></div>
 		<script>
 			$ = (q, n) => (n || document).querySelector(q);
 
 			var options = {
 				tags: {
-					greet: new m42kup.renderer.Tag({
+					greet: new yamd.renderer.Tag({
 						name: 'greet',
 						display: 'inline',
 						renderer: (el, options) => {
@@ -187,11 +187,11 @@
 				hljs, katex
 			};
 
-			m42kup.set(options);
-			m42kup.addCodeMirrorMode(CodeMirror);
+			yamd.set(options);
+			yamd.addCodeMirrorMode(CodeMirror);
 			
 			var editor = CodeMirror.fromTextArea($('#input'), {
-				mode: 'm42kup',
+				mode: 'yamd',
 				lineWrapping: true,
 				indentWithTabs: true,
 				viewportMargin: Infinity,
@@ -207,17 +207,17 @@
 			});
 
 			editor.on('change', () => {
-				var pt = m42kup.parser.input2pt(editor.getValue());
-				$('#input-highlighted').innerHTML = m42kup.highlight(editor.getValue()) + '\n';
+				var pt = yamd.parser.input2pt(editor.getValue());
+				$('#input-highlighted').innerHTML = yamd.highlight(editor.getValue()) + '\n';
 				$('#output-pt').innerHTML = hljs.highlight('json', JSON.stringify(pt)).value;
 
-				var ast = m42kup.parser.pt2ast(pt);
+				var ast = yamd.parser.pt2ast(pt);
 				$('#output-ast').innerHTML = hljs.highlight('json', JSON.stringify(ast)).value;
 
-				var nt = m42kup.ast2nt(ast);
+				var nt = yamd.ast2nt(ast);
 				$('#output-nt').innerHTML = hljs.highlight('js', nt + '').value;
 
-				var output = m42kup.render(editor.getValue());
+				var output = yamd.render(editor.getValue());
 				$('#output-html').innerHTML = hljs.highlight('html', output).value;
 				$('#output').innerHTML = output;
 			});

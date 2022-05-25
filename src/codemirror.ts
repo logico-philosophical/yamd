@@ -163,7 +163,7 @@ export default function addCodeMirrorMode(CodeMirror) {
 		}
 	}
 
-	CodeMirror.defineMode('m42kup', (config, parserConfig) => ({
+	CodeMirror.defineMode('yamd', (config, parserConfig) => ({
 		startState(baseColumn) {
 			return {
 				levels: [],

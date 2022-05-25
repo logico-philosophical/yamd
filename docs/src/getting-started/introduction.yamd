@@ -1,8 +1,8 @@
-[=m42kup 소개]
+[=yamd 소개]
 
-m42kup은 간결하고 일관적인 문법을 갖는 가벼운 마크업 언어(lightweight markup language)이다.
+yamd는 간결하고 일관적인 문법을 갖는 가벼운 마크업 언어(lightweight markup language)이다.
 
-[==m42kup의 특징]
+[==yamd의 특징]
 
 [ul
 	[*] [~(href=https://github.com/highlightjs/highlight.js)highlight.js]를 써서 구문 강조를 위한 요소를 만들 수 있다.

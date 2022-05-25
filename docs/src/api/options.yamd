@@ -1,11 +1,11 @@
 [=렌더링 옵션]
 
-[;m42kup.render(input, options)] 및 [;m42kup.cascade(options)], [;m42kup.set(options)]에서 쓸 수 있는 옵션은 다음과 같다.
+[;yamd.render(input, options)] 및 [;yamd.cascade(options)], [;yamd.set(options)]에서 쓸 수 있는 옵션은 다음과 같다.
 
 [;;;(lang=javascript)`
 {
     tags: {
-        [key: string]: m42kup.renderer.Tag
+        [key: string]: yamd.renderer.Tag
     },
     hljs,
     katex
@@ -14,7 +14,7 @@
 
 [==[;tags]]
 
-태그 이름과 [;m42kup.renderer.Tag] 인스턴스의 키-값 쌍. 새로운 요소를 정의하기 위해 사용되며, 태그 이름이 사용 중인 경우 덮어 쓰고 아니면 새로 만든다.
+태그 이름과 [;yamd.renderer.Tag] 인스턴스의 키-값 쌍. 새로운 요소를 정의하기 위해 사용되며, 태그 이름이 사용 중인 경우 덮어 쓰고 아니면 새로 만든다.
 
 [==[;hljs]]
 

@@ -1,4 +1,15 @@
-import peg from '../dist/peg';
+let peg;
+
+if (process.env.__webpack__) {
+	peg = require('../build_tmp/peg');
+} else {
+	let fs = require('fs');
+	let path = require('path');
+	let pegjs = require('pegjs');
+
+	let grammar = fs.readFileSync(path.join(__dirname, 'parser.pegjs'), 'utf-8');
+	peg = pegjs.generate(grammar, {cache: true});
+}
 
 export interface AstRootType {
 	input: string;

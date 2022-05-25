@@ -1,7 +1,7 @@
-[=[;m42kup]]
+[=[;yamd]]
 
 [;;;(lang=javascript)
-m42kup: {
+yamd: {
     parser: { ... },
     renderer: { ... },
     highlighter: { ... },
@@ -29,7 +29,7 @@ m42kup: {
 
 [==[;ast2nt(ast, options)]]
 
-AST로부터 노드의 트리를 만든다. [;m42kup.renderer.ast2nt(ast, options)]와 같은데 [;m42kup]의 글로벌 옵션이 적용되며 [;options]는 글로벌 옵션을 cascade 한다.
+AST로부터 노드의 트리를 만든다. [;yamd.renderer.ast2nt(ast, options)]와 같은데 [;yamd]의 글로벌 옵션이 적용되며 [;options]는 글로벌 옵션을 cascade 한다.
 
 [**Parameters]
 
@@ -60,7 +60,7 @@ AST로부터 노드의 트리를 만든다. [;m42kup.renderer.ast2nt(ast, option
 [**Examples]
 
 [;;;(lang=javascript)`
-m42kup.render('[*hello]');
+yamd.render('[*hello]');
 `]
 
 [;;;(lang=html)
@@ -70,12 +70,12 @@ m42kup.render('[*hello]');
 
 [==[;highlight(input)]]
 
-m42kup 코드를 구문 강조한다. 출력 형식에 관하여는 [;m42kup.highlighter.pt2hl]을 참조하라.
+yamd 코드를 구문 강조한다. 출력 형식에 관하여는 [;yamd.highlighter.pt2hl]을 참조하라.
 
 [**Parameters]
 
 [ul
-    [*] [;input: string]: m42kup 코드.
+    [*] [;input: string]: yamd 코드.
 ]
 
 [**Returns]
@@ -85,16 +85,16 @@ m42kup 코드를 구문 강조한다. 출력 형식에 관하여는 [;m42kup.hig
 [**Examples]
 
 [;;;(lang=javascript)`
-m42kup.highlight('[*hello]');
+yamd.highlight('[*hello]');
 `]
 
 [;;;(lang=html)`
-<span class="m42hl-elem"><span class="m42hl-lbm">[</span><span class="m42hl-tn">*</span><span class="m42hl-sp"></span><span class="m42hl-tx">hello</span><span class="m42hl-rbm">]</span></span>
+<span class="yamdhl-elem"><span class="yamdhl-lbm">[</span><span class="yamdhl-tn">*</span><span class="yamdhl-sp"></span><span class="yamdhl-tx">hello</span><span class="yamdhl-rbm">]</span></span>
 `]
 
 [==[;cascade(options)]]
 
-현재의 글로벌 옵션을 보존하면서 [;options]로 적당히 덮어 쓴다. [;m42kup.cascade]나 [;m42kup.set]을 한 번도 호출하지 않은 경우 [;m42kup.set]과 효과가 같다.
+현재의 글로벌 옵션을 보존하면서 [;options]로 적당히 덮어 쓴다. [;yamd.cascade]나 [;yamd.set]을 한 번도 호출하지 않은 경우 [;yamd.set]과 효과가 같다.
 
 [**Parameters]
 
@@ -107,7 +107,7 @@ m42kup.highlight('[*hello]');
 [;;;(lang=javascript)`<
 // global options: {}
 
-m42kup.cascade({
+yamd.cascade({
     tags: {
         // deletes default element [=]
         '=': false
@@ -116,11 +116,11 @@ m42kup.cascade({
 
 // global options: {tags: {'=': false}}
 
-m42kup.cascade({
+yamd.cascade({
     tags: {
         // overwrites default element behavior of [*].
         // wraps content with '*'.
-        '*': new m42kup.renderer.Tag({
+        '*': new yamd.renderer.Tag({
             name: '*',
             display: 'inline',
             renderer: (el, options) => {
@@ -137,7 +137,7 @@ m42kup.cascade({
 
 [==[;set(options)]]
 
-현재의 글로벌 옵션을 버리고 [;options]로 설정한다. [;m42kup.cascade]나 [;m42kup.set]을 한 번도 호출하지 않은 경우 [;m42kup.cascade]와 효과가 같다. [;m42kup.set({})]으로 글로벌 옵션을 없애버릴 수 있다.
+현재의 글로벌 옵션을 버리고 [;options]로 설정한다. [;yamd.cascade]나 [;yamd.set]을 한 번도 호출하지 않은 경우 [;yamd.cascade]와 효과가 같다. [;yamd.set({})]으로 글로벌 옵션을 없애버릴 수 있다.
 
 [**Parameters]
 
@@ -150,7 +150,7 @@ m42kup.cascade({
 [;;;(lang=javascript)`<
 // global options: {}
 
-m42kup.set({
+yamd.set({
     tags: {
         // deletes default element [=]
         '=': false
@@ -159,11 +159,11 @@ m42kup.set({
 
 // global options: {tags: {'=': false}}
 
-m42kup.set({
+yamd.set({
     tags: {
         // overwrites default element behavior of [*].
         // wraps content with '*'.
-        '*': new m42kup.renderer.Tag({
+        '*': new yamd.renderer.Tag({
             name: '*',
             display: 'inline',
             renderer: (el, options) => {
@@ -180,7 +180,7 @@ m42kup.set({
 
 [==[;addCodeMirrorMode(CodeMirror)]]
 
-CodeMirror에 m42kup 구문 지원을 추가한다.
+CodeMirror에 yamd 구문 지원을 추가한다.
 
 [**Parameters]
 

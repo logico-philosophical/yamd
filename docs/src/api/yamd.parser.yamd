@@ -1,4 +1,4 @@
-[=[;m42kup.parser]]
+[=[;yamd.parser]]
 
 [;;;(lang=javascript)
 parser: {
@@ -14,7 +14,7 @@ parser: {
 [**Parameters]
 
 [ul
-	[*] [;input: string]: m42kup 코드.
+	[*] [;input: string]: yamd 코드.
 ]
 
 [**Returns]

@@ -51,7 +51,7 @@ tagNameMap['blockquote'] = new Tag({
 		var type = el.getAttribute('type');
 
 		if (['info', 'warn'].includes(type))
-			return el.html(`<blockquote class="m42kup-bq-${type}">${el.innerHtml}</blockquote>`);
+			return el.html(`<blockquote class="yamd-bq-${type}">${el.innerHtml}</blockquote>`);
 
 		return el.html(`<blockquote>${el.innerHtml}</blockquote>`);
 	}
