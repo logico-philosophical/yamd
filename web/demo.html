@@ -157,20 +157,38 @@
 	<body>
 		<h1>yamd client-side renderer test page</h1>
 		<a href="https://github.com/logico-philosophical/yamd">GitHub repo</a>
-		<h2>Input</h2>
-		<textarea id="input" placeholder="input"></textarea>
-		<h2>Highlighted input</h2>
-		<pre id="input-highlighted" class="yamd-hl"></pre>
-		<h2>Rendered output</h2>
-		<div id="output"></div>
-		<h2>Parse tree</h2>
-		<pre id="output-pt" class="hljs"></pre>
-		<h2>Abstract syntax tree</h2>
-		<pre id="output-ast" class="hljs"></pre>
-		<h2>Node tree</h2>
-		<pre id="output-nt" class="hljs"></pre>
-		<h2>Output HTML</h2>
-		<pre id="output-html" class="hljs"></pre>
+		<div style="margin-top: 1em">
+			<input type="checkbox" id="checkbox-verbose" name="checkbox-verbose" checked>
+			<label for="checkbox-verbose">verbose</label>
+		</div>
+		<div id="div-input">
+			<h2>Input</h2>
+			<textarea id="input" placeholder="input"></textarea>
+		</div>
+		<div id="div-input-highlighted">
+			<h2>Highlighted input</h2>
+			<pre id="input-highlighted" class="yamd-hl"></pre>
+		</div>
+		<div id="div-output">
+			<h2>Rendered output</h2>
+			<div id="output"></div>
+		</div>
+		<div id="div-output-pt">
+			<h2>Parse tree</h2>
+			<pre id="output-pt" class="hljs"></pre>
+		</div>
+		<div id="div-output-ast">
+			<h2>Abstract syntax tree</h2>
+			<pre id="output-ast" class="hljs"></pre>
+		</div>
+		<div id="div-output-nt">
+			<h2>Node tree</h2>
+			<pre id="output-nt" class="hljs"></pre>
+		</div>
+		<div id="div-output-html">
+			<h2>Output HTML</h2>
+			<pre id="output-html" class="hljs"></pre>
+		</div>
 		<script>
 			$ = (q, n) => (n || document).querySelector(q);
 
@@ -220,6 +238,18 @@
 				var output = yamd.render(editor.getValue());
 				$('#output-html').innerHTML = hljs.highlight('html', output).value;
 				$('#output').innerHTML = output;
+			});
+
+			function setVerbose(verbose) {
+				['input-highlighted', 'output-pt', 'output-ast', 'output-nt', 'output-html'].forEach(id => {
+					$('#div-' + id).style.display = verbose ? 'unset' : 'none';
+				});
+			}
+
+			setVerbose($('#checkbox-verbose').checked);
+
+			$('#checkbox-verbose').addEventListener('change', evt => {
+				setVerbose(evt.target.checked);
 			});
 		</script>
 	</body>
