@@ -132,10 +132,12 @@
 
 			.side-by-side #div-inputs {
 				overflow-y: scroll;
+				padding-bottom: 20vh;
 			}
 
 			.side-by-side #div-outputs {
 				overflow-y: scroll;
+				padding-bottom: 20vh;
 			}
 		</style>
 		<style>
@@ -260,20 +262,27 @@
 				inputStyle: 'textarea'
 			});
 
-			editor.on('change', () => {
-				var pt = yamd.parser.input2pt(editor.getValue());
-				$('#input-highlighted').innerHTML = yamd.highlight(editor.getValue()) + '\n';
-				$('#output-pt').innerHTML = hljs.highlight('json', JSON.stringify(pt)).value;
+			function update(val, verbose) {
+				var pt = yamd.parser.input2pt(val);
 
-				var ast = yamd.parser.pt2ast(pt);
-				$('#output-ast').innerHTML = hljs.highlight('json', JSON.stringify(ast)).value;
+				if (verbose) {
+					$('#input-highlighted').innerHTML = yamd.highlight(val) + '\n';
+					$('#output-pt').innerHTML = hljs.highlight('json', JSON.stringify(pt)).value;
 
-				var nt = yamd.ast2nt(ast);
-				$('#output-nt').innerHTML = hljs.highlight('js', nt + '').value;
+					var ast = yamd.parser.pt2ast(pt);
+					$('#output-ast').innerHTML = hljs.highlight('json', JSON.stringify(ast)).value;
 
-				var output = yamd.render(editor.getValue());
-				$('#output-html').innerHTML = hljs.highlight('html', output).value;
+					var nt = yamd.ast2nt(ast);
+					$('#output-nt').innerHTML = hljs.highlight('js', nt + '').value;
+				}
+
+				var output = yamd.render(val);
+				if (verbose) $('#output-html').innerHTML = hljs.highlight('html', output).value;
 				$('#output').innerHTML = output;
+			}
+
+			editor.on('change', () => {
+				update(editor.getValue(), $('#checkbox-verbose').checked);
 			});
 
 			function setVerbose(verbose) {
@@ -286,6 +295,7 @@
 
 			$('#checkbox-verbose').addEventListener('change', evt => {
 				setVerbose(evt.target.checked);
+				update(editor.getValue(), $('#checkbox-verbose').checked);
 			});
 
 			function setSideBySide(sbs) {
