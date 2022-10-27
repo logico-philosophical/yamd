@@ -20,8 +20,14 @@
 				box-sizing: border-box;
 			}
 
+			html {
+				margin: 0;
+				padding: 0;
+			}
+
 			body {
-				padding: 15px;
+				padding: 23px;
+				margin: 0;
 				font: 16px Roboto, sans-serif;
 				font-weight: 400;
 				-webkit-font-smoothing: antialiased;
@@ -109,6 +115,28 @@
 			.katex {
 				color: #202124;
 			}
+
+			.side-by-side {
+				display: flex;
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+
+			.side-by-side > * {
+				flex: 1;
+				padding: .7em;
+			}
+
+			.side-by-side #div-inputs {
+				overflow-y: scroll;
+			}
+
+			.side-by-side #div-outputs {
+				overflow-y: scroll;
+			}
 		</style>
 		<style>
 			.CodeMirror {
@@ -155,39 +183,47 @@
 		</style>
 	</head>
 	<body>
-		<h1>yamd client-side renderer test page</h1>
-		<a href="https://github.com/logico-philosophical/yamd">GitHub repo</a>
-		<div style="margin-top: 1em">
-			<input type="checkbox" id="checkbox-verbose" name="checkbox-verbose" checked>
-			<label for="checkbox-verbose">verbose</label>
-		</div>
-		<div id="div-input">
-			<h2>Input</h2>
-			<textarea id="input" placeholder="input"></textarea>
-		</div>
-		<div id="div-input-highlighted">
-			<h2>Highlighted input</h2>
-			<pre id="input-highlighted" class="yamd-hl"></pre>
-		</div>
-		<div id="div-output">
-			<h2>Rendered output</h2>
-			<div id="output"></div>
-		</div>
-		<div id="div-output-pt">
-			<h2>Parse tree</h2>
-			<pre id="output-pt" class="hljs"></pre>
-		</div>
-		<div id="div-output-ast">
-			<h2>Abstract syntax tree</h2>
-			<pre id="output-ast" class="hljs"></pre>
-		</div>
-		<div id="div-output-nt">
-			<h2>Node tree</h2>
-			<pre id="output-nt" class="hljs"></pre>
-		</div>
-		<div id="div-output-html">
-			<h2>Output HTML</h2>
-			<pre id="output-html" class="hljs"></pre>
+		<div id="div-io">
+			<div id="div-inputs">
+				<h1>yamd client-side renderer test page</h1>
+				<a href="https://github.com/logico-philosophical/yamd">GitHub repo</a>
+				<div style="margin: 1em 0">
+					<input type="checkbox" id="checkbox-verbose" name="checkbox-verbose" checked>
+					<label for="checkbox-verbose">verbose</label>
+					<input type="checkbox" id="checkbox-side-by-side" name="checkbox-side-by-side">
+					<label for="checkbox-side-by-side">side-by-side</label>
+				</div>
+				<div id="div-input">
+					<h2>Input</h2>
+					<textarea id="input" placeholder="input"></textarea>
+				</div>
+				<div id="div-input-highlighted">
+					<h2>Highlighted input</h2>
+					<pre id="input-highlighted" class="yamd-hl"></pre>
+				</div>
+			</div>
+			<div id="div-outputs">
+				<div id="div-output">
+					<h2>Rendered output</h2>
+					<div id="output"></div>
+				</div>
+				<div id="div-output-pt">
+					<h2>Parse tree</h2>
+					<pre id="output-pt" class="hljs"></pre>
+				</div>
+				<div id="div-output-ast">
+					<h2>Abstract syntax tree</h2>
+					<pre id="output-ast" class="hljs"></pre>
+				</div>
+				<div id="div-output-nt">
+					<h2>Node tree</h2>
+					<pre id="output-nt" class="hljs"></pre>
+				</div>
+				<div id="div-output-html">
+					<h2>Output HTML</h2>
+					<pre id="output-html" class="hljs"></pre>
+				</div>
+			</div>
 		</div>
 		<script>
 			$ = (q, n) => (n || document).querySelector(q);
@@ -250,6 +286,16 @@
 
 			$('#checkbox-verbose').addEventListener('change', evt => {
 				setVerbose(evt.target.checked);
+			});
+
+			function setSideBySide(sbs) {
+				$('#div-io').classList[sbs ? 'add' : 'remove']('side-by-side');
+			}
+
+			setSideBySide($('#checkbox-side-by-side').checked);
+
+			$('#checkbox-side-by-side').addEventListener('change', evt => {
+				setSideBySide(evt.target.checked);
 			});
 		</script>
 	</body>
